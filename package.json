@@ -7,9 +7,9 @@
     "sketch": ">=3.0"
   },
   "skpm": {
-    "name": "🥘pan",
+    "name": "🥘Pan",
     "manifest": "src/manifest.json",
-    "main": "sketch-plugin-scaffolding.sketchplugin",
+    "main": "pan.sketchplugin",
     "assets": [
       "static/**/*",
       "dist"
@@ -25,22 +25,23 @@
     "postinstall": "npm run build && skpm-link"
   },
   "devDependencies": {
+    "@sketch-hq/sketch-file-format-ts": "^5.1.0",
     "@skpm/builder": "^0.7.7",
     "@typescript-eslint/eslint-plugin": "^3.1.0",
     "@typescript-eslint/parser": "^3.1.0",
+    "@umijs/preset-react": "1.x",
+    "@umijs/test": "^3.2.3",
     "concurrently": "^5.2.0",
     "eslint": "^7.1.0",
+    "lint-staged": "^10.0.7",
+    "prettier": "^1.19.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "sketch": "^0.2.0",
     "sketch-module-web-view": "^3.4.1",
     "terser-webpack-plugin": "^3.0.3",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.5",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "@umijs/preset-react": "1.x",
-    "@umijs/test": "^3.2.3",
-    "lint-staged": "^10.0.7",
-    "prettier": "^1.19.1",
     "umi": "^3.2.3",
     "yorkie": "^2.0.0"
   }

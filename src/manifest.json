@@ -3,11 +3,18 @@
   "bundleVersion": 1,
   "commands": [
     {
-      "name": "Hello",
+      "name": "System Info",
       "identifier": "system-info",
       "script": "./app.ts",
       "shortcut": "cmd j",
       "handler": "systemInfo"
+    },
+    {
+      "name": "Swap Position",
+      "identifier": "swap-position",
+      "script": "./app.ts",
+      "shortcut": "ctrl shift s",
+      "handler": "swapPosition"
     },
     {
       "name": "panel",
@@ -19,6 +26,13 @@
   ],
   "menu": {
     "title": "🚀🚀Pan🚀🚀",
-    "items": ["system-info", "panel"]
+    "items": [
+      "system-info",
+      "panel",
+      {
+        "title": "Swap",
+        "items": ["swap-position"]
+      }
+    ]
   }
 }
