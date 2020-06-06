@@ -2,14 +2,13 @@ import BrowserWindow from 'sketch-module-web-view';
 import { UI } from 'sketch';
 import { getWinURL } from '@/sketch/utils/windows';
 
-const initWindows = () => {
-  const webviewIdentifier = '{{ slug }}.webview';
-
+const homeWindows = () => {
   const browserWindow = new BrowserWindow({
-    identifier: webviewIdentifier,
+    identifier: 'homeWin.webview',
     width: 240,
     height: 180,
     show: false,
+    hidesOnDeactivate: false,
   });
 
   // only show the window when the page has loaded to avoid a white flash
@@ -35,4 +34,4 @@ const initWindows = () => {
   browserWindow.loadURL(getWinURL('home'));
 };
 
-export default initWindows;
+export default homeWindows;

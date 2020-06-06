@@ -285,6 +285,7 @@ interface BrowserWindowConstructorOptions {
   height?: number;
   /**
    * 失焦时自动隐藏
+   * @type Boolean
    */
   hidesOnDeactivate?: boolean;
   /**

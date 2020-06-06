@@ -15,26 +15,6 @@ declare interface SketchActionContext<T extends MSAction>
   };
   action: string;
 }
-declare function log(obj: any): void;
-// Sketch includes timer functions as of Sketch 53
-declare function clearImmediate(handle?: number): void;
-declare function clearInterval(handle?: number): void;
-declare function clearTimeout(handle?: number): void;
-declare function setImmediate(
-  handler: Function,
-  timeout?: number,
-  ...arguments: any[]
-): number;
-declare function setInterval(
-  handler: Function,
-  timeout?: number,
-  ...arguments: any[]
-): number;
-declare function setTimeout(
-  handler: Function,
-  timeout?: number,
-  ...arguments: any[]
-): number;
 
 /*
 ABOUT:

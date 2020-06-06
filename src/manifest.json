@@ -1,25 +1,26 @@
 {
   "compatibleVersion": 3,
   "bundleVersion": 1,
+  "icon": "icons/logo.png",
   "commands": [
     {
       "name": "System Info",
       "identifier": "system-info",
-      "script": "./app.ts",
+      "script": "./sketch/app.ts",
       "shortcut": "cmd j",
       "handler": "systemInfo"
     },
     {
       "name": "Swap Position",
       "identifier": "swap-position",
-      "script": "./app.ts",
+      "script": "./sketch/app.ts",
       "shortcut": "ctrl shift s",
       "handler": "swapPosition"
     },
     {
       "name": "panel",
       "identifier": "panel",
-      "script": "./app.ts",
+      "script": "./sketch/app.ts",
       "handler": "panel",
       "shortcut": "ctrl k"
     }

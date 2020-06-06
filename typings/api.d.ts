@@ -1,5 +1,4 @@
 /// <reference path="./sketch.d.ts" />
-/// <reference types="node" />
 
 declare module 'sketch/dom' {
   class dom {
@@ -1473,8 +1472,10 @@ declare module 'sketch/dom' {
       scale(scaleWidth: number, scaleHeight: number): this;
 
       /**
-       * Each layer defines its own system of coordinates (with its origin at the top left of the layer). You can change that basis from one layer to the other with changeBasis.
-       * Both from and to can be omitted (but not at the same time) to change the basis from/to the Page coordinates.
+       * Each layer defines its own system of coordinates (with its origin at the top left of the layer).
+       * You can change that basis from one layer to the other with changeBasis.
+       * Both from and to can be omitted (but not at the same time)
+       * to change the basis from/to the Page coordinates.
        */
       changeBasis(change: { from?: Layer; to?: Layer }): Rectangle;
 

@@ -2,7 +2,7 @@
   "name": "pan",
   "version": "1.0.0",
   "author": "Arvin Xu",
-  "description": "kitchen match pan",
+  "description": "你的必备平底锅",
   "engines": {
     "sketch": ">=3.0"
   },
@@ -11,7 +11,7 @@
     "manifest": "src/manifest.json",
     "main": "pan.sketchplugin",
     "assets": [
-      "static/**/*",
+      "static",
       "dist"
     ]
   },
