@@ -10,7 +10,7 @@ declare global {
 /**
  * 输出插件基本信息
  */
-export default (context: Sketch.Context) => {
+export default (context: SketchContext) => {
   console.info('=======System Info=======');
   console.info(`开发环境: ${process.env.NODE_ENV}`);
   console.info(`Command Name: ${process.title}`);

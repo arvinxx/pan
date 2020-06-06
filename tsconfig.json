@@ -2,18 +2,24 @@
   "include": ["src", "**/*.ts", "**/*.js"],
   "compilerOptions": {
     "target": "es5",
-    "module": "esnext",
+    "module": "commonjs",
+    "sourceMap": true,
     "downlevelIteration": true,
-    "strict": true,
+
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "newLine": "lf",
     "moduleResolution": "node",
+    "esModuleInterop": true,
+    "lib": ["dom", "es2015", "es2016", "es2017"],
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
       "render/*": ["resources/*"],
       "@/*": ["src/*"]
     },
-    "jsx": "react"
+    "jsx": "preserve"
   }
 }
