@@ -1,4 +1,4 @@
-import { homeWin } from '@/sketch/windows';
+import { homeWin, replaceWin } from '@/sketch/windows';
 import {
   systemInfo as systemInfoCmd,
   swapPosition as swapPositionCmd,
@@ -13,7 +13,11 @@ export const systemInfo = systemInfoCmd;
 export const swapPosition = swapPositionCmd;
 // export const swapStyle = swapStyleCmd;
 
-export const panel = () => {
+export const home = () => {
   console.log('启动 home 窗口');
   homeWin();
+};
+export const replace = () => {
+  console.log('启动 replace 窗口');
+  replaceWin();
 };

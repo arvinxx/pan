@@ -18,10 +18,16 @@
       "handler": "swapPosition"
     },
     {
-      "name": "panel",
-      "identifier": "panel",
+      "name": "Home",
+      "identifier": "win.home",
       "script": "./sketch/app.ts",
-      "handler": "panel",
+      "handler": "home"
+    },
+    {
+      "name": "查找替换",
+      "identifier": "win.replace",
+      "script": "./sketch/app.ts",
+      "handler": "replace",
       "shortcut": "ctrl k"
     }
   ],
@@ -30,6 +36,7 @@
     "items": [
       "system-info",
       "panel",
+      "win.replace",
       {
         "title": "Swap",
         "items": ["swap-position"]

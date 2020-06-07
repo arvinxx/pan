@@ -6,20 +6,26 @@
     "importHelpers": true,
     "jsx": "react",
     "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
     "sourceMap": true,
-    "baseUrl": "./",
     "strict": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@@/*": ["src/.umi/*"]
-    },
-    "allowSyntheticDefaultImports": true
+      "@/*": ["./*"],
+      "@/common": ["../common"],
+      "@/common/*": ["../common/*"],
+      "@@/*": [".umi/*"]
+    }
   },
   "include": [
     "mock/**/*",
-    "src/**/*",
-    "config/**/*",
+    "./services/**/*",
+    "./pages/**/*",
+    "./assets/**/*",
     ".umirc.ts",
-    "typings.d.ts"
+    "typings.d.ts",
+    "../../typings"
   ]
 }
