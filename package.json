@@ -1,8 +1,8 @@
 {
   "name": "pan",
   "version": "1.0.0",
-  "author": "Arvin Xu",
-  "description": "你的必备平底锅",
+  "author": "闻冰",
+  "description": "设计厨子必备的锅",
   "engines": {
     "sketch": ">=3.0"
   },
@@ -45,8 +45,5 @@
     "typescript": "^3.9.5",
     "umi": "^3.2.3",
     "yorkie": "^2.0.0"
-  },
-  "dependencies": {
-    "styled-components": "^5.1.1"
   }
 }

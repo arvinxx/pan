@@ -57,7 +57,7 @@ function escapeReplaceString(string) {
 // start ^(Occupation)
 // end (Occupation)$
 
-export default function() {
+export default function () {
   const theme = UI && UI.getTheme ? UI.getTheme() : '';
   defaultSettings.darkMode = theme === 'dark';
 
@@ -169,7 +169,7 @@ export default function() {
     }
     state.regex = regex;
 
-    parseLayers(selection, regex);
+    parseLayers(selection);
 
     state.count = layers.length + overrides.length;
     // send count
@@ -238,7 +238,7 @@ export default function() {
 
         case 'Text':
           // log('Text')
-          if (layerTextMatch(layer)) {
+          if (layerTextMatch()) {
             replaceInLayer(layer);
           }
           //layer.text = 'toto'
