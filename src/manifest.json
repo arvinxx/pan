@@ -4,64 +4,55 @@
   "icon": "icons/logo.png",
   "commands": [
     {
-      "name": "System Info",
-      "identifier": "system-info",
+      "name": "系统信息",
+      "identifier": "com.arvinxx.pan.system-info",
       "script": "./sketch/commands/systemInfo.ts",
       "shortcut": "cmd j"
     },
     {
       "name": "生成画板总览",
-      "identifier": "artboard.overview",
-      "script": "./sketch/app.ts",
-      "shortcut": "ctrl a",
-      "handler": "artboardOverview"
+      "identifier": "com.arvinxx.pan.artboards-overview",
+      "script": "./sketch/commands/artboardsOverview.ts",
+      "shortcut": "ctrl a"
     },
     {
       "name": "交换位置",
-      "identifier": "swap-position",
+      "identifier": "com.arvinxx.pan.swap-position",
       "script": "./sketch/app.ts",
       "shortcut": "ctrl shift s",
       "handler": "swapPosition"
     },
     {
       "name": "交换文本",
-      "identifier": "swap-text",
+      "identifier": "com.arvinxx.pan.swap-text",
       "script": "./sketch/app.ts",
       "shortcut": "ctrl shift s",
       "handler": "swapText"
     },
     {
       "name": "Home",
-      "identifier": "win.home",
+      "identifier": "com.arvinxx.pan.win.home",
       "script": "./sketch/app.ts",
       "handler": "home"
     },
     {
       "name": "查找替换",
-      "identifier": "win.replace",
+      "identifier": "com.arvinxx.pan.win.replace",
       "script": "./sketch/app.ts",
       "handler": "replace",
       "shortcut": "ctrl k"
-    },
-    {
-      "name": "打开表格",
-      "identifier": "win.table",
-      "script": "./sketch/app.ts",
-      "handler": "table",
-      "shortcut": "ctrl t"
     }
   ],
   "menu": {
     "title": "🚀🚀Pan🚀🚀",
     "items": [
-      "system-info",
-      "artboard.overview",
-      "panel",
-      "win.replace",
-      "win.table",
+      "com.arvinxx.pan.system-info",
+      "com.arvinxx.pan.artboards-overview",
+      "com.arvinxx.pan.panel",
+      "com.arvinxx.pan.win.replace",
       {
         "title": "交换",
-        "items": ["swap-position", "swap-text"]
+        "items": ["com.arvinxx.pan.swap-position", "com.arvinxx.pan.swap-text"]
       }
     ]
   }

@@ -5,6 +5,6 @@ import { ChannelType } from '@/common/channel';
  * @param {ChannelType} channel 信道
  * @param {*} data 发送信息
  */
-export const sendMsg = (channel: ChannelType, data?) => {
+export const sendMsg = (channel: ChannelType, data?: any) => {
   window.postMessage(channel, JSON.stringify(data));
 };

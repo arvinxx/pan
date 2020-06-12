@@ -1,2 +1,2 @@
-export { default as overview } from './overview';
+export { default as overview } from './artboardsOverview';
 export * from './swap';

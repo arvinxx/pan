@@ -1,5 +1,7 @@
-// Do the actual parsing of the table.
-function transformTableProps() {
+/**
+ * 解析表格
+ **/
+const transformTableProps = () => {
   if (!window.hotTableInstance || window.hotTableInstance.isDestroyed) {
     return {
       dataSource: [],
@@ -16,11 +18,12 @@ function transformTableProps() {
       flex: window.hotTableInstance.getColWidth(i),
       textAlign: window.hotTableInstance.getCell(0, i)
         ? textAlignToLeftOrRight(
-            window.getComputedStyle(window.hotTableInstance.getCell(0, i), null).textAlign,
+            window.getComputedStyle(window.hotTableInstance.getCell(0, i), null)
+              .textAlign
           )
         : undefined,
     },
-    render: text => text.content || text,
+    render: (text) => text.content || text,
   }));
   const dataSource = [];
   data.slice(1, data.length).forEach((row, rowIndex) => {
@@ -31,7 +34,9 @@ function transformTableProps() {
         content: item,
         style: {
           textAlign: cell
-            ? textAlignToLeftOrRight(window.getComputedStyle(cell, null).textAlign)
+            ? textAlignToLeftOrRight(
+                window.getComputedStyle(cell, null).textAlign
+              )
             : undefined,
         },
       };
@@ -42,9 +47,9 @@ function transformTableProps() {
     dataSource,
     columns,
   };
-}
+};
 
-function textAlignToLeftOrRight(textAlign) {
+const textAlignToLeftOrRight = (textAlign: 'start' | 'end' | string) => {
   if (textAlign === 'start') {
     return 'left';
   }
@@ -52,7 +57,7 @@ function textAlignToLeftOrRight(textAlign) {
     return 'right';
   }
   return textAlign;
-}
+};
 
 // Return the API
 export default transformTableProps;

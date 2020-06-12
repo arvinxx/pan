@@ -44,12 +44,12 @@ for (let i = 1; i <= 3; i += 1) {
   });
 }
 
-const expandedRowRender = record => <p>{record.description}</p>;
+const expandedRowRender = (record) => <p>{record.description}</p>;
 const defaultTitle = () => 'Here is title';
 const showHeader = true;
 const defaultFooter = () => 'Here is footer';
 
-const Preview = props => {
+const Preview = (props) => {
   const { title, footer, checkable, bordered, expandable, size } = props;
 
   return (

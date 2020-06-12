@@ -1,27 +1,27 @@
 import React from 'react';
 import { message } from 'antd';
-import emitter from '../common/event';
-import ErrorBoundary from '../common/ErrorBoundary';
-import transformTableProps from '../common/transformTableProps';
+import { ErrorBoundary } from '@/components';
+import { event as emitter, uuid } from '@/utils';
+import transformTableProps from './common/transformTableProps';
 
 import Table from './components/Table';
-import uuid from '../utils/uuid';
 
-import pluginCall from '../sketchCall';
-import yo from '../yo';
-import '../webCall';
+// import pluginCall from '../sketchCall';
+import { notifyProgress } from '@/services';
 import './index.less';
+
+declare global {
+  interface Window {
+    pluginCall: any;
+    Kitchen: any;
+  }
+}
 
 window.pluginCall = pluginCall;
 window.Kitchen = {};
 window.Kitchen.AntD = {};
-const exportSVG = window.ChartShaper.exporter.exportSvgCode;
-const LangMap = {
-  en_us: 'en-US',
-  zh_cn: 'zh-CN',
-};
 
-class DPL extends React.PureComponent {
+export class DPL extends React.PureComponent {
   state = {
     router: 'guide',
     loading: false,
@@ -46,10 +46,9 @@ class DPL extends React.PureComponent {
     emitter.removeListener('syncGenerateHistory', this.updateGenerateHistory);
   }
 
-  updateGenerateHistory = (type, generateHistory) => {
-    const historyField = type === 'CHART' ? 'chartHistory' : 'tableHistory';
+  updateGenerateHistory = (generateHistory) => {
     this.setState({
-      [historyField]: generateHistory,
+      tableHistory: generateHistory,
     });
   };
 
