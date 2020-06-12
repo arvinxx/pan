@@ -2,15 +2,19 @@ import React, { useRef, useCallback, useEffect } from 'react';
 import { HotTable } from '@handsontable/react';
 import { Table } from 'antd';
 import cloneDeep from 'lodash/cloneDeep';
+import { contextMenu } from 'handsontable';
 import { defaultData } from './defaultProps';
+import styles from './index.less';
+
+import 'handsontable/dist/handsontable.full.css';
 
 const expandedRowRender = () => <p>我是 description</p>;
 const defaultTitle = () => '表格标题';
 const defaultFooter = () => '表格页脚';
 
-const Data = React.memo(props => {
+const Data = React.memo((props) => {
   const { tableProps = {}, preview, onDataChange, dataForHandsontable } = props;
-  const hotTableComponent = useRef();
+  const hotTableComponent = useRef<HotTable>(null);
   const onCellEdit = useCallback(
     (changed, source) => {
       if (source === 'loadData') {
@@ -19,7 +23,7 @@ const Data = React.memo(props => {
 
       setTimeout(() => onDataChange(), 0);
     },
-    [onDataChange],
+    [onDataChange]
   );
 
   const onCreate = useCallback(
@@ -30,7 +34,7 @@ const Data = React.memo(props => {
 
       setTimeout(() => onDataChange(), 0);
     },
-    [onDataChange],
+    [onDataChange]
   );
 
   const onRemove = useCallback(
@@ -41,7 +45,7 @@ const Data = React.memo(props => {
 
       setTimeout(() => onDataChange(), 0);
     },
-    [onDataChange],
+    [onDataChange]
   );
 
   const onResize = useCallback(() => {
@@ -55,7 +59,9 @@ const Data = React.memo(props => {
   }, []);
 
   useEffect(() => {
-    const data = dataForHandsontable ? cloneDeep(dataForHandsontable) : cloneDeep(defaultData);
+    const data = dataForHandsontable
+      ? cloneDeep(dataForHandsontable)
+      : cloneDeep(defaultData);
     window.hotTableInstance.loadData(data);
   }, [dataForHandsontable]);
 
@@ -65,9 +71,17 @@ const Data = React.memo(props => {
     widthValue = 600;
   }
 
-  const { title, footer, checkable, bordered, expandable, size, ...restTableProps } = tableProps;
+  const {
+    title,
+    footer,
+    checkable,
+    bordered,
+    expandable,
+    size,
+    ...restTableProps
+  } = tableProps;
 
-  const contextMenu = [
+  const contextMenu: contextMenu.PredefinedMenuItemKey = [
     'row_above',
     'row_below',
     'col_left',
@@ -93,7 +107,7 @@ const Data = React.memo(props => {
       >
         <div style={{ width: widthValue }}>
           <Table
-            className="preview-table"
+            className={styles.preview}
             pagination={false}
             bordered={bordered}
             title={title ? defaultTitle : null}
@@ -113,12 +127,11 @@ const Data = React.memo(props => {
                 position: 'absolute',
                 visibility: 'hidden', // 使用 display: none 会造成奇怪的列头渲染丢失问题
               }
-            : null
+            : undefined
         }
       >
         <HotTable
           ref={hotTableComponent}
-          root="hot"
           manualColumnResize
           afterColumnResize={onResize}
           colHeaders
@@ -132,7 +145,7 @@ const Data = React.memo(props => {
           afterCreateRow={onCreate}
           contextMenu={contextMenu}
           licenseKey="non-commercial-and-evaluation"
-          language="zh-CN"
+          // language="zh-CN"
         />
       </div>
     </div>

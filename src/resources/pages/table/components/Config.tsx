@@ -1,17 +1,15 @@
 import React, { FC } from 'react';
 import { useIntl } from 'umi';
+import styles from './style.less';
 
-interface ConfigAreaProps {
+interface ConfigProps {
   config: any;
+  current: string;
   ConfigComponent: any;
   onChange: Function;
 }
-const ConfigArea: FC<ConfigAreaProps> = ({
-  config,
-  ConfigComponent,
-  onChange,
-}) => {
-  const { formatMessage } = useIntl;
+const Config: FC<ConfigProps> = ({ config, ConfigComponent, onChange }) => {
+  const { formatMessage } = useIntl();
 
   const onChangeField = (...args: any[]) => {
     const { target } = args[0];
@@ -56,8 +54,10 @@ const ConfigArea: FC<ConfigAreaProps> = ({
   };
 
   return (
-    <div className="config-area">
-      <div className="title">{formatMessage({ id: 'page.table.element' })}</div>
+    <div>
+      <div className={styles.title}>
+        {formatMessage({ id: 'page.table.element' })}
+      </div>
       <ConfigComponent
         {...(config || ConfigComponent.defaultProps)}
         onChangeField={onChangeField}
@@ -66,4 +66,4 @@ const ConfigArea: FC<ConfigAreaProps> = ({
   );
 };
 
-export default ConfigArea;
+export default Config;

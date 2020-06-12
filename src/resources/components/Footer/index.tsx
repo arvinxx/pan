@@ -1,39 +1,41 @@
-import React, { useCallback } from 'react';
-import { Button, Popconfirm, Tooltip, Timeline, Tag, Popover } from 'antd';
-import Icon from '@ant-design/icons';
+import React, { useCallback, FC } from 'react';
+import { Button, Tooltip, Timeline, Tag, Popover } from 'antd';
+import {
+  CheckOutlined,
+  ClockCircleOutlined,
+  RedoOutlined,
+} from '@ant-design/icons';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import groupBy from 'lodash/groupBy';
 import 'dayjs/locale/zh-cn';
 import useHotKeysForUndo from '@/hooks/useHotKeysForUndo';
-import { IconFont as CustomIcon } from '@/components';
-import './footer.less';
+import { IconFont } from '@/components';
+import { useIntl } from 'umi';
+
+import styles from './footer.less';
 
 dayjs.locale('zh-cn');
 dayjs.extend(relativeTime);
 
-const chartNameMap = {
-  Area: '面积图',
-  StackArea: '堆叠面积图',
-  PercentageStackArea: '百分比堆叠面积图',
-  Bar: '条形图',
-  GroupBar: '分组条形图',
-  StackBar: '堆叠条形图',
-  PercentageStackBar: '百分比堆叠条形图',
-  Column: '柱形图',
-  GroupColumn: '分组柱形图',
-  StackColumn: '堆叠柱形图',
-  PercentageStackColumn: '百分比堆叠柱形图',
-  Line: '折线图',
-  Pie: '饼图',
-  Ring: '环形图',
-  Radar: '雷达',
-};
+interface FooterProps {
+  config: any;
+  handleGenerate: any;
+  canRedo: any;
+  canUndo: any;
+  redo: any;
+  undo: any;
+  resetConfig: any;
+  history: any;
+  onApplyHistory: any;
+  onClearHistory: any;
+}
 
-const Footer = React.memo((props) => {
+const Footer: FC<FooterProps> = React.memo((props) => {
+  const { formatMessage } = useIntl();
   const {
     config,
-    onBack,
+
     handleGenerate,
     canRedo,
     canUndo,
@@ -46,7 +48,7 @@ const Footer = React.memo((props) => {
   } = props;
 
   const generateHistoryGroupedByDate = groupBy(history, (item) =>
-    dayjs().diff(dayjs(item.date), 'weeks') > 1 ? '更早' : '本周之内'
+    dayjs().diff(dayjs(item.date), 'week') > 1 ? '更早' : '本周之内'
   );
 
   const resortedKeyObject = {
@@ -55,11 +57,11 @@ const Footer = React.memo((props) => {
   };
 
   const clearHistory = useCallback(() => {
-    const type = config.category ? 'TABLE' : 'CHART';
-    onClearHistory(type);
+    onClearHistory('TABLE');
   }, [onClearHistory, config]);
 
   const historyList = Object.keys(resortedKeyObject).map((title) => {
+    // @ts-ignore
     const list = resortedKeyObject[title];
     const tagProps =
       title === '更早'
@@ -74,29 +76,33 @@ const Footer = React.memo((props) => {
           <Tag {...tagProps}>{title}</Tag>
         </div>
         <ul className="history-list">
-          {list.reverse().map((item) => {
-            const itemTitle = item.category
-              ? '表格'
-              : chartNameMap[item.configs.type];
-            return (
-              <li key={item.date} className="history-item">
-                <span className="history-item-title" title={itemTitle}>
-                  {itemTitle}
-                </span>
-                <span className="history-item-date">
-                  {dayjs(item.date).fromNow()}
-                </span>
-                <a
-                  className="history-item-apply"
-                  href="#"
-                  onClick={() => onApplyHistory(item)}
-                  title={dayjs(item.date).format('YYYY-MM-DD HH:mm:ss')}
-                >
-                  应用
-                </a>
-              </li>
-            );
-          })}
+          {list
+            .reverse()
+            .map(
+              (
+                item: { date: string | number | dayjs.Dayjs | Date },
+                index: number
+              ) => {
+                return (
+                  <li key={index} className="history-item">
+                    <span className="history-item-title" title={'表格'}>
+                      表格
+                    </span>
+                    <span className="history-item-date">
+                      {dayjs(item.date).fromNow()}
+                    </span>
+                    <a
+                      className="history-item-apply"
+                      href="#"
+                      onClick={() => onApplyHistory(item)}
+                      title={dayjs(item.date).format('YYYY-MM-DD HH:mm:ss')}
+                    >
+                      应用
+                    </a>
+                  </li>
+                );
+              }
+            )}
         </ul>
       </Timeline.Item>
     );
@@ -125,42 +131,8 @@ const Footer = React.memo((props) => {
   useHotKeysForUndo(handleUndo, handleRedo);
 
   return (
-    <div className="footer">
-      <div className="footer-router">
-        {/* <Popconfirm
-          overlayClassName="footer-popconfirm"
-          title="返回首页会丢失已有修改，确认返回吗？"
-          onConfirm={onBack}
-          icon={null}
-          width=""
-          okText="确定"
-          cancelText="取消"
-        >
-          <div className="footer-router-item footer-router-back">返回首页</div>
-        </Popconfirm> */}
-        {canRedo || canUndo ? (
-          <Popconfirm
-            overlayClassName="footer-popconfirm"
-            title="返回首页会丢失已有修改，确认返回吗？"
-            onConfirm={onBack}
-            icon={null}
-            okText="确定"
-            cancelText="取消"
-          >
-            <div className="footer-router-item footer-router-back">
-              {window.ks_i18n['Back Home']}
-            </div>
-          </Popconfirm>
-        ) : (
-          <div
-            className="footer-router-item footer-router-back"
-            onClick={onBack}
-          >
-            {window.ks_i18n['Back Home']}
-          </div>
-        )}
-      </div>
-      <div className="history">
+    <div className={styles.container}>
+      <div className={styles.history}>
         <Popover
           title={null}
           overlayClassName="history-popover"
@@ -201,36 +173,38 @@ const Footer = React.memo((props) => {
           placement="bottom"
           arrowPointAtCenter
         >
-          <Icon
-            type="clock-circle-o"
-            className="history"
-            title="图表生成历史"
-          />
+          <ClockCircleOutlined className="history" title="历史记录" />
         </Popover>
       </div>
       <div
-        className="un-redo undo"
+        className={`${styles.unRedo} ${styles.undo}`}
         style={{ color: `${canUndo ? '#00000099' : '#ccc'}` }}
         onClick={handleUndo}
       >
-        <Tooltip placement="top" title="撤销">
-          <CustomIcon type="icon-Undo" />
+        <Tooltip
+          placement="top"
+          title={formatMessage({ id: 'components.footer.undo' })}
+        >
+          <IconFont type="icon-Undo" />
         </Tooltip>
       </div>
       <div
-        className="un-redo redo"
+        className={`${styles.unRedo} ${styles.redo}`}
         style={{ color: `${canRedo ? '#00000099' : '#ccc'}` }}
         onClick={handleRedo}
       >
-        <Tooltip placement="top" title="重做">
-          <CustomIcon type="icon-Redo" />
+        <Tooltip
+          placement="top"
+          title={formatMessage({ id: 'components.footer.redo' })}
+        >
+          <IconFont type="icon-Redo" />
         </Tooltip>
       </div>
-      <Button icon="undo" onClick={handleReset}>
-        {window.ks_i18n.Reset}
+      <Button icon={<RedoOutlined />} onClick={handleReset}>
+        {formatMessage({ id: 'components.footer.reset' })}
       </Button>
-      <Button icon="check" type="primary" onClick={handleGenerate}>
-        {window.ks_i18n.Generate}
+      <Button icon={<CheckOutlined />} type="primary" onClick={handleGenerate}>
+        {formatMessage({ id: 'components.footer.generate' })}
       </Button>
     </div>
   );

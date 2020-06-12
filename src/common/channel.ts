@@ -3,6 +3,10 @@ const channel = {
   REPLACE_REPLACE: 'REPLACE_REPLACE',
   REPLACE_FIND: 'REPLACE_FIND',
   REPLACE_RESET_PREF: 'REPLACE_RESET_PREF',
+
+  // 生成表格
+  TABLE_GENERATE: 'TABLE_GENERATE',
+  TABLE_CLEAR_HISTORY: 'TABLE_CLEAR_HISTORY',
 };
 export default channel;
 export type ChannelType = keyof typeof channel;

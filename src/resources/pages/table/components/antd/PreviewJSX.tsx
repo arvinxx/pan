@@ -3,7 +3,7 @@ import { Table } from 'antd';
 
 import defaultProps from './defaultProps';
 
-const placeholderJSX = ({ width }) => (
+const placeholderJSX = ({ width }: { width: number }) => (
   <div
     style={{
       height: 4,
@@ -44,7 +44,9 @@ for (let i = 1; i <= 3; i += 1) {
   });
 }
 
-const expandedRowRender = (record) => <p>{record.description}</p>;
+const expandedRowRender = (record: { description: string }) => (
+  <p>{record.description}</p>
+);
 const defaultTitle = () => 'Here is title';
 const showHeader = true;
 const defaultFooter = () => 'Here is footer';
@@ -67,10 +69,10 @@ const Preview = (props) => {
         }}
         pagination={false}
         bordered={bordered}
-        title={title ? defaultTitle : null}
-        footer={footer ? defaultFooter : null}
-        expandedRowRender={expandable ? expandedRowRender : null}
-        rowSelection={checkable ? {} : null}
+        title={title ? defaultTitle : undefined}
+        footer={footer ? defaultFooter : undefined}
+        expandedRowRender={expandable ? expandedRowRender : undefined}
+        rowSelection={checkable ? {} : undefined}
         columns={columns}
         dataSource={data}
         size={size}

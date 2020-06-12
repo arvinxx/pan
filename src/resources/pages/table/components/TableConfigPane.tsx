@@ -1,35 +1,42 @@
-import React from 'react';
+import React, { useState, FC } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
-import ConfigArea from './areas/ConfigArea';
-import PreviewArea from './areas/PreviewArea';
-import DataArea from './areas/DataArea';
+import Config from './Config';
+import Preview from './Preview';
+import DataArea from './DataArea';
 import AntD from './antd';
 import transformTableProps from '../common/transformTableProps';
+import styles from './style.less';
+import { TableConfig } from '@/pages/table/data';
 
-export default class TableConfigPane extends React.PureComponent {
-  state = {
-    preview: false,
+interface TableConfigPaneProps {
+  config: any;
+  onChange: any;
+  current?: 'table';
+}
+const TableConfigPane: FC<TableConfigPaneProps> = ({
+  config,
+  onChange,
+  current = 'table',
+}) => {
+  const [preview, setPreview] = useState(false);
+
+  const getTableProps = () => {
+    return config
+      ? {
+          ...config.config,
+          ...config.componentData,
+        }
+      : {};
   };
 
-  getTableProps() {
-    const { config } = this.props;
-
-    return {
-      ...config.config,
-      ...config.componentData,
-    };
-  }
-
-  onTableConfigChange = (tableConfig) => {
-    const { onChange, config } = this.props;
+  const onTableConfigChange = (tableConfig: TableConfig) => {
     onChange({
       ...config,
       config: tableConfig,
     });
   };
 
-  onDataChange = () => {
-    const { onChange, config } = this.props;
+  const onDataChange = () => {
     const dataForHandsontable = cloneDeep(window.hotTableInstance.getData());
     const componentData = transformTableProps();
     onChange({
@@ -39,55 +46,50 @@ export default class TableConfigPane extends React.PureComponent {
     });
   };
 
-  onPreviewChange = () => {
-    const { preview } = this.state;
-    this.setState({
-      preview: !preview,
-    });
+  const onPreviewChange = () => {
+    setPreview(!preview);
   };
 
-  render() {
-    const { current = 'table', config } = this.props;
-    const { preview } = this.state;
-    const { ConfigJSX, PreviewJSX, DataJSX } = AntD[current];
+  const { ConfigJSX, PreviewJSX, DataJSX } = AntD;
 
-    const previewNode = (
-      <PreviewArea
-        PreviewComponent={PreviewJSX}
-        preview={preview}
-        config={config.config}
-        key="preview"
-        large={!DataJSX}
-        onPreviewChange={this.onPreviewChange}
-      />
-    );
+  const previewNode = (
+    <Preview
+      PreviewComponent={PreviewJSX}
+      preview={preview}
+      config={config && config.config}
+      key="preview"
+      large={!DataJSX}
+      onPreviewChange={onPreviewChange}
+    />
+  );
 
-    // 配置、预览、数据 三块布局
-    return (
-      <div className="areas-container">
-        <div className="vertical-zone-main">
-          {DataJSX ? (
-            <DataArea
-              DataComponent={DataJSX}
-              dataForHandsontable={config.dataForHandsontable}
-              tableProps={this.getTableProps()}
-              onDataChange={this.onDataChange}
-              preview={preview}
-            />
-          ) : (
-            previewNode
-          )}
-        </div>
-        <div className="vertical-zone-side">
-          <ConfigArea
-            ConfigComponent={ConfigJSX}
-            config={config.config}
-            current={current}
-            onChange={this.onTableConfigChange}
+  // 配置、预览、数据 三块布局
+  return (
+    <div className={styles.container}>
+      <div className={styles.main}>
+        {DataJSX ? (
+          <DataArea
+            DataComponent={DataJSX}
+            dataForHandsontable={config && config.dataForHandsontable}
+            tableProps={getTableProps()}
+            onDataChange={onDataChange}
+            preview={preview}
           />
-          {DataJSX ? previewNode : null}
-        </div>
+        ) : (
+          previewNode
+        )}
       </div>
-    );
-  }
-}
+      <div className={styles.side}>
+        <Config
+          ConfigComponent={ConfigJSX}
+          config={config && config.config}
+          current={current}
+          onChange={onTableConfigChange}
+        />
+        {DataJSX ? previewNode : null}
+      </div>
+    </div>
+  );
+};
+
+export default TableConfigPane;

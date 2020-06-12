@@ -2,23 +2,38 @@
  * 使用了数组的length来简化操作，因此stack一直是在引用上做修改，在外部如果要使用stack的话要注意
  */
 import { useReducer, useCallback, useEffect } from 'react';
+import { TableConfig } from '@/pages/table/data';
 
 const UNDO = 'UNDO';
 const REDO = 'REDO';
 const SET = 'SET';
 const RESET = 'RESET';
 
-const initialState = {
+export interface Action {
+  type: 'UNDO' | 'REDO' | 'SET' | 'RESET';
+  item?: any;
+  callback?: Function;
+  origin?: TableConfig;
+}
+
+export interface HistoryState {
+  limit: number;
+  present: number;
+  stack: TableConfig[];
+}
+
+const initialState: HistoryState = {
   limit: 100,
   stack: [],
   present: -1,
 };
 
-const reducer = (state, action) => {
+const reducer = (state: HistoryState, action: Action): HistoryState => {
   const { stack, present, limit } = state;
-
+  console.log(state, action);
   switch (action.type) {
-    case UNDO: {
+    // 撤销
+    case UNDO:
       if (action.callback) {
         action.callback(stack[present - 1]);
       }
@@ -27,9 +42,9 @@ const reducer = (state, action) => {
         present: present - 1,
         limit,
       };
-    }
 
-    case REDO: {
+    // 重做
+    case REDO:
       if (action.callback) {
         action.callback(stack[present + 1]);
       }
@@ -38,9 +53,9 @@ const reducer = (state, action) => {
         present: present + 1,
         limit,
       };
-    }
 
-    case SET: {
+    // 设置
+    case SET:
       const { item } = action;
 
       if (item === stack[present]) {
@@ -72,22 +87,45 @@ const reducer = (state, action) => {
         present: newPresent,
         limit,
       };
-    }
 
-    case RESET: {
-      return {
+    // 重置
+    case RESET:
+      return <HistoryState>{
         stack: [action.origin],
         present: 0,
         limit,
       };
-    }
 
     default:
       return state;
   }
 };
 
-const useUndo = (initial, limit, board) => {
+const useUndo = (
+  initial: TableConfig | undefined,
+  limit: number,
+  board?: any
+): {
+  /**
+   * 设置
+   */
+  set: any;
+  /**
+   * 重置
+   */
+  reset: any;
+  /**
+   * 撤销
+   */
+  undo: any;
+  /**
+   * 重做
+   */
+  redo: any;
+  canUndo: any;
+  canRedo: any;
+  present: TableConfig;
+} => {
   let definedState = {};
   if (initial !== undefined) {
     definedState = {
@@ -117,13 +155,13 @@ const useUndo = (initial, limit, board) => {
       dispatch({ type: REDO, callback: board.current.reset });
     }
   }, [canRedo, dispatch]);
-  const set = useCallback(item => dispatch({ type: SET, item }), [dispatch]);
+  const set = useCallback((item) => dispatch({ type: SET, item }), [dispatch]);
   const reset = useCallback(
-    origin => {
+    (origin) => {
       dispatch({ type: RESET, origin });
       board.current.reset(origin);
     },
-    [dispatch],
+    [dispatch]
   );
 
   const present = state.stack[state.present];

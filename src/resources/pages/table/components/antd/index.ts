@@ -1,6 +1,11 @@
-import table from './table';
-import './index.less';
+import defaultProps from './defaultProps';
+import ConfigJSX from './ConfigJSX';
+import PreviewJSX from './PreviewJSX';
+import DataJSX from './DataJSX';
 
 export default {
-  table,
+  defaultProps,
+  ConfigJSX,
+  PreviewJSX,
+  DataJSX,
 };

@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from 'react';
 
-const useHotKeysForUndo = (undoHandler, redoHandler) => {
+const useHotKeysForUndo = (undoHandler: Function, redoHandler: Function) => {
   const handler = useCallback(
     (e) => {
       const Z = 90;
@@ -10,7 +10,7 @@ const useHotKeysForUndo = (undoHandler, redoHandler) => {
         redoHandler();
       }
     },
-    [undoHandler, redoHandler]
+    [undoHandler, redoHandler],
   );
   useEffect(() => {
     const canUseDOM = !!(

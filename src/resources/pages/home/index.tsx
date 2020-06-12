@@ -7,7 +7,6 @@ const Panel: FC = () => {
   return (
     <div>
       <h1 className={styles.title}>index</h1>
-      <Button>交换</Button>
     </div>
   );
 };

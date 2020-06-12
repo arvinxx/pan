@@ -18,28 +18,31 @@
     {
       "name": "交换位置",
       "identifier": "com.arvinxx.pan.swap-position",
-      "script": "./sketch/app.ts",
+      "script": "./sketch/commands/swap.ts",
       "shortcut": "ctrl shift s",
       "handler": "swapPosition"
     },
     {
       "name": "交换文本",
       "identifier": "com.arvinxx.pan.swap-text",
-      "script": "./sketch/app.ts",
+      "script": "./sketch/commands/swap.ts",
       "shortcut": "ctrl shift s",
       "handler": "swapText"
     },
     {
       "name": "Home",
       "identifier": "com.arvinxx.pan.win.home",
-      "script": "./sketch/app.ts",
-      "handler": "home"
+      "script": "./sketch/windows/home.ts"
+    },
+    {
+      "name": "表格",
+      "identifier": "com.arvinxx.pan.win.table",
+      "script": "./sketch/windows/table.ts"
     },
     {
       "name": "查找替换",
       "identifier": "com.arvinxx.pan.win.replace",
-      "script": "./sketch/app.ts",
-      "handler": "replace",
+      "script": "./sketch/windows/replace.ts",
       "shortcut": "ctrl k"
     }
   ],
@@ -49,7 +52,9 @@
       "com.arvinxx.pan.system-info",
       "com.arvinxx.pan.artboards-overview",
       "com.arvinxx.pan.panel",
+      "com.arvinxx.pan.win.home",
       "com.arvinxx.pan.win.replace",
+      "com.arvinxx.pan.win.table",
       {
         "title": "交换",
         "items": ["com.arvinxx.pan.swap-position", "com.arvinxx.pan.swap-text"]

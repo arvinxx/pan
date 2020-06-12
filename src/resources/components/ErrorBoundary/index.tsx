@@ -1,18 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, ErrorInfo } from 'react';
 import { Button, Alert } from 'antd';
+import { formatMessage } from 'umi';
 
 interface ErrorBoundaryProps {
   onRetry: React.MouseEventHandler<HTMLElement>;
 }
 export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
   state = {
-    error: undefined,
+    error: '',
     info: {
       componentStack: '',
     },
   };
 
-  componentDidCatch(error, info) {
+  componentDidCatch(error: Error, info: ErrorInfo) {
     this.setState({ error, info });
   }
 
@@ -35,7 +36,7 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
                 </div>
                 <div style={{ marginTop: 24 }}>
                   <Button type="primary" onClick={onRetry}>
-                    重试
+                    {formatMessage({ id: 'components.footer.home' })}
                   </Button>
                 </div>
               </div>

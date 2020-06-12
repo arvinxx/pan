@@ -8,3 +8,4 @@ import { ChannelType } from '@/common/channel';
 export const sendMsg = (channel: ChannelType, data?: any) => {
   window.postMessage(channel, JSON.stringify(data));
 };
+

@@ -18,6 +18,8 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
+      "@@/*": ["src/resources/.umi/*"],
+
       "@/*": ["src/*"]
     },
     "jsx": "preserve"

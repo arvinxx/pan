@@ -1,11 +1,69 @@
+import zhCN from './zh-CN';
+
 export default {
-  'page.table.element': '元素配置',
-  'page.table.error': '发生错误，错误信息：{msg}',
-  'page.table.data-area.preview': '预览',
-  'page.table.preview-area.preview': '预览',
-  'page.table.preview-area.preview-mode': '预览完整展示',
-  'page.table.preview-area.editing-mode': '切换数据编辑',
-  'page.table.data-area.origin': '原始数据',
+  ...zhCN,
+  common: {
+    'Authorization failed, please try again': '授权失败，请重试',
+    'Successfully authorized': '授权成功',
+    'Network Error': '网络错误',
+    'Please select the enterprise space to be associated':
+      '请选择需要关联的企业空间',
+    "Can't find the page": '无法找到页面',
+    'The authorization request is abnormal, please contact the administrator':
+      '授权请求异常，请联系管理员',
+    'Install Kitchen-Lite now?': '是否立即安装 Kitchen 精简版？',
+    'Kitchen is not compatible with your current system version:':
+      'Kitchen 不兼容您当前的系统版本：',
+    Ok: '确定',
+    Cancel: '取消',
+    Start: '开始使用',
+    'Prepare for downloading Kitchen-Lite...': '准备下载 Kitchen 精简版...',
+    'Kitchen-Lite downloaded': '完成下载精简版 Kitchen',
+    'Kitchen-Lite installed, please restart Sketch':
+      '精简版 Kitchen 安装完成，请重启 Sketch',
+    "Can't find object 'GCRect'": 'GCRect 对象不存在！',
+    "GCRect does not contain 'size' or 'origin' attribute!":
+      'GCRect 不包含 size 或 origin 属性！',
+    'Failed to get appsecret': '获取 appsecret 失败',
+    'Failed to restart Sketch, to use the formal edition Kitchen, please try again manually':
+      '自动重启 Sketch 失败，请手动重启以使用正式版 Kitchen',
+    'Library imported': '🐛 导入 Library 完毕',
+    'Kitchen-Lite is not compatible with your system, please upgrade to macOS 10.11.3 or above':
+      "Kitchen Lite 不支持的系统', '请升级至 macOS 10.11.3 及以上版本",
+    'Kitchen reloaded!': 'Kitchen 已重载！',
+    Group: '分组',
+    Repos: '语雀画板',
+    'Update list': '刷新列表',
+    'Filter repos': '筛选画板知识库',
+    'Filter groups': '筛选画板组',
+    Artboard: '画板',
+    'Yuque repos list updated!': '语雀画板知识库列表更新成功！',
+    Authorizing: '授权中',
+    'Please select artboards': '选择 Artboard 后才能上传',
+    Upload: '上传到语雀画板',
+    'New group': '新建分组',
+    'Yuque params is missing': '缺少语雀所需参数，请重新添加此类目',
+    'Get Yuque artboards failure': '获取语雀画板数据失败',
+    'Get Yuque artboards failure, please auth Yuque':
+      '获取语雀画板数据失败，请重新授权',
+    'Goto Yuque': '跳转到语雀',
+    'Current repos': '当前知识库',
+    'Learn more': '了解更多',
+    'Already auth to Yuque': '已授权',
+    Need: '需要',
+    'Yuque Auth': '语雀授权',
+    'enable this function': '开启此功能',
+    'Please input meaningful name': '请输入一个有意义的填充卡片名称',
+    'Please select image source': '请选择图片填充来源',
+    'New Group': '新建分组',
+    'New Repo': '新建画板知识库',
+    'No Group': '暂无分组，请在语雀新建分组',
+    Canceling: '取消中...',
+    'Upload canceled': '上传已取消',
+    LOADING: '载入中',
+    'Initial load may take a while': '初次载入可能较慢，请耐心等待',
+  },
+
   component: {
     'Please do not select multiple layers at the same time':
       '请不要同时选择多个图层',
@@ -17,6 +75,8 @@ export default {
       '生成的图层已添加到当前 page 下',
     'An error occurred, info:': '发生错误，错误信息：',
     'Component Generator': '组件生成器',
+    'Element config': '元素配置',
+    'Origin data': '原始数据',
     'Editing Mode': '切换数据编辑',
     'Preview Mode': '预览完整展示',
     Size: '尺寸',

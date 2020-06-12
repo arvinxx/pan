@@ -1,153 +1,89 @@
-import React from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { message } from 'antd';
-import { ErrorBoundary } from '@/components';
+import { ErrorBoundary, Footer } from '@/components';
 import { event as emitter, uuid } from '@/utils';
 import transformTableProps from './common/transformTableProps';
+import Handsontable from 'handsontable';
 
-import Table from './components/Table';
+import useUndo from '@/hooks/useUndo';
+import TableConfigPane from './components/TableConfigPane';
 
-// import pluginCall from '../sketchCall';
-import { notifyProgress } from '@/services';
-import './index.less';
+import styles from './style.less';
+import { TableConfig } from '@/pages/table/data';
+import { sendMsg } from '@/services';
+import { HotTable } from '@handsontable/react';
 
 declare global {
   interface Window {
-    pluginCall: any;
-    Kitchen: any;
+    hotTableInstance: Handsontable;
   }
 }
 
-window.pluginCall = pluginCall;
-window.Kitchen = {};
-window.Kitchen.AntD = {};
-
-export class DPL extends React.PureComponent {
-  state = {
-    router: 'guide',
-    loading: false,
-    config: null,
+const TablePage: FC = () => {
+  const [state, setState] = useState({
     tableHistory: [],
-  };
+  });
+  const [loading, setLoading] = useState(false);
+  const [config, handleConfig] = useState<TableConfig | undefined>();
+  console.log(config);
+  // componentDidMount() {
+  //   // 声明一个自定义事件
+  //   // 在组件装载完成以后
+  //   // 至于这里的整体结构为什么要用 事件 ？
+  //   // 因为虽然打破了 react 单项流的原则，但是直达，在当前场景下可以提高编码速度
+  //   emitter.addListener('complete', this.onComplete);
+  //   emitter.addListener('error', this.onError);
+  //   emitter.addListener('syncGenerateHistory', this.updateGenerateHistory);
+  // }
+  //
+  // // 组件销毁前移除事件监听
+  // componentWillUnmount() {
+  //   emitter.removeListener('complete', this.onComplete);
+  //   emitter.removeListener('error', this.onError);
+  //   emitter.removeListener('syncGenerateHistory', this.updateGenerateHistory);
+  // }
+  //
+  // updateGenerateHistory = (generateHistory) => {
+  //   this.setState({
+  //     tableHistory: generateHistory,
+  //   });
+  // };
+  //
+  // onComplete = () => {
+  //   this.setState({
+  //     loading: false,
+  //   });
+  // };
 
-  componentDidMount() {
-    // 声明一个自定义事件
-    // 在组件装载完成以后
-    // 至于这里的整体结构为什么要用 事件 ？
-    // 因为虽然打破了 react 单项流的原则，但是直达，在当前场景下可以提高编码速度
-    emitter.addListener('complete', this.onComplete);
-    emitter.addListener('error', this.onError);
-    emitter.addListener('syncGenerateHistory', this.updateGenerateHistory);
-  }
-
-  // 组件销毁前移除事件监听
-  componentWillUnmount() {
-    emitter.removeListener('complete', this.onComplete);
-    emitter.removeListener('error', this.onError);
-    emitter.removeListener('syncGenerateHistory', this.updateGenerateHistory);
-  }
-
-  updateGenerateHistory = (generateHistory) => {
-    this.setState({
-      tableHistory: generateHistory,
-    });
-  };
-
-  onComplete = () => {
-    this.setState({
-      loading: false,
-    });
-  };
-
-  onError = (msg) => {
-    message.error(`${window.ks_i18n['An error occurred, info:']}${msg}`);
-    this.setState({
-      loading: false,
-    });
-  };
-
-  onReset = () => {
-    const { config } = this.state;
-    this.setState({
-      config: {
-        category: config.category,
-        id: config.id,
-      },
-    });
-  };
-
-  onBack = () => {
-    this.setState({
-      router: 'guide',
-      config: null,
-    });
-  };
-
-  onChange = (config) => {
-    this.setState({ config });
-  };
-
-  onRetry = () => {
+  const onRetry = () => {
     window.location.reload();
   };
 
-  onSelectChartType = (type) => {
-    const { trackData } = this.props;
-    const config = {
-      id: uuid(),
-      ...window.ChartShaper.getDemoConfigById(type),
-    };
-    this.setState({
-      router: 'chart',
-      config,
-    });
-    if (window.Tracert) {
-      window.Tracert.click('chartShaper.editChart', {
-        UUID: trackData.cnzzUUID,
-        type: config.configs.type,
-      });
-      window.EI_USE = 0;
-      window.startTime = new Date();
-    }
+  const {
+    set: setConfig,
+    reset: resetConfig,
+    undo,
+    redo,
+    canUndo,
+    canRedo,
+    present,
+  } = useUndo(config, 50);
+
+  const handleChange = useCallback(
+    (c) => {
+      setConfig(c);
+    },
+    [setConfig]
+  );
+
+  const onChange = (config: TableConfig) => {
+    handleConfig(config);
   };
 
-  onInitTable = () => {
-    const { trackData } = this.props;
-    this.setState({
-      router: 'table',
-      config: { category: 'table' },
-    });
-    if (window.Tracert) {
-      window.Tracert.click('chartShaper.editTable', {
-        UUID: trackData.cnzzUUID,
-        type: 'table',
-      });
-      window.EI_USE = 0;
-      window.startTime = new Date();
-    }
-  };
-
-  onGenerate = (config) => {
-    const { trackData } = this.props;
-    const { track } = this.context;
+  const onGenerate = (config: TableConfig) => {
     let generateConfig = config;
-    track({
-      action: `生成组件-${
-        config.category ? config.category : config.configs.type
-      }`,
-    });
-    if (window.Tracert) {
-      window.Tracert.click('chartShaper.generate', {
-        UUID: trackData.cnzzUUID,
-        type: config.category ? config.category : config.configs.type,
-        duration: new Date() - window.startTime,
-        EI_USE: window.EI_USE,
-      });
-    }
 
-    if (
-      config.category === 'table' &&
-      (!config.componentData || !config.dataForHandsontable)
-    ) {
+    if (!config.componentData || !config.dataForHandsontable) {
       const dataForHandsontable = window.hotTableInstance.getData();
       const componentData = transformTableProps();
       generateConfig = {
@@ -157,62 +93,51 @@ export class DPL extends React.PureComponent {
       };
     }
 
-    this.setState({
-      loading: true,
-      config: generateConfig,
-    });
+    setLoading(true);
+    handleConfig(generateConfig);
 
-    if (config.category === 'table') {
-      // 通知 Sketch 生成表格
-      pluginCall('generate', [
-        {
-          config: generateConfig,
-        },
-      ]);
-    }
+    // 通知 Sketch 生成表格
+    sendMsg('TABLE_GENERATE', [
+      {
+        config: generateConfig,
+      },
+    ]);
   };
 
-  onApplyHistory = (storedConfig) => {
-    const { trackData } = this.props;
+  const handleGenerate = useCallback(() => {
+    onGenerate(present);
+  }, [onGenerate, present]);
+
+  const onApplyHistory = (storedConfig: TableConfig) => {
     const newConfig = { ...storedConfig, id: uuid() };
-    this.setState({ config: newConfig });
-    if (window.Tracert) {
-      window.Tracert.click('chartShaper.history', {
-        UUID: trackData.cnzzUUID,
-        type: storedConfig.category
-          ? storedConfig.category
-          : storedConfig.configs.type,
-      });
-      window.EI_USE = 0;
-      window.startTime = new Date();
-    }
+    handleConfig(newConfig);
   };
 
-  onClearHistory = (type) => {
-    pluginCall('clearGenerateHistory', [type]);
+  const onClearHistory = (type: string) => {
+    sendMsg('TABLE_CLEAR_HISTORY', type);
   };
 
-  renderPage() {
-    const { config, loading, tableHistory } = this.state;
+  const { tableHistory } = state;
 
-    return (
-      <Table
+  return (
+    <ErrorBoundary onRetry={onRetry}>
+      <div className={styles.table}>
+        <TableConfigPane config={present} onChange={handleChange} />
+      </div>
+      <Footer
         config={config}
-        onChange={this.onChange}
-        loading={loading}
-        onReset={this.onReset}
-        onBack={this.onBack}
-        onGenerate={this.onGenerate}
+        onApplyHistory={onApplyHistory}
+        onClearHistory={onClearHistory}
+        canRedo={canRedo}
+        canUndo={canUndo}
+        redo={redo}
+        undo={undo}
+        resetConfig={resetConfig}
+        handleGenerate={handleGenerate}
         history={tableHistory}
-        onApplyHistory={this.onApplyHistory}
-        onClearHistory={this.onClearHistory}
       />
-    );
-  }
+    </ErrorBoundary>
+  );
+};
 
-  render() {
-    return (
-      <ErrorBoundary onRetry={this.onRetry}>{this.renderPage()}</ErrorBoundary>
-    );
-  }
-}
+export default TablePage;

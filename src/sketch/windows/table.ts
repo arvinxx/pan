@@ -2,7 +2,7 @@ import BrowserWindow from 'sketch-module-web-view';
 import { UI } from 'sketch';
 import { getWinURL } from '@/sketch/utils/windows';
 
-const homeWindows = () => {
+const tableWindows = () => {
   const browserWindow = new BrowserWindow({
     identifier: 'homeWin.webview',
     // width: 400,
@@ -35,4 +35,4 @@ const homeWindows = () => {
   browserWindow.loadURL(getWinURL('table'));
 };
 
-export default homeWindows;
+export default tableWindows;

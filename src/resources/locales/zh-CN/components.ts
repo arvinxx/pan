@@ -1,10 +1,15 @@
 export default {
+  // ErrorBoundary //
+  'components.error-boundary.retry': '重试',
+
   // Footer //
   'components.footer.cancel': '取消',
   'components.footer.generate': '生成',
   'components.footer.reset': '重置',
   'components.footer.home': '返回首页',
   'components.footer.preview': '预览',
+  'components.footer.redo': '重做',
+  'components.footer.undo': '撤销',
 
   // checkForUpdate //
   'components.check-update.release': '新版本的 Kitchen 已经发布',

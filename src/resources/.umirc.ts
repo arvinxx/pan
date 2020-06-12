@@ -7,13 +7,14 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
+  devtool: 'source-map',
   outputPath: `../../dist`,
   alias: {
     '@/common': resolve(__dirname, '../common'),
     theme: resolve(__dirname, './theme'),
   },
   locale: {
-    // default: 'zh-CN',
+    default: 'zh-CN',
   },
   theme,
   history: { type: isDev ? 'hash' : 'browser' },
