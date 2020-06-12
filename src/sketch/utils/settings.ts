@@ -5,7 +5,9 @@ import { Settings } from 'sketch';
  * @param {String} key
  */
 export const getSettings = <T = any>(key: string): T => {
-  return JSON.parse(Settings.settingForKey(key));
+  const settings = Settings.settingForKey(key);
+  if (settings) return JSON.parse(settings);
+  else return settings;
 };
 
 /**

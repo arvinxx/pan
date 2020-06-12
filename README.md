@@ -3,14 +3,24 @@
 本项目基于 `skpm` 和 `umi` 进行搭建
 
 ## CLI Commands
+### 安装
+```bash
+npm i
+```
+或
+```bash
+yarn
+```
 
+### 开发
 ``` bash
-# build with hot reload
-npm run watch
-
-# build for production
+npm run dev
+```
+###  打包构建
+```bash
 npm run build
 ```
+
 
 ## Custom Configuration
 

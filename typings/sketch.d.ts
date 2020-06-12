@@ -12846,6 +12846,9 @@ declare class MSDocument extends NSDocument /* implements MSCloudExportableDocum
   /* typeEncoding=@16@0:8 */
   currentHorizontalRulerData(...args: any[]): any;
   /* typeEncoding=@16@0:8 */
+  /**
+   * 获取当前页面
+   **/
   currentPage(...args: any[]): MSPage;
   /* typeEncoding=@16@0:8 */
   currentVerticalRulerData(...args: any[]): any;
@@ -26714,14 +26717,22 @@ declare class MSLayerMovement extends NSObject {
   static moveForward(...args: any[]): any;
   /* typeEncoding=v44@0:8@16@24@32c40 */
   static moveLayer_withParent_toNewParent_forceTop(...args: any[]): any;
+  /**
+   * 移动到画板底部
+   * typeEncoding=v24@0:8@16
+   * @params layers 需要移动的图层,必须是个数组
+   **/
+  static moveToBack(layers: MSLayer[]): void;
+  /**
+   * 移动到画板底部
+   * typeEncoding=v24@0:8@16
+   * @params layers 需要移动的图层,必须是个数组
+   **/
+  static moveToFront(layers: MSLayer[]): void;
   /* typeEncoding=v24@0:8@16 */
-  static moveToBack(...args: any[]): any;
+  static moveToTopOfHierarchy(layers: MSLayer[]): void;
   /* typeEncoding=v24@0:8@16 */
-  static moveToFront(...args: any[]): any;
-  /* typeEncoding=v24@0:8@16 */
-  static moveToTopOfHierarchy(...args: any[]): any;
-  /* typeEncoding=v24@0:8@16 */
-  static moveUpHierarchy(...args: any[]): any;
+  static moveUpHierarchy(layers: MSLayer[]): void;
 }
 
 declare class MSLayerMoverItem extends NSObject {
@@ -41810,7 +41821,7 @@ declare class MSSliceExportOptions extends NSViewController {
 }
 
 declare class MSSliceLayer extends _MSSliceLayer /* implements MSLayerPreviewability, MSLayerWithMutableBackgroundColor, MSColorConvertible */ {
-  /* typeEncoding=@"MSColor", ivar=(null), attributes=(retain,nonatomic) */
+  // /* typeEncoding=@"MSColor", ivar=(null), attributes=(retain,nonatomic) */
   backgroundColor(): MSColor;
   /* typeEncoding=Q, ivar=(null), attributes=(assign,nonatomic,readonly) */
   badgeType(): number;
@@ -41828,6 +41839,7 @@ declare class MSSliceLayer extends _MSSliceLayer /* implements MSLayerPreviewabi
   /* typeEncoding=@24@0:8@16 */
   static sliceLayerFromLayer(...args: any[]): any;
 
+  static new(): MSSliceLayer;
   /* typeEncoding=v32@0:8@16@24 */
   applyScreenPickerColor_preferredStyleName(...args: any[]): any;
   /* typeEncoding=@16@0:8 */
@@ -41852,8 +41864,11 @@ declare class MSSliceLayer extends _MSSliceLayer /* implements MSLayerPreviewabi
   rootForNameUniquing(...args: any[]): any;
   /* typeEncoding=@16@0:8 */
   selectedPreviewTemplateImage(...args: any[]): any;
-  /* typeEncoding=v24@0:8@16 */
-  setName(...args: any[]): any;
+  /**
+   * 设置图层名称
+   * typeEncoding=v24@0:8@16
+   */
+  setName(value: string): void;
   /* typeEncoding=c16@0:8 */
   shouldDrawSelectionStroke(...args: any[]): any;
   /* typeEncoding=@16@0:8 */
@@ -45008,7 +45023,10 @@ declare class MSTextLayer extends _MSTextLayer /* implements MSFirstLineTypesett
   /* typeEncoding=v24@0:8@16 */
   setFontPostscriptName(...args: any[]): any;
   /* typeEncoding=v24@0:8d16 */
-  setFontSize(...args: any[]): any;
+  /**
+   * 设置字体大小
+   **/
+  setFontSize(num: number): any;
   /* typeEncoding=v20@0:8c16 */
   setIsEditingText(...args: any[]): any;
   /* typeEncoding=v20@0:8f16 */
@@ -45023,8 +45041,11 @@ declare class MSTextLayer extends _MSTextLayer /* implements MSFirstLineTypesett
   setRectAccountingForClipped(...args: any[]): any;
   /* typeEncoding=v24@0:8@16 */
   setSharedStyle(...args: any[]): any;
-  /* typeEncoding=v24@0:8@16 */
-  setStringValue(...args: any[]): any;
+  /**
+   * 设置字符串值
+   * typeEncoding=v24@0:8@16
+   */
+  setStringValue(value: NSString): void;
   /* typeEncoding=v24@0:8@16 */
   setStyle(...args: any[]): any;
   /* typeEncoding=v24@0:8@16 */
@@ -54414,10 +54435,16 @@ declare class _MSLayerGroup extends MSStyledLayer {
 
   /* typeEncoding=v16@0:8 */
   _cxx_destruct(): void;
-  /* typeEncoding=v24@0:8@16 */
-  addLayer(...args: any[]): any;
-  /* typeEncoding=v24@0:8@16 */
-  addLayers(...args: any[]): any;
+  /**
+   * 添加图层
+   * typeEncoding=v24@0:8@16
+   **/
+  addLayer(layer: MSLayer): void;
+  /**
+   * 添加图层组
+   * typeEncoding=v24@0:8@16
+   **/
+  addLayers(layers: MSLayer[]): any;
   /* typeEncoding=v32@0:8@16Q24 */
   copyPropertiesToObject_options(...args: any[]): any;
   /* typeEncoding=v24@0:8@?16 */

@@ -1,0 +1,170 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: right;
+  padding: 12px 24px;
+  box-shadow: 0 -1px 2px 0 rgba(0, 21, 41, 0.15);
+  background: #fff;
+  z-index: 1000;
+
+  button {
+    margin-left: 8px;
+  }
+
+  .ant-btn {
+    font-size: 14px;
+  }
+
+  &-router {
+    float: left;
+    line-height: 32px;
+    font-size: 14px;
+    color: #ccc;
+  }
+
+  &-popconfirm {
+    left: 10px !important;
+
+    .ant-popover-content > .ant-popover-arrow {
+      left: 19% !important;
+    }
+
+    .ant-popover-message-title {
+      padding-left: 0 !important;
+    }
+  }
+
+  &-router-item {
+    display: inline-block;
+    margin: 0 5px;
+  }
+
+  &-router-back {
+    color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+  }
+
+  .redo {
+    margin-right: 40px;
+    margin-left: 10px;
+  }
+  .un-redo {
+    display: inline-block;
+    line-height: 32px;
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+
+    .anticon {
+      margin: 6px;
+    }
+  }
+
+  .history {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 20px;
+    transition: all 0.3s;
+    position: relative;
+    line-height: 32px;
+    width: 32px;
+    height: 32px;
+    margin-right: 20px;
+    color: #666;
+
+    &:hover {
+      color: #000;
+    }
+  }
+}
+
+.history-date-title {
+  position: relative;
+  top: -0.5px;
+}
+
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.history-item {
+  transition: all 0.2s;
+  padding: 4px 0;
+  display: flex;
+  margin: 4px 0;
+  margin-left: -12px;
+  padding-left: 12px;
+  padding-right: 4px;
+
+  &-date,
+  &-apply {
+    float: right;
+  }
+
+  &-apply {
+    display: none;
+  }
+
+  &-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+  }
+
+  &:hover {
+    background: #e9f7fe;
+
+    .history-item-date {
+      display: none;
+    }
+
+    .history-item-apply {
+      display: block;
+    }
+  }
+}
+
+.history-popover .ant-popover-inner-content {
+  padding-left: 0;
+  padding-right: 0;
+  min-height: 400px;
+}
+
+.history-popover-notfound {
+  color: #999;
+  text-align: center;
+  padding: 100px 0;
+
+  &-text {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.65);
+    text-align: center;
+    line-height: 24px;
+    margin-top: 16px;
+    margin-bottom: 4px;
+  }
+
+  &-desc {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.45);
+    text-align: center;
+    line-height: 20px;
+  }
+}
+
+.clear-history {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  opacity: 0.6;
+  transition: all 0.3s;
+
+  &:hover {
+    opacity: 1;
+  }
+}

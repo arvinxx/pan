@@ -4,7 +4,7 @@
 export const swapPosition = (context: SketchContext) => {
   const objects = context.selection as NSArray<MSRectangleShape>;
   if (objects.count() != 2) {
-    context.document.showMessage('请选择两个物体😶');
+    context.document.showMessage('请选择两个图层😶');
     return;
   }
 
@@ -35,4 +35,54 @@ export const swapPosition = (context: SketchContext) => {
 
   objects[1].setAbsolutePosition(oneMid);
   objects[0].setAbsolutePosition(twoMid);
+};
+
+/**
+ * 交换文字
+ **/
+export const swapText = (context: SketchContext) => {
+  // Setup
+  const doc = context.document;
+  const selection = context.selection;
+  const selectionHasTextLayer = false;
+  const strings = [];
+
+  const objects = context.selection as NSArray<MSRectangleShape>;
+  if (objects.count() != 2) {
+    doc.showMessage('请选择两个图层😶');
+    return;
+  }
+
+  let layer;
+  let loop = selection.objectEnumerator();
+
+  selection.forEach((layer) => {
+    if (layer.class() === 'MSTextLayer') {
+      selectionHasTextLayer = true;
+
+      // Collect stringslis
+      strings.push(layer.stringValue());
+    }
+  });
+
+  // Check strings
+  if (strings.length == 2) {
+    let i = strings.length - 1;
+    loop = selection.objectEnumerator();
+    while ((layer = loop.nextObject())) {
+      layer.setStringValue(strings[i]);
+      i--;
+    }
+
+    // Finish
+    doc.showMessage('文本交换完毕');
+  } else {
+    // No text layers selected
+    doc.showMessage('请选择两个图层😶');
+  }
+
+  // No text layers selected
+  if (!selectionHasTextLayer) {
+    doc.showMessage('选中的图层没有文本');
+  }
 };

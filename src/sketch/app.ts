@@ -1,16 +1,15 @@
-import { homeWin, replaceWin } from '@/sketch/windows';
+import { homeWin, replaceWin, tableWin } from '@/sketch/windows';
 import {
-  systemInfo as systemInfoCmd,
   swapPosition as swapPositionCmd,
-  // swapStyle as swapStyleCmd,
+  swapText as swapTextCmd,
+  overview as OverViewCmd,
 } from '@/sketch/commands';
 
-/**
- * hello 方法
- */
-export const systemInfo = systemInfoCmd;
-
 export const swapPosition = swapPositionCmd;
+
+export const artboardOverview = OverViewCmd;
+
+export const swapText = swapTextCmd;
 // export const swapStyle = swapStyleCmd;
 
 export const home = () => {
@@ -20,4 +19,9 @@ export const home = () => {
 export const replace = () => {
   console.log('启动 replace 窗口');
   replaceWin();
+};
+
+export const table = () => {
+  console.log('启动 table 窗口');
+  tableWin();
 };

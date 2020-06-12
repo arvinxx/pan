@@ -71,13 +71,13 @@ export default function () {
     setSettings(STATE_UNIQUE_KEY, '');
 
     // load pref
-    const savedSettings = JSON.parse(getSettings(PREF_UNIQUE_KEY));
+    const savedSettings = getSettings(PREF_UNIQUE_KEY);
 
     console.log(`savedSettings: ${savedSettings}`);
     if (savedSettings === 'object') {
       state = { ...defaultSettings, ...savedSettings };
     } else {
-      setSettings(PREF_UNIQUE_KEY, JSON.stringify({}));
+      setSettings(PREF_UNIQUE_KEY, {});
     }
   }
 

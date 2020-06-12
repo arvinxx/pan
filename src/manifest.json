@@ -6,16 +6,29 @@
     {
       "name": "System Info",
       "identifier": "system-info",
-      "script": "./sketch/app.ts",
-      "shortcut": "cmd j",
-      "handler": "systemInfo"
+      "script": "./sketch/commands/systemInfo.ts",
+      "shortcut": "cmd j"
     },
     {
-      "name": "Swap Position",
+      "name": "生成画板总览",
+      "identifier": "artboard.overview",
+      "script": "./sketch/app.ts",
+      "shortcut": "ctrl a",
+      "handler": "artboardOverview"
+    },
+    {
+      "name": "交换位置",
       "identifier": "swap-position",
       "script": "./sketch/app.ts",
       "shortcut": "ctrl shift s",
       "handler": "swapPosition"
+    },
+    {
+      "name": "交换文本",
+      "identifier": "swap-text",
+      "script": "./sketch/app.ts",
+      "shortcut": "ctrl shift s",
+      "handler": "swapText"
     },
     {
       "name": "Home",
@@ -29,17 +42,26 @@
       "script": "./sketch/app.ts",
       "handler": "replace",
       "shortcut": "ctrl k"
+    },
+    {
+      "name": "打开表格",
+      "identifier": "win.table",
+      "script": "./sketch/app.ts",
+      "handler": "table",
+      "shortcut": "ctrl t"
     }
   ],
   "menu": {
     "title": "🚀🚀Pan🚀🚀",
     "items": [
       "system-info",
+      "artboard.overview",
       "panel",
       "win.replace",
+      "win.table",
       {
-        "title": "Swap",
-        "items": ["swap-position"]
+        "title": "交换",
+        "items": ["swap-position", "swap-text"]
       }
     ]
   }

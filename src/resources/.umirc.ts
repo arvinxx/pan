@@ -10,7 +10,10 @@ export default defineConfig({
   outputPath: `../../dist`,
   alias: {
     '@/common': resolve(__dirname, '../common'),
-    'theme': resolve(__dirname, './theme'),
+    theme: resolve(__dirname, './theme'),
+  },
+  locale: {
+    // default: 'zh-CN',
   },
   theme,
   history: { type: isDev ? 'hash' : 'browser' },

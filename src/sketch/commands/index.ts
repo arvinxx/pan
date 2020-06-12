@@ -1,2 +1,2 @@
-export { default as systemInfo } from './systemInfo';
+export { default as overview } from './overview';
 export * from './swap';
