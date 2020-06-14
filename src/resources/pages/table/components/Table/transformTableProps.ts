@@ -1,9 +1,9 @@
 export const defaultData = [
   ['Header 1', 'Header 2', 'Header 3', 'Header 4', 'Header 5'],
-  ['', '', '', '', ''],
-  ['', '', '', '', ''],
-  ['', '', '', '', ''],
-  ['', '', '', '', ''],
+  ['----', '----', '----', '----', '----'],
+  ['----', '----', '----', '----', '----'],
+  ['----', '----', '----', '----', '----'],
+  ['----', '----', '----', '----', '----'],
 ];
 
 /**
@@ -27,6 +27,7 @@ const transformTableProps = (data = defaultData) => {
       // const cell = window.hotTableInstance.getCell(rowIndex, columnIndex);
       newRow[columns[columnIndex].dataIndex] = {
         content: item,
+        key: rowIndex + '-' + columnIndex,
       };
     });
     dataSource.push(newRow);

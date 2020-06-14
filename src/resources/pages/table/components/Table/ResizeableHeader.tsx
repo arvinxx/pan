@@ -52,12 +52,9 @@ const ResizeableHeader: FC<ResizeableTitleProps> = (props) => {
           <Input
             defaultValue={title}
             autoFocus={editTitle}
-            onBlur={handleText}
             size={'small'}
             className={styles.input}
-            onChange={(e) => {
-              console.log(e.target.value);
-            }}
+            onBlur={handleText}
             // @ts-ignore
             onPressEnter={handleText}
           />

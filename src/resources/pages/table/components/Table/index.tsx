@@ -19,6 +19,7 @@ interface ColType {
 const Data: FC = () => {
   const dispatch = useDispatch();
   const [activeHeader, setActiveHeader] = useState('');
+  const [activeCells, setActiveCells] = useState<string[]>([]);
   const table = useSelector<ConnectState, TableModelState>(
     (state) => state.table
   );
@@ -83,6 +84,35 @@ const Data: FC = () => {
               setActiveHeader(column.key);
             },
           }),
+          render: (text, record, index) => {
+            const cellKey: string = text.key;
+            return activeCells.includes(cellKey) ? (
+              <Input
+                size={'small'}
+                defaultValue={text.content}
+                onMouseLeave={() => {
+                  setActiveCells(
+                    activeCells.filter((cell) => cell !== cellKey)
+                  );
+                }}
+                onBlur={() => {
+                  console.log(activeCells);
+                  console.log(activeCells.filter((cell) => cell !== cellKey));
+                  setActiveCells(
+                    activeCells.filter((cell) => cell !== cellKey)
+                  );
+                }}
+              />
+            ) : (
+              <div
+                onMouseEnter={() => {
+                  setActiveCells([...activeCells, text!.key]);
+                }}
+              >
+                {text.content}
+              </div>
+            );
+          },
         }))}
         components={{
           header: {
@@ -90,7 +120,7 @@ const Data: FC = () => {
           },
         }}
         dataSource={dataSource}
-        rowKey={'key'}
+        rowKey={'dataIndex'}
         className={styles.preview}
         pagination={false}
         bordered={bordered}
