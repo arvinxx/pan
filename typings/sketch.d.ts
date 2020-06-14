@@ -24806,6 +24806,13 @@ declare class MSJSONDictionaryUnarchiver extends MSJSONUnarchiver {
     ...args: any[]
   ): any;
 
+  /**
+   * 64版本的方法
+   **/
+  static unarchivedObjectFromDictionary_asVersion_corruptionDetected_error(
+    ...args: any[]
+  ): any;
+
   /* typeEncoding=v16@0:8 */
   _cxx_destruct(): void;
   /* typeEncoding=@16@0:8 */

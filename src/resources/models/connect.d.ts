@@ -1,6 +1,7 @@
 import { EffectsCommandMap, Subscription, AnyAction } from 'dva';
 
 import { TableModelState } from '@/pages/table/model';
+import { ImmerReducer } from '@@/plugin-dva/connect';
 
 export { TableModelState };
 

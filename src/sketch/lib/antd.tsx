@@ -4,6 +4,7 @@ import Table from 'antd-sketchapp/lib/components/Table';
 import Checkbox from 'antd-sketchapp/lib/components/Checkbox';
 import { Page } from 'sketch/dom';
 import { renderToJSON, makeSymbol, render, View } from 'react-sketchapp';
+
 // import { fromSJSONDictionary } from '@skpm/sketchapp-json-plugin';
 
 /**
@@ -20,7 +21,9 @@ function fromSJSONDictionary64(jsTree) {
 
   const err = MOPointer.alloc().init();
   const uace =
+    // v64 及以上版本
     MSJSONDictionaryUnarchiver.unarchivedObjectFromDictionary_asVersion_corruptionDetected_error ||
+    // v64 以下版本
     MSJSONDictionaryUnarchiver.unarchiveObjectFromDictionary_asVersion_corruptionDetected_error;
 
   const decoded = uace(jsTree, sketchVersion, null, null);

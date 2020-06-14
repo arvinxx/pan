@@ -12,7 +12,6 @@ import { sendMsg } from '@/services';
 import { ConnectState, Loading, TableModelState } from '@/models/connect';
 import DataArea from '@/pages/table/components/DataArea';
 import Config from '@/pages/table/components/Config';
-import Preview from '@/pages/table/components/Preview';
 
 declare global {
   interface Window {
@@ -48,17 +47,6 @@ const TablePage: FC = () => {
     canRedo,
     present,
   } = useUndo(config, 50);
-
-  const handleChange = useCallback(
-    (c) => {
-      setConfig(c);
-    },
-    [setConfig]
-  );
-
-  const onChange = (config: TableConfig) => {
-    dispatch({ type: 'table/save', payload: { config } });
-  };
 
   const handleGenerate = () => {
     // 通知 Sketch 生成表格

@@ -13,6 +13,7 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
+      "typings/*": ["../../typings/*"],
       "@/*": ["./*"],
       "@/common": ["../common"],
       "@/common/*": ["../common/*"],

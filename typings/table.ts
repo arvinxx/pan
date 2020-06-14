@@ -8,9 +8,17 @@ export interface TableConfig {
   size: SizeType;
   title: boolean;
   widthValue: number;
+  /**
+   * 加载中
+   */
+  loading: boolean;
+  /**
+   * 是否显示 header
+   */
+  showHeader: boolean;
 }
 
-export interface TableModel {
+export interface TableModelType {
   /**
    * 表格列头
    */
@@ -23,4 +31,12 @@ export interface TableModel {
    * 表格控制选项
    */
   config: TableConfig;
+  /**
+   * 标题
+   */
+  titleText: string;
+  /**
+   * 页脚
+   */
+  footerText: string;
 }

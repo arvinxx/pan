@@ -3,7 +3,7 @@ import { UI } from 'sketch';
 import { getWinURL } from '@/sketch/utils/windows';
 import channel from '@/common/channel';
 import { generateTable } from '@/sketch/utils/table';
-import { TableModel } from 'typings/table';
+import { TableModelType } from 'typings/table';
 
 const tableWindows = () => {
   const browserWindow = new BrowserWindow({
@@ -36,7 +36,7 @@ const tableWindows = () => {
   });
 
   webContents.on(channel.TABLE_GENERATE, (data: string) => {
-    const table: TableModel = JSON.parse(data);
+    const table: TableModelType = JSON.parse(data);
     const success = generateTable(table);
     if (success) {
       browserWindow.close();

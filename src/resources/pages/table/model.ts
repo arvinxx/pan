@@ -1,24 +1,10 @@
-import { Table } from 'antd';
-
 import { DvaModel, Reducer, Effect } from '@/models/connect';
-import { TableConfig } from './data';
+import { TableModelType } from 'typings/table';
+import update from 'immutability-helper';
+
 import transformTableProps from '@/pages/table/components/Table/transformTableProps';
 
-export interface TableModelState {
-  /**
-   * 表格列头
-   */
-  columns: any[];
-  /**
-   * 数据源
-   */
-  dataSource: any[];
-  /**
-   * 表格控制选项
-   */
-  config: TableConfig;
-}
-
+export interface TableModelState extends TableModelType {}
 export interface TableModelStore extends DvaModel<TableModelState> {
   namespace: 'table';
   state: TableModelState;
@@ -26,6 +12,7 @@ export interface TableModelStore extends DvaModel<TableModelState> {
   reducers: {
     save: Reducer<TableModelState>;
     saveConfig: Reducer<TableModelState>;
+    handleHeaderText: Reducer<TableModelState>;
   };
 }
 
@@ -35,7 +22,45 @@ const { dataSource, columns } = transformTableProps();
 const TableModel: TableModelStore = {
   namespace: 'table',
   state: {
-    columns,
+    titleText: '表格标题',
+    footerText: '表格页脚',
+    columns: [
+      {
+        title: 'Header 1',
+        dataIndex: 'Header 1',
+        key: 'Header 1',
+        width: 120,
+        style: {},
+      },
+      {
+        title: 'Header 2',
+        dataIndex: 'Header 2',
+        key: 'Header 2',
+        width: 120,
+        style: {},
+      },
+      {
+        title: 'Header 3',
+        dataIndex: 'Header 3',
+        key: 'Header 3',
+        width: 120,
+        style: {},
+      },
+      {
+        title: 'Header 4',
+        dataIndex: 'Header 4',
+        key: 'Header 4',
+        width: 120,
+        style: {},
+      },
+      {
+        title: 'Header 5',
+        dataIndex: 'Header 5',
+        key: 'Header 5',
+        width: 120,
+        style: {},
+      },
+    ],
     dataSource,
     config: {
       title: false,
@@ -43,6 +68,8 @@ const TableModel: TableModelStore = {
       checkable: false,
       bordered: false,
       expandable: false,
+      loading: false,
+      showHeader: true,
       size: 'large',
       widthValue: 600,
     },
@@ -54,6 +81,22 @@ const TableModel: TableModelStore = {
     },
     saveConfig(state, { payload }) {
       return { ...state, config: { ...state.config, ...payload } };
+    },
+    handleHeaderText(state, { payload }) {
+      const index = state.columns.findIndex(
+        (col) => col.dataIndex === payload.dataIndex
+      );
+
+      return {
+        ...state,
+        columns: update(state.columns, {
+          [index]: {
+            title: {
+              $set: payload.text,
+            },
+          },
+        }),
+      };
     },
   },
 };

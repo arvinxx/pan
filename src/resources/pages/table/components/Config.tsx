@@ -29,6 +29,8 @@ const Config: FC = () => {
     size,
     title,
     widthValue,
+    loading,
+    showHeader,
   } = config;
 
   const handleCheckbox = (key: string) => (e: CheckboxChangeEvent) => {
@@ -65,7 +67,6 @@ const Config: FC = () => {
             小
           </Radio>
         </Radio.Group>
-
         <Row gutter={8}>
           <Col style={{ lineHeight: '30px' }}>导出宽度</Col>
           <Col>
@@ -88,8 +89,15 @@ const Config: FC = () => {
             />
           </Col>
         </Row>
-
         <div className={styles.sep}>属性</div>
+        <Checkbox
+          className={styles.checkBox}
+          checked={showHeader}
+          name="showHeader"
+          onChange={handleCheckbox('showHeader')}
+        >
+          表头
+        </Checkbox>
         <Checkbox
           className={styles.checkBox}
           checked={title}
@@ -129,6 +137,14 @@ const Config: FC = () => {
           onChange={handleCheckbox('footer')}
         >
           页脚
+        </Checkbox>
+        <Checkbox
+          className={styles.checkBox}
+          checked={loading}
+          name="loading"
+          onChange={handleCheckbox('loading')}
+        >
+          加载中
         </Checkbox>
       </div>
     </div>

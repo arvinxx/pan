@@ -1,10 +1,10 @@
 /**
  * 生成 table
  */
-import { TableModel } from 'typings/table';
+import { TableModelType } from 'typings/table';
 import generateComponentLayer from '../lib/antd';
 
-export const generateTable = (table: TableModel): boolean => {
+export const generateTable = (table: TableModelType): boolean => {
   const doc = context.document;
   try {
     const { columns, config, dataSource } = table;
