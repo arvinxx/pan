@@ -1,6 +1,9 @@
 import BrowserWindow from 'sketch-module-web-view';
 import { UI } from 'sketch';
 import { getWinURL } from '@/sketch/utils/windows';
+import channel from '@/common/channel';
+import { generateTable } from '@/sketch/utils/table';
+import { TableModel } from 'typings/table';
 
 const tableWindows = () => {
   const browserWindow = new BrowserWindow({
@@ -21,7 +24,7 @@ const tableWindows = () => {
 
   // print a message when the page loads
   webContents.on('did-finish-load', () => {
-    UI.message('UI loaded!');
+    // UI.message('UI loaded!');
   });
 
   // add a handler for a call from web content's javascript
@@ -32,6 +35,13 @@ const tableWindows = () => {
       .catch(console.error);
   });
 
+  webContents.on(channel.TABLE_GENERATE, (data: string) => {
+    const table: TableModel = JSON.parse(data);
+    const success = generateTable(table);
+    if (success) {
+      browserWindow.close();
+    }
+  });
   browserWindow.loadURL(getWinURL('table'));
 };
 

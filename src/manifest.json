@@ -37,7 +37,8 @@
     {
       "name": "表格",
       "identifier": "com.arvinxx.pan.win.table",
-      "script": "./sketch/windows/table.ts"
+      "script": "./sketch/windows/table.ts",
+      "shortcut": "ctrl t"
     },
     {
       "name": "查找替换",

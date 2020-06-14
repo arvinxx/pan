@@ -30,7 +30,6 @@ const initialState: HistoryState = {
 
 const reducer = (state: HistoryState, action: Action): HistoryState => {
   const { stack, present, limit } = state;
-  console.log(state, action);
   switch (action.type) {
     // 撤销
     case UNDO:

@@ -1,17 +1,18 @@
 import React, { FC, useCallback, useState } from 'react';
-import { message } from 'antd';
 import { ErrorBoundary, Footer } from '@/components';
-import { event as emitter, uuid } from '@/utils';
-import transformTableProps from './common/transformTableProps';
+import { uuid } from '@/utils';
 import Handsontable from 'handsontable';
+import { useSelector, useDispatch } from 'dva';
 
 import useUndo from '@/hooks/useUndo';
-import TableConfigPane from './components/TableConfigPane';
 
 import styles from './style.less';
 import { TableConfig } from '@/pages/table/data';
 import { sendMsg } from '@/services';
-import { HotTable } from '@handsontable/react';
+import { ConnectState, Loading, TableModelState } from '@/models/connect';
+import DataArea from '@/pages/table/components/DataArea';
+import Config from '@/pages/table/components/Config';
+import Preview from '@/pages/table/components/Preview';
 
 declare global {
   interface Window {
@@ -20,40 +21,19 @@ declare global {
 }
 
 const TablePage: FC = () => {
+  const dispatch = useDispatch();
+  const table = useSelector<ConnectState, TableModelState>(
+    (state) => state.table
+  );
+  const { config } = table;
+
+  const loading = useSelector<ConnectState, boolean>(
+    (state) => state.loading.models.table
+  );
+
   const [state, setState] = useState({
     tableHistory: [],
   });
-  const [loading, setLoading] = useState(false);
-  const [config, handleConfig] = useState<TableConfig | undefined>();
-  console.log(config);
-  // componentDidMount() {
-  //   // 声明一个自定义事件
-  //   // 在组件装载完成以后
-  //   // 至于这里的整体结构为什么要用 事件 ？
-  //   // 因为虽然打破了 react 单项流的原则，但是直达，在当前场景下可以提高编码速度
-  //   emitter.addListener('complete', this.onComplete);
-  //   emitter.addListener('error', this.onError);
-  //   emitter.addListener('syncGenerateHistory', this.updateGenerateHistory);
-  // }
-  //
-  // // 组件销毁前移除事件监听
-  // componentWillUnmount() {
-  //   emitter.removeListener('complete', this.onComplete);
-  //   emitter.removeListener('error', this.onError);
-  //   emitter.removeListener('syncGenerateHistory', this.updateGenerateHistory);
-  // }
-  //
-  // updateGenerateHistory = (generateHistory) => {
-  //   this.setState({
-  //     tableHistory: generateHistory,
-  //   });
-  // };
-  //
-  // onComplete = () => {
-  //   this.setState({
-  //     loading: false,
-  //   });
-  // };
 
   const onRetry = () => {
     window.location.reload();
@@ -77,40 +57,17 @@ const TablePage: FC = () => {
   );
 
   const onChange = (config: TableConfig) => {
-    handleConfig(config);
+    dispatch({ type: 'table/save', payload: { config } });
   };
 
-  const onGenerate = (config: TableConfig) => {
-    let generateConfig = config;
-
-    if (!config.componentData || !config.dataForHandsontable) {
-      const dataForHandsontable = window.hotTableInstance.getData();
-      const componentData = transformTableProps();
-      generateConfig = {
-        ...config,
-        dataForHandsontable,
-        componentData,
-      };
-    }
-
-    setLoading(true);
-    handleConfig(generateConfig);
-
+  const handleGenerate = () => {
     // 通知 Sketch 生成表格
-    sendMsg('TABLE_GENERATE', [
-      {
-        config: generateConfig,
-      },
-    ]);
+    sendMsg('TABLE_GENERATE', table);
   };
-
-  const handleGenerate = useCallback(() => {
-    onGenerate(present);
-  }, [onGenerate, present]);
 
   const onApplyHistory = (storedConfig: TableConfig) => {
     const newConfig = { ...storedConfig, id: uuid() };
-    handleConfig(newConfig);
+    // handleConfig(newConfig);
   };
 
   const onClearHistory = (type: string) => {
@@ -121,8 +78,13 @@ const TablePage: FC = () => {
 
   return (
     <ErrorBoundary onRetry={onRetry}>
-      <div className={styles.table}>
-        <TableConfigPane config={present} onChange={handleChange} />
+      <div className={styles.container}>
+        <div className={styles.main}>
+          <DataArea />
+        </div>
+        <div className={styles.side}>
+          <Config />
+        </div>
       </div>
       <Footer
         config={config}

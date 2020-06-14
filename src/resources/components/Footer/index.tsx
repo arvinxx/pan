@@ -1,17 +1,17 @@
 import React, { useCallback, FC } from 'react';
-import { Button, Tooltip, Timeline, Tag, Popover } from 'antd';
+import { Button, Tooltip, Timeline, Tag, Popover, Row, Col } from 'antd';
 import {
   CheckOutlined,
   ClockCircleOutlined,
   RedoOutlined,
 } from '@ant-design/icons';
+import { useIntl } from 'umi';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import groupBy from 'lodash/groupBy';
 import 'dayjs/locale/zh-cn';
 import useHotKeysForUndo from '@/hooks/useHotKeysForUndo';
 import { IconFont } from '@/components';
-import { useIntl } from 'umi';
 
 import styles from './footer.less';
 
@@ -131,82 +131,90 @@ const Footer: FC<FooterProps> = React.memo((props) => {
   useHotKeysForUndo(handleUndo, handleRedo);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.history}>
-        <Popover
-          title={null}
-          overlayClassName="history-popover"
-          content={
-            <div>
-              <Timeline
-                style={{
-                  width: 260,
-                  maxHeight: 'calc(100vh - 120px)',
-                  overflow: 'auto',
-                  padding: '8px 16px',
-                }}
-              >
+    <Row className={styles.container} justify="space-between">
+      <Col>
+        <div
+          className={`${styles.unRedo} ${styles.undo}`}
+          style={{ color: `${canUndo ? '#00000099' : '#ccc'}` }}
+          onClick={handleUndo}
+        >
+          <Tooltip
+            placement="top"
+            title={formatMessage({ id: 'components.footer.undo' })}
+          >
+            <IconFont type="icon-Undo" />
+          </Tooltip>
+        </div>
+        <div
+          className={`${styles.unRedo} ${styles.redo}`}
+          style={{ color: `${canRedo ? '#00000099' : '#ccc'}` }}
+          onClick={handleRedo}
+        >
+          <Tooltip
+            placement="top"
+            title={formatMessage({ id: 'components.footer.redo' })}
+          >
+            <IconFont type="icon-Redo" />
+          </Tooltip>
+        </div>
+        <div className={styles.history}>
+          <Popover
+            title={null}
+            overlayClassName="history-popover"
+            content={
+              <div>
+                <Timeline
+                  style={{
+                    width: 260,
+                    maxHeight: 'calc(100vh - 120px)',
+                    overflow: 'auto',
+                    padding: '8px 16px',
+                  }}
+                >
+                  {hasHistory ? (
+                    historyList
+                  ) : (
+                    <div className="history-popover-notfound">
+                      <img
+                        src="https://gw.alipayobjects.com/zos/rmsportal/iUiSlmAMRtsydJpvrOhE.svg"
+                        alt="404"
+                      />
+                      <div className="history-popover-notfound-text">
+                        暂无历史记录
+                      </div>
+                      <div className="history-popover-notfound-desc">
+                        图表生成后会保存配置和数据以便复原
+                      </div>
+                    </div>
+                  )}
+                </Timeline>
                 {hasHistory ? (
-                  historyList
-                ) : (
-                  <div className="history-popover-notfound">
-                    <img
-                      src="https://gw.alipayobjects.com/zos/rmsportal/iUiSlmAMRtsydJpvrOhE.svg"
-                      alt="404"
-                    />
-                    <div className="history-popover-notfound-text">
-                      暂无历史记录
-                    </div>
-                    <div className="history-popover-notfound-desc">
-                      图表生成后会保存配置和数据以便复原
-                    </div>
-                  </div>
-                )}
-              </Timeline>
-              {hasHistory ? (
-                <a className="clear-history" onClick={clearHistory}>
-                  清空历史
-                </a>
-              ) : null}
-            </div>
-          }
-          placement="bottom"
-          arrowPointAtCenter
+                  <a className="clear-history" onClick={clearHistory}>
+                    清空历史
+                  </a>
+                ) : null}
+              </div>
+            }
+            placement="bottom"
+            arrowPointAtCenter
+          >
+            <ClockCircleOutlined className="history" title="历史记录" />
+          </Popover>
+        </div>
+      </Col>
+      <Col>
+        <Button icon={<RedoOutlined />} onClick={handleReset}>
+          {formatMessage({ id: 'components.footer.reset' })}
+        </Button>
+        <Button
+          icon={<CheckOutlined />}
+          type="primary"
+          onClick={handleGenerate}
         >
-          <ClockCircleOutlined className="history" title="历史记录" />
-        </Popover>
-      </div>
-      <div
-        className={`${styles.unRedo} ${styles.undo}`}
-        style={{ color: `${canUndo ? '#00000099' : '#ccc'}` }}
-        onClick={handleUndo}
-      >
-        <Tooltip
-          placement="top"
-          title={formatMessage({ id: 'components.footer.undo' })}
-        >
-          <IconFont type="icon-Undo" />
-        </Tooltip>
-      </div>
-      <div
-        className={`${styles.unRedo} ${styles.redo}`}
-        style={{ color: `${canRedo ? '#00000099' : '#ccc'}` }}
-        onClick={handleRedo}
-      >
-        <Tooltip
-          placement="top"
-          title={formatMessage({ id: 'components.footer.redo' })}
-        >
-          <IconFont type="icon-Redo" />
-        </Tooltip>
-      </div>
-      <Button icon={<RedoOutlined />} onClick={handleReset}>
-        {formatMessage({ id: 'components.footer.reset' })}
-      </Button>
-      <Button icon={<CheckOutlined />} type="primary" onClick={handleGenerate}>
-        {formatMessage({ id: 'components.footer.generate' })}
-      </Button>
-    </div>
+          {formatMessage({ id: 'components.footer.generate' })}
+        </Button>
+      </Col>
+    </Row>
   );
 });
 

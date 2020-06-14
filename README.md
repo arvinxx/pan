@@ -22,7 +22,22 @@ npm run build
 ```
 
 
-## Custom Configuration
+## 项目架构
+
+```
+├── README.md                   # 说明
+├── package.json                # package.json
+├── src                         # 源代码
+  ├── manifest.json             # sketch 插件入口文件
+  ├── common                    # resources 和 sketch 共用代码文件
+  ├── resources                 # 视图端 webview (UI窗口)
+  └── sketch                    # sketch 端定义的功能
+├── static                      # 静态图片等资源
+├── tsconfig.json               # ts 配置文件
+├── tslint.json                 # lint 配置文件
+├── typings                     # ts 类型定义文件
+└── webpack.skpm.config.js      # skpm 配置文件
+```
 
 ### Babel
 

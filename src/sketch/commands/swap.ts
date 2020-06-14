@@ -43,43 +43,43 @@ export const swapPosition = (context: SketchContext) => {
 export const swapText = (context: SketchContext) => {
   // Setup
   const doc = context.document;
-  const selection = context.selection;
+  // const selection = context.selection;
   const selectionHasTextLayer = false;
-  const strings = [];
+  // const strings = [];
 
   const objects = context.selection as NSArray<MSRectangleShape>;
   if (objects.count() != 2) {
     doc.showMessage('请选择两个图层😶');
     return;
   }
-
-  let layer;
-  let loop = selection.objectEnumerator();
-
-  selection.forEach((layer) => {
-    if (layer.class() === 'MSTextLayer') {
-      selectionHasTextLayer = true;
-
-      // Collect stringslis
-      strings.push(layer.stringValue());
-    }
-  });
-
-  // Check strings
-  if (strings.length == 2) {
-    let i = strings.length - 1;
-    loop = selection.objectEnumerator();
-    while ((layer = loop.nextObject())) {
-      layer.setStringValue(strings[i]);
-      i--;
-    }
-
-    // Finish
-    doc.showMessage('文本交换完毕');
-  } else {
-    // No text layers selected
-    doc.showMessage('请选择两个图层😶');
-  }
+  //
+  // let layer;
+  // let loop = selection.objectEnumerator();
+  //
+  // selection.forEach((layer) => {
+  //   if (layer.class() === 'MSTextLayer') {
+  //     selectionHasTextLayer = true;
+  //
+  //     // Collect stringslis
+  //     strings.push(layer.stringValue());
+  //   }
+  // });
+  //
+  // // Check strings
+  // if (strings.length == 2) {
+  //   let i = strings.length - 1;
+  //   loop = selection.objectEnumerator();
+  //   while ((layer = loop.nextObject())) {
+  //     layer.setStringValue(strings[i]);
+  //     i--;
+  //   }
+  //
+  //   // Finish
+  //   doc.showMessage('文本交换完毕');
+  // } else {
+  //   // No text layers selected
+  //   doc.showMessage('请选择两个图层😶');
+  // }
 
   // No text layers selected
   if (!selectionHasTextLayer) {

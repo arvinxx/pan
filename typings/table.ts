@@ -9,3 +9,18 @@ export interface TableConfig {
   title: boolean;
   widthValue: number;
 }
+
+export interface TableModel {
+  /**
+   * 表格列头
+   */
+  columns: any[];
+  /**
+   * 数据源
+   */
+  dataSource: any[];
+  /**
+   * 表格控制选项
+   */
+  config: TableConfig;
+}

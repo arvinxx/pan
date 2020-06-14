@@ -23,6 +23,7 @@ module.exports = function(config, isPluginCommand) {
       return `"file://" + String(context.scriptPath).split(".sketchplugin/Contents/Sketch")[0] + ".sketchplugin/Contents/Resources/${url}"`;
     },
   };
+
   config.module.rules.push({
     test: /\.tsx?$/,
     exclude: [/node_modules/],

@@ -32,6 +32,7 @@ others are likely more Sketch things
  */
 type MochaProperty<T> = T | (() => T);
 
+declare const context: SketchContext;
 declare const NSUTF8StringEncoding: number;
 declare const NSViewWidthSizable: number;
 declare const NSViewHeightSizable: number;
@@ -43,6 +44,7 @@ declare const NSLayoutAttributeHeight: number;
 declare const NSLayoutRelationEqual: number;
 declare const NSLayoutAttributeTop: any;
 declare const NSPasteboardTypeString: unique symbol;
+declare const MOPointer: any;
 
 declare function NSClassFromString(name: string): any;
 declare function NSMakeRect(x: number, y: number, w: number, h: number): NSRect;
