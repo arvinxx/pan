@@ -64,9 +64,9 @@ const ResizeableHeader: FC<ResizeableTitleProps> = (props) => {
           // onClick={() => {
           //   setEditTitle(true);
           // }}
-          onMouseEnter={() => {
-            setEditTitle(true);
-          }}
+          // onMouseEnter={() => {
+          //   setEditTitle(true);
+          // }}
           {...restProps}
         >
           <div style={{ lineHeight: '24px' }}>{children}</div>

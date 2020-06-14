@@ -19,11 +19,19 @@ interface ColType {
 const Data: FC = () => {
   const dispatch = useDispatch();
   const [activeHeader, setActiveHeader] = useState('');
-  const [activeCells, setActiveCells] = useState<string[]>([]);
+  // const [activeCells, setActiveCells] = useState<string[]>([]);
   const table = useSelector<ConnectState, TableModelState>(
     (state) => state.table
   );
-  const { config, columns, dataSource, footerText, titleText } = table;
+  const {
+    config,
+    columns,
+    dataSource,
+    footerText,
+    titleText,
+    activeCells,
+    activeHeaders,
+  } = table;
   const ref = useClickAway(() => {
     setActiveHeader('');
   });
@@ -77,11 +85,14 @@ const Data: FC = () => {
             width: column.width,
             onResize: handleResize(index),
             className: classnames({
-              [styles.activeHeader]: activeHeader === column.key,
+              [styles.activeHeader]: activeHeaders.includes(column.key),
               [styles.header]: true,
             }),
             onClick: () => {
-              setActiveHeader(column.key);
+              dispatch({
+                type: 'table/handleActiveHeaders',
+                payload: { key: column.key },
+              });
             },
           }),
           render: (text, record, index) => {
@@ -90,23 +101,26 @@ const Data: FC = () => {
               <Input
                 size={'small'}
                 defaultValue={text.content}
-                onMouseLeave={() => {
-                  setActiveCells(
-                    activeCells.filter((cell) => cell !== cellKey)
-                  );
-                }}
+                // onMouseLeave={() => {
+                //   setActiveCells(
+                //     activeCells.filter((cell) => cell !== cellKey)
+                //   );
+                // }}
                 onBlur={() => {
                   console.log(activeCells);
                   console.log(activeCells.filter((cell) => cell !== cellKey));
-                  setActiveCells(
-                    activeCells.filter((cell) => cell !== cellKey)
-                  );
+                  // setActiveCells(
+                  //   activeCells.filter((cell) => cell !== cellKey)
+                  // );
                 }}
               />
             ) : (
               <div
                 onMouseEnter={() => {
-                  setActiveCells([...activeCells, text!.key]);
+                  dispatch({
+                    type: 'table/addActiveCells',
+                    payload: { key: cellKey },
+                  });
                 }}
               >
                 {text.content}
