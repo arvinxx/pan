@@ -5,8 +5,9 @@ import update from 'immutability-helper';
 import transformTableProps from '@/pages/table/components/Table/transformTableProps';
 
 export interface TableModelState extends TableModelType {
-  activeHeaders: string[];
+  activeHeader: string;
   activeCells: string[];
+  focusedCellKey: string;
 }
 export interface TableModelStore extends DvaModel<TableModelState> {
   namespace: 'table';
@@ -16,8 +17,8 @@ export interface TableModelStore extends DvaModel<TableModelState> {
     save: Reducer<TableModelState>;
     saveConfig: Reducer<TableModelState>;
     handleHeaderText: Reducer<TableModelState>;
-    handleActiveHeaders: Reducer<TableModelState>;
     addActiveCells: Reducer<TableModelState>;
+    removeActiveCells: Reducer<TableModelState>;
   };
 }
 
@@ -30,7 +31,8 @@ const TableModel: TableModelStore = {
     titleText: '表格标题',
     footerText: '表格页脚',
     activeCells: [],
-    activeHeaders: [],
+    activeHeader: '',
+    focusedCellKey: '',
     columns: [
       {
         title: 'Header 1',
@@ -105,20 +107,6 @@ const TableModel: TableModelStore = {
         }),
       };
     },
-    handleActiveHeaders(state, { payload }) {
-      const activeHeaders = state.activeHeaders;
-
-      if (activeHeaders.includes(payload.key)) {
-        return {
-          ...state,
-          activeHeaders: activeHeaders.filter((key) => key !== payload.key),
-        };
-      }
-      return {
-        ...state,
-        activeHeaders: update(activeHeaders, { $push: [payload.key] }),
-      };
-    },
     addActiveCells(state, { payload }) {
       if (state.activeCells.includes(payload.key)) {
         return state;
@@ -126,6 +114,12 @@ const TableModel: TableModelStore = {
       return {
         ...state,
         activeCells: update(state.activeCells, { $push: [payload.key] }),
+      };
+    },
+    removeActiveCells(state, { payload }) {
+      return {
+        ...state,
+        activeCells: state.activeCells.filter((cell) => cell !== payload.key),
       };
     },
   },

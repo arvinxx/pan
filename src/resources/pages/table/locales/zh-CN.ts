@@ -1,5 +1,7 @@
 export default {
-  'page.table.element': '元素配置',
+  'page.table.element.table': '表格配置',
+  'page.table.element.header': '表头配置',
+  'page.table.element.cell': '单元格配置',
   'page.table.error': '发生错误，错误信息：{msg}',
   'page.table.data-area.preview': '预览',
   'page.table.preview-area.preview': '预览',

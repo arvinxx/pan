@@ -24,7 +24,7 @@ const transformTableProps = (data = defaultData) => {
   data.slice(1, data.length).forEach((row, rowIndex) => {
     const newRow = {};
     row.forEach((item, columnIndex) => {
-      // const cell = window.hotTableInstance.getCell(rowIndex, columnIndex);
+      // @ts-ignore
       newRow[columns[columnIndex].dataIndex] = {
         content: item,
         key: rowIndex + '-' + columnIndex,

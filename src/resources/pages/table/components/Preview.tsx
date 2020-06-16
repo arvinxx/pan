@@ -69,36 +69,34 @@ const Preview: FC = () => {
 
   return (
     <div>
-      <div className={styles.preview}>
-        <div className={styles.title}>
-          {formatMessage({
-            id: 'page.table.preview-area.preview',
-          })}
-        </div>
-        <div
+      <div className={styles.title}>
+        {formatMessage({
+          id: 'page.table.preview-area.preview',
+        })}
+      </div>
+      <div
+        style={{
+          width: 200,
+          height: 160,
+        }}
+      >
+        <Table
           style={{
-            width: 200,
-            height: 160,
+            transform: 'scale(0.4)',
+            transformOrigin: '0 0',
+            width: 500,
           }}
-        >
-          <Table
-            style={{
-              transform: 'scale(0.4)',
-              transformOrigin: '0 0',
-              width: 500,
-            }}
-            pagination={false}
-            bordered={bordered}
-            title={title ? defaultTitle : undefined}
-            footer={footer ? defaultFooter : undefined}
-            expandedRowRender={expandable ? expandedRowRender : undefined}
-            rowSelection={checkable ? {} : undefined}
-            columns={columns}
-            dataSource={data}
-            size={size}
-            showHeader={showHeader}
-          />
-        </div>
+          pagination={false}
+          bordered={bordered}
+          title={title ? defaultTitle : undefined}
+          footer={footer ? defaultFooter : undefined}
+          expandedRowRender={expandable ? expandedRowRender : undefined}
+          rowSelection={checkable ? {} : undefined}
+          columns={columns}
+          dataSource={data}
+          size={size}
+          showHeader={showHeader}
+        />
       </div>
     </div>
   );

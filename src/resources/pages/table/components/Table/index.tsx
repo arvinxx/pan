@@ -6,7 +6,7 @@ import { ResizeCallbackData } from 'react-resizable';
 import classnames from 'classnames';
 import { useClickAway } from '@umijs/hooks';
 
-import ResizeableHeader from './ResizeableHeader';
+import TableHeader from './TableHeader';
 import EditableCell from './EditableCell';
 
 import styles from './index.less';
@@ -18,7 +18,6 @@ interface ColType {
 }
 const Data: FC = () => {
   const dispatch = useDispatch();
-  const [activeHeader, setActiveHeader] = useState('');
   // const [activeCells, setActiveCells] = useState<string[]>([]);
   const table = useSelector<ConnectState, TableModelState>(
     (state) => state.table
@@ -30,10 +29,11 @@ const Data: FC = () => {
     footerText,
     titleText,
     activeCells,
-    activeHeaders,
+    activeHeader,
+    focusedCellKey,
   } = table;
   const ref = useClickAway(() => {
-    setActiveHeader('');
+    // dispatch({ type: 'table/save', payload: { activeHeader: '' } });
   });
   const {
     title,
@@ -65,77 +65,82 @@ const Data: FC = () => {
     });
   };
 
-  const defaultTitle = () =>
-    title ? <EditableCell field={'titleText'} text={titleText} /> : undefined;
-  const defaultFooter = () =>
-    footer ? (
-      <EditableCell field={'footerText'} text={footerText} />
-    ) : (
-      undefined
-    );
-
   return (
-    <div style={{ width: widthValue > 0 ? widthValue : 600 }} ref={ref}>
+    <div style={{ width: widthValue > 0 ? widthValue : '100%' }} ref={ref}>
       <Table
         columns={columns.map((col, index) => ({
           ...col,
+
+          // header 单元格控制
           onHeaderCell: (column) => ({
             ...col,
+            active: activeHeader === column.key,
             // @ts-ignore
             width: column.width,
             onResize: handleResize(index),
             className: classnames({
-              [styles.activeHeader]: activeHeaders.includes(column.key),
+              [styles.activeHeader]: activeHeader === column.key,
               [styles.header]: true,
             }),
             onClick: () => {
               dispatch({
-                type: 'table/handleActiveHeaders',
-                payload: { key: column.key },
+                type: 'table/save',
+                payload: { activeHeader: column.key },
               });
             },
           }),
-          render: (text, record, index) => {
+          // 单元格控制
+          onCell: (items) => {
+            const item = items[col!.dataIndex];
+            return {
+              onMouseLeave: () => {
+                dispatch({
+                  type: 'table/removeActiveCells',
+                  payload: { key: item.key },
+                });
+              },
+              onMouseEnter: () => {
+                dispatch({
+                  type: 'table/addActiveCells',
+                  payload: { key: item.key },
+                });
+              },
+            };
+          },
+
+          render: (text) => {
             const cellKey: string = text.key;
-            return activeCells.includes(cellKey) ? (
+            return activeCells.includes(cellKey) ||
+              focusedCellKey === cellKey ? (
               <Input
                 size={'small'}
                 defaultValue={text.content}
-                // onMouseLeave={() => {
-                //   setActiveCells(
-                //     activeCells.filter((cell) => cell !== cellKey)
-                //   );
-                // }}
+                // 当点击时 激活该单元格
+                onFocus={() => {
+                  dispatch({
+                    type: 'table/save',
+                    payload: { focusedCellKey: cellKey },
+                  });
+                }}
                 onBlur={() => {
-                  console.log(activeCells);
-                  console.log(activeCells.filter((cell) => cell !== cellKey));
-                  // setActiveCells(
-                  //   activeCells.filter((cell) => cell !== cellKey)
-                  // );
+                  // dispatch({
+                  //   type: 'table/save',
+                  //   payload: { focusedCellKey: '' },
+                  // });
                 }}
               />
             ) : (
-              <div
-                onMouseEnter={() => {
-                  dispatch({
-                    type: 'table/addActiveCells',
-                    payload: { key: cellKey },
-                  });
-                }}
-              >
-                {text.content}
-              </div>
+              <div style={{ height: 24 }}>{text.content}</div>
             );
           },
         }))}
         components={{
           header: {
-            cell: ResizeableHeader,
+            cell: TableHeader,
           },
         }}
         dataSource={dataSource}
         rowKey={'dataIndex'}
-        className={styles.preview}
         pagination={false}
         bordered={bordered}
         loading={loading}

@@ -28,9 +28,6 @@ const EditableCell: FC<EditableCellProps> = ({ field, text }) => {
     />
   ) : (
     <div
-      // onClick={() => {
-      //   setEditTitle(true);
-      // }}
       onMouseEnter={() => {
         setEditTitle(true);
       }}

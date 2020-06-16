@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
+import { Card } from 'antd';
 import { useIntl } from 'umi';
-import CustomTable from './Table';
+import Table from './Table';
 import styles from './style.less';
 
 const DataArea: FC = () => {
@@ -13,7 +14,9 @@ const DataArea: FC = () => {
           id: 'page.table.data-area.preview',
         })}
       </div>
-      <CustomTable />
+      <Card>
+        <Table />
+      </Card>
     </div>
   );
 };

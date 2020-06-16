@@ -3,15 +3,13 @@ import { ErrorBoundary, Footer } from '@/components';
 import { uuid } from '@/utils';
 import Handsontable from 'handsontable';
 import { useSelector, useDispatch } from 'dva';
-
 import useUndo from '@/hooks/useUndo';
-
-import styles from './style.less';
 import { TableConfig } from '@/pages/table/data';
 import { sendMsg } from '@/services';
 import { ConnectState, Loading, TableModelState } from '@/models/connect';
 import DataArea from '@/pages/table/components/DataArea';
 import Config from '@/pages/table/components/Config';
+import styles from './style.less';
 
 declare global {
   interface Window {

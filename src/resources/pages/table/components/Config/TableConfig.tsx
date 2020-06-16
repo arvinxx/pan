@@ -1,20 +1,23 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import {
   // message,
+  Button,
   Radio,
   Checkbox,
   InputNumber,
   Row,
   Col,
+  Input,
+  Space,
 } from 'antd';
-import styles from './style.less';
+import styles from '../style.less';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { ConnectState, TableModelState } from '@/models/connect';
 import { useIntl } from 'umi';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
-const Config: FC = () => {
+const TableConfig: FC = () => {
   const dispatch = useDispatch();
   const { config } = useSelector<ConnectState, TableModelState>(
     (state) => state.table
@@ -43,7 +46,7 @@ const Config: FC = () => {
   return (
     <div>
       <div className={styles.title}>
-        {formatMessage({ id: 'page.table.element' })}
+        {formatMessage({ id: 'page.table.element.table' })}
       </div>
       <div>
         <div className={styles.sep}>表格尺寸</div>
@@ -151,4 +154,4 @@ const Config: FC = () => {
   );
 };
 
-export default Config;
+export default TableConfig;
