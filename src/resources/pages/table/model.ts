@@ -17,6 +17,7 @@ export interface TableModelStore extends DvaModel<TableModelState> {
     save: Reducer<TableModelState>;
     saveConfig: Reducer<TableModelState>;
     handleHeaderText: Reducer<TableModelState>;
+    handleColumnConfig: Reducer<TableModelState>;
     addActiveCells: Reducer<TableModelState>;
     removeActiveCells: Reducer<TableModelState>;
   };
@@ -40,6 +41,7 @@ const TableModel: TableModelStore = {
         key: 'Header 1',
         width: 120,
         style: {},
+        align: 'left',
       },
       {
         title: 'Header 2',
@@ -47,6 +49,7 @@ const TableModel: TableModelStore = {
         key: 'Header 2',
         width: 120,
         style: {},
+        align: 'left',
       },
       {
         title: 'Header 3',
@@ -54,6 +57,7 @@ const TableModel: TableModelStore = {
         key: 'Header 3',
         width: 120,
         style: {},
+        align: 'left',
       },
       {
         title: 'Header 4',
@@ -61,6 +65,7 @@ const TableModel: TableModelStore = {
         key: 'Header 4',
         width: 120,
         style: {},
+        align: 'left',
       },
       {
         title: 'Header 5',
@@ -68,6 +73,7 @@ const TableModel: TableModelStore = {
         key: 'Header 5',
         width: 120,
         style: {},
+        align: 'left',
       },
     ],
     dataSource,
@@ -81,6 +87,7 @@ const TableModel: TableModelStore = {
       showHeader: true,
       size: 'large',
       widthValue: 600,
+      hasData: true,
     },
   },
   effects: {},
@@ -95,7 +102,6 @@ const TableModel: TableModelStore = {
       const index = state.columns.findIndex(
         (col) => col.dataIndex === payload.dataIndex
       );
-
       return {
         ...state,
         columns: update(state.columns, {
@@ -103,6 +109,20 @@ const TableModel: TableModelStore = {
             title: {
               $set: payload.text,
             },
+          },
+        }),
+      };
+    },
+    handleColumnConfig(state, { payload }) {
+      const index = state.columns.findIndex(
+        (col) => col.dataIndex === payload.dataIndex
+      );
+      const { field, value } = payload;
+      return {
+        ...state,
+        columns: update(state.columns, {
+          [index]: {
+            [field]: { $set: value },
           },
         }),
       };

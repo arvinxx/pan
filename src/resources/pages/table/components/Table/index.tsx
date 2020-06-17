@@ -28,7 +28,7 @@ const Data: FC = () => {
     dataSource,
     footerText,
     titleText,
-    activeCells,
+    // activeCells,
     activeHeader,
     focusedCellKey,
   } = table;
@@ -45,6 +45,7 @@ const Data: FC = () => {
     widthValue,
     loading,
     showHeader,
+    hasData,
   } = config;
 
   const handleResize = (index: number) => (
@@ -85,7 +86,7 @@ const Data: FC = () => {
             onClick: () => {
               dispatch({
                 type: 'table/save',
-                payload: { activeHeader: column.key },
+                payload: { activeHeader: column.key, focusedCellKey: '' },
               });
             },
           }),
@@ -93,6 +94,16 @@ const Data: FC = () => {
           onCell: (items) => {
             const item = items[col!.dataIndex];
             return {
+              className: {
+                [styles.activeHeader]: focusedCellKey === item.key,
+                [styles.header]: true,
+              },
+              onClick: () => {
+                dispatch({
+                  type: 'table/save',
+                  payload: { focusedCellKey: item.key, activeHeader: '' },
+                });
+              },
               onMouseLeave: () => {
                 dispatch({
                   type: 'table/removeActiveCells',
@@ -108,38 +119,14 @@ const Data: FC = () => {
             };
           },
 
-          render: (text) => {
-            const cellKey: string = text.key;
-            return activeCells.includes(cellKey) ||
-              focusedCellKey === cellKey ? (
-              <Input
-                size={'small'}
-                defaultValue={text.content}
-                // 当点击时 激活该单元格
-                onFocus={() => {
-                  dispatch({
-                    type: 'table/save',
-                    payload: { focusedCellKey: cellKey },
-                  });
-                }}
-                onBlur={() => {
-                  // dispatch({
-                  //   type: 'table/save',
-                  //   payload: { focusedCellKey: '' },
-                  // });
-                }}
-              />
-            ) : (
-              <div style={{ height: 24 }}>{text.content}</div>
-            );
-          },
+          render: (text) => <div>{text.content}</div>,
         }))}
         components={{
           header: {
             cell: TableHeader,
           },
         }}
-        dataSource={dataSource}
+        dataSource={hasData ? dataSource : undefined}
         rowKey={'dataIndex'}
         pagination={false}
         bordered={bordered}

@@ -5,6 +5,9 @@ export interface TableConfig {
   checkable: boolean;
   expandable: boolean;
   footer: boolean;
+  /**
+   * 大小
+   **/
   size: SizeType;
   title: boolean;
   widthValue: number;
@@ -16,13 +19,17 @@ export interface TableConfig {
    * 是否显示 header
    */
   showHeader: boolean;
+  /**
+   * 是否显示数据
+   **/
+  hasData: boolean;
 }
 
 export interface TableModelType {
   /**
    * 表格列头
    */
-  columns: any[];
+  columns: ColumnType[];
   /**
    * 数据源
    */
@@ -39,4 +46,20 @@ export interface TableModelType {
    * 页脚
    */
   footerText: string;
+}
+
+export interface ColumnType {
+  /**
+   *
+   **/
+  title: string;
+  dataIndex: string;
+  key: string;
+  /**
+   * 表宽
+   **/
+  width: number;
+  style?: any;
+  align: 'left' | 'center' | 'right';
+  ellipsis?: boolean;
 }

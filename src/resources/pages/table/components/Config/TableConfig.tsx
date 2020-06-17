@@ -34,6 +34,7 @@ const TableConfig: FC = () => {
     widthValue,
     loading,
     showHeader,
+    hasData,
   } = config;
 
   const handleCheckbox = (key: string) => (e: CheckboxChangeEvent) => {
@@ -148,6 +149,14 @@ const TableConfig: FC = () => {
           onChange={handleCheckbox('loading')}
         >
           加载中
+        </Checkbox>
+        <Checkbox
+          className={styles.checkBox}
+          checked={hasData}
+          name="hasData"
+          onChange={handleCheckbox('hasData')}
+        >
+          显示数据
         </Checkbox>
       </div>
     </div>

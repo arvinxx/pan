@@ -5,11 +5,12 @@ import {
   Button,
   Radio,
   Checkbox,
-  InputNumber,
+  Switch,
   Row,
   Col,
   Input,
   Space,
+  InputNumber,
 } from 'antd';
 import styles from './style.less';
 
@@ -39,6 +40,16 @@ const HeaderConfig: FC = () => {
       },
     });
   };
+  const setColumnConfig = (field: string, value: any) => {
+    dispatch({
+      type: 'table/handleColumnConfig',
+      payload: {
+        dataIndex: column.dataIndex,
+        field,
+        value,
+      },
+    });
+  };
   // 每次切换 index 时,自动聚焦标题
   useEffect(() => {
     if (titleInput.current) {
@@ -51,16 +62,67 @@ const HeaderConfig: FC = () => {
         {formatMessage({ id: 'page.table.element.header' })}
       </div>
       <div>
-        <Row gutter={8}>
-          <Col span={6} style={{ lineHeight: '30px' }}>
-            文本
-          </Col>
+        <Row gutter={[8, 12]}>
+          <Col span={6}>文本</Col>
           <Col span={18}>
             <Input
               ref={titleInput}
               autoFocus={index > -1}
               value={column && column.title}
-              onChange={handleText}
+              onChange={(e) => {
+                setColumnConfig('title', e.target.value);
+              }}
+            />
+          </Col>
+          <Col span={6}>列宽</Col>
+          <Col span={18}>
+            <InputNumber
+              name="width"
+              step={10}
+              value={column.width}
+              onChange={(value) => {
+                setColumnConfig('width', value);
+              }}
+            />
+          </Col>
+          <Col span={6}>对齐</Col>
+          <Col span={18}>
+            <Radio.Group
+              onChange={(e) => {
+                setColumnConfig('align', e.target.value);
+              }}
+              defaultValue={'left'}
+              value={column.align}
+            >
+              <Radio className={styles.radio} value={'left'}>
+                左
+              </Radio>
+              <Radio className={styles.radio} value={'center'}>
+                中
+              </Radio>
+              <Radio className={styles.radio} value={'right'}>
+                右
+              </Radio>
+            </Radio.Group>
+          </Col>
+          <Col span={6}>固定列</Col>
+          <Col span={18}>
+            <Switch
+              checked={column.fixed}
+              onChange={(checked) => {
+                console.log(checked);
+                setColumnConfig('fixed', checked);
+              }}
+            />
+          </Col>
+          <Col span={6}>自动省略</Col>
+          <Col span={18}>
+            <Switch
+              checked={column.ellipsis}
+              onChange={(checked) => {
+                console.log(checked);
+                setColumnConfig('ellipsis', checked);
+              }}
             />
           </Col>
         </Row>

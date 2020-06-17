@@ -7,7 +7,7 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  devtool: 'source-map',
+  devtool: isDev ? 'source-map' : 'cheap-eval-source-map',
   outputPath: `../../dist`,
   alias: {
     '@/common': resolve(__dirname, '../common'),
