@@ -15,7 +15,7 @@ const EditableCell: FC<EditableCellProps> = ({ field, text }) => {
       defaultValue={text}
       onChange={(e) => {
         dispatch({
-          type: 'table/save',
+          type: 'table/saveConfig',
           payload: { [field]: e.target.value },
         });
       }}

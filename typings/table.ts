@@ -10,7 +10,16 @@ export interface TableConfig {
    **/
   size: SizeType;
   title: boolean;
-  widthValue: number;
+  /**
+   * 标题
+   */
+  titleText: string;
+  /**
+   * 页脚
+   */
+  footerText: string;
+
+  widthValue: string;
   /**
    * 加载中
    */
@@ -38,14 +47,6 @@ export interface TableModelType {
    * 表格控制选项
    */
   config: TableConfig;
-  /**
-   * 标题
-   */
-  titleText: string;
-  /**
-   * 页脚
-   */
-  footerText: string;
 }
 
 export interface ColumnType {
@@ -53,6 +54,7 @@ export interface ColumnType {
    *
    **/
   title: string;
+
   dataIndex: string;
   key: string;
   /**

@@ -71,27 +71,46 @@ const TableConfig: FC = () => {
             小
           </Radio>
         </Radio.Group>
+        <div className={styles.sep}>导出宽度</div>
+        <Radio.Group
+          name="widthValue"
+          onChange={(e) => {
+            dispatch({
+              type: 'table/saveConfig',
+              payload: { widthValue: e.target.value },
+            });
+          }}
+          value={widthValue}
+        >
+          <Radio className={styles.radio} value="auto">
+            自动
+          </Radio>
+          <Radio className={styles.radio} value="600">
+            固定宽度
+            {widthValue === 'auto' ? null : (
+              <InputNumber
+                style={{
+                  width: 130,
+                }}
+                step={10}
+                type="tel"
+                placeholder="800"
+                maxLength={25}
+                name="widthValue"
+                value={Number(widthValue)}
+                onChange={(value) => {
+                  dispatch({
+                    type: 'table/saveConfig',
+                    payload: { widthValue: value },
+                  });
+                }}
+              />
+            )}
+          </Radio>
+        </Radio.Group>
         <Row gutter={8}>
           <Col style={{ lineHeight: '30px' }}>导出宽度</Col>
-          <Col>
-            <InputNumber
-              style={{
-                width: 130,
-              }}
-              step={10}
-              type="tel"
-              placeholder="800"
-              maxLength={25}
-              name="widthValue"
-              value={widthValue}
-              onChange={(value) => {
-                dispatch({
-                  type: 'table/saveConfig',
-                  payload: { widthValue: value },
-                });
-              }}
-            />
-          </Col>
+          <Col></Col>
         </Row>
         <div className={styles.sep}>属性</div>
         <Checkbox

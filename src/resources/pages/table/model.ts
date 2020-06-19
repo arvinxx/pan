@@ -8,6 +8,15 @@ export interface TableModelState extends TableModelType {
   activeHeader: string;
   activeCells: string[];
   focusedCellKey: string;
+  activeTabKey: string;
+  codeComment: {
+    // 表格注释
+    table: boolean;
+    // 列注释
+    columns: boolean;
+    // 代码源
+    dataSource: boolean;
+  };
 }
 export interface TableModelStore extends DvaModel<TableModelState> {
   namespace: 'table';
@@ -16,6 +25,7 @@ export interface TableModelStore extends DvaModel<TableModelState> {
   reducers: {
     save: Reducer<TableModelState>;
     saveConfig: Reducer<TableModelState>;
+    switchCodeComment: Reducer<TableModelState>;
     handleHeaderText: Reducer<TableModelState>;
     handleColumnConfig: Reducer<TableModelState>;
     addActiveCells: Reducer<TableModelState>;
@@ -29,8 +39,7 @@ const { dataSource, columns } = transformTableProps();
 const TableModel: TableModelStore = {
   namespace: 'table',
   state: {
-    titleText: '表格标题',
-    footerText: '表格页脚',
+    activeTabKey: 'table',
     activeCells: [],
     activeHeader: '',
     focusedCellKey: '',
@@ -79,6 +88,8 @@ const TableModel: TableModelStore = {
     dataSource,
     config: {
       title: false,
+      titleText: '表格标题',
+      footerText: '表格页脚',
       footer: false,
       checkable: false,
       bordered: false,
@@ -86,8 +97,13 @@ const TableModel: TableModelStore = {
       loading: false,
       showHeader: true,
       size: 'large',
-      widthValue: 600,
+      widthValue: 'auto',
       hasData: true,
+    },
+    codeComment: {
+      table: true,
+      columns: true,
+      dataSource: true,
     },
   },
   effects: {},
@@ -97,6 +113,9 @@ const TableModel: TableModelStore = {
     },
     saveConfig(state, { payload }) {
       return { ...state, config: { ...state.config, ...payload } };
+    },
+    switchCodeComment(state, { payload }) {
+      return { ...state, codeComment: { ...state.codeComment, ...payload } };
     },
     handleHeaderText(state, { payload }) {
       const index = state.columns.findIndex(

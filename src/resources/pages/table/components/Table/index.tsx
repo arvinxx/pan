@@ -26,8 +26,7 @@ const Data: FC = () => {
     config,
     columns,
     dataSource,
-    footerText,
-    titleText,
+
     // activeCells,
     activeHeader,
     focusedCellKey,
@@ -38,6 +37,8 @@ const Data: FC = () => {
   const {
     title,
     footer,
+    footerText,
+    titleText,
     checkable,
     bordered,
     expandable,
@@ -67,8 +68,9 @@ const Data: FC = () => {
   };
 
   return (
-    <div style={{ width: widthValue > 0 ? widthValue : '100%' }} ref={ref}>
+    <div style={{ width: widthValue }} ref={ref}>
       <Table
+        // @ts-ignore
         columns={columns.map((col, index) => ({
           ...col,
 
@@ -88,6 +90,9 @@ const Data: FC = () => {
                 type: 'table/save',
                 payload: { activeHeader: column.key, focusedCellKey: '' },
               });
+            },
+            onKeyDown: (e) => {
+              console.log(e);
             },
           }),
           // 单元格控制

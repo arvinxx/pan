@@ -9,7 +9,6 @@ import { ConnectState, TableModelState } from '@/models/connect';
 import styles from './style.less';
 import ButtonGroup from './ButtonGroup';
 import { Button, Col } from 'antd';
-import { LeftOutlined } from '@ant-design/icons/lib';
 
 const Index: FC = () => {
   const dispatch = useDispatch();
