@@ -19,7 +19,7 @@ import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
 const TableConfig: FC = () => {
   const dispatch = useDispatch();
-  const { config } = useSelector<ConnectState, TableModelState>(
+  const { config, tableWidth } = useSelector<ConnectState, TableModelState>(
     (state) => state.table
   );
   const { formatMessage } = useIntl();
@@ -73,21 +73,21 @@ const TableConfig: FC = () => {
         </Radio.Group>
         <div className={styles.sep}>导出宽度</div>
         <Radio.Group
-          name="widthValue"
+          name="tableWidth"
           onChange={(e) => {
             dispatch({
-              type: 'table/saveConfig',
-              payload: { widthValue: e.target.value },
+              type: 'table/save',
+              payload: { tableWidth: e.target.value },
             });
           }}
-          value={widthValue}
+          value={tableWidth}
         >
           <Radio className={styles.radio} value="auto">
             自动
           </Radio>
-          <Radio className={styles.radio} value="600">
+          <Radio className={styles.radio} value="fixed">
             固定宽度
-            {widthValue === 'auto' ? null : (
+            {tableWidth === 'auto' ? null : (
               <InputNumber
                 style={{
                   width: 130,
@@ -97,7 +97,7 @@ const TableConfig: FC = () => {
                 placeholder="800"
                 maxLength={25}
                 name="widthValue"
-                value={Number(widthValue)}
+                value={widthValue}
                 onChange={(value) => {
                   dispatch({
                     type: 'table/saveConfig',
@@ -108,10 +108,6 @@ const TableConfig: FC = () => {
             )}
           </Radio>
         </Radio.Group>
-        <Row gutter={8}>
-          <Col style={{ lineHeight: '30px' }}>导出宽度</Col>
-          <Col></Col>
-        </Row>
         <div className={styles.sep}>属性</div>
         <Checkbox
           className={styles.checkBox}

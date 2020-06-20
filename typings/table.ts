@@ -19,7 +19,7 @@ export interface TableConfig {
    */
   footerText: string;
 
-  widthValue: string;
+  widthValue: number;
   /**
    * 加载中
    */

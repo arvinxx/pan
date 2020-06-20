@@ -17,6 +17,7 @@ export interface TableModelState extends TableModelType {
     // 代码源
     dataSource: boolean;
   };
+  tableWidth: 'auto' | 'fixed';
 }
 export interface TableModelStore extends DvaModel<TableModelState> {
   namespace: 'table';
@@ -97,9 +98,10 @@ const TableModel: TableModelStore = {
       loading: false,
       showHeader: true,
       size: 'large',
-      widthValue: 'auto',
+      widthValue: 600,
       hasData: true,
     },
+    tableWidth: 'auto',
     codeComment: {
       table: true,
       columns: true,

@@ -26,7 +26,7 @@ const Data: FC = () => {
     config,
     columns,
     dataSource,
-
+    tableWidth,
     // activeCells,
     activeHeader,
     focusedCellKey,
@@ -68,7 +68,10 @@ const Data: FC = () => {
   };
 
   return (
-    <div style={{ width: widthValue }} ref={ref}>
+    <div
+      style={{ width: tableWidth !== 'auto' ? widthValue : undefined }}
+      ref={ref}
+    >
       <Table
         // @ts-ignore
         columns={columns.map((col, index) => ({
@@ -107,18 +110,6 @@ const Data: FC = () => {
                 dispatch({
                   type: 'table/save',
                   payload: { focusedCellKey: item.key, activeHeader: '' },
-                });
-              },
-              onMouseLeave: () => {
-                dispatch({
-                  type: 'table/removeActiveCells',
-                  payload: { key: item.key },
-                });
-              },
-              onMouseEnter: () => {
-                dispatch({
-                  type: 'table/addActiveCells',
-                  payload: { key: item.key },
                 });
               },
             };
