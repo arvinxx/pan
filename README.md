@@ -28,10 +28,10 @@ npm run build
 ├── README.md                   # 说明
 ├── package.json                # package.json
 ├── src                         # 源代码
-  ├── manifest.json             # sketch 插件入口文件
-  ├── common                    # resources 和 sketch 共用代码文件
   ├── resources                 # 视图端 webview (UI窗口)
   └── sketch                    # sketch 端定义的功能
+  ├── bridge                    # 视图层和 sketch 端的通信层
+  ├── common                    # resources 和 sketch 共用的模块文件
 ├── static                      # 静态图片等资源
 ├── tsconfig.json               # ts 配置文件
 ├── tslint.json                 # lint 配置文件
@@ -39,32 +39,60 @@ npm run build
 └── webpack.skpm.config.js      # skpm 配置文件
 ```
 
-### Babel
+## Resources
 
-To customize Babel, you have two options:
+Resources 采用 umi 的架构,大家都懂 不再赘述
 
-* You may create a [`.babelrc`](https://babeljs.io/docs/usage/babelrc) file in your project's root directory. Any settings you define here will overwrite matching config-keys within skpm preset. For example, if you pass a "presets" object, it will replace & reset all Babel presets that skpm defaults to.
+### 启动方式
 
-* If you'd like to modify or add to the existing Babel config, you must use a `webpack.skpm.config.js` file. Visit the [Webpack](#webpack) section for more info.
+`npm run dev:resources`
 
-### Webpack
+### 目录结构
+```
+resources
+├── assets
+├─ components
+├── config
+├── hooks
+├── locales
+├── models
+├── pages
+├── services
+├── theme
+├── tsconfig.json
+└── utils
+```
+### 开发注意事项
 
-To customize webpack create `webpack.skpm.config.js` file which exports function that will change webpack's config.
+1. 建议在浏览器端进行开发，需要用到和 sketch 的交互时再进入 sketch 测试。 预览URL为 http://url/#/{page}.html 
+2. 代码模块引用不允许引入 sketch 层的模块 ,所有通信建议封装到 `service` 层
 
-```js
-/**
- * Function that mutates original webpack config.
- * Supports asynchronous changes when promise is returned.
- *
- * @param {object} config - original webpack config.
- * @param {boolean} isPluginCommand - wether the config is for a plugin command or a resource
- **/
-module.exports = function (config, isPluginCommand) {
-  /** you can change config here **/
-}
+## Sketch
+sketch 文件夹包含 Sketch 端的代码
+
+### 开发方式
+通过 `npm run dev:sketch` 进行 sketch 端开发 (需要启动 resources 端进行配合)
+
+如果只需要跑 sketch 端代码,不涉及 webview 层,可以使用 `npm run dev:sketch-only` 只启动 sketch 端进行开发
+
+### 目录结构
+
+```
+sketch
+├── manifest.json             # sketch 插件入口文件
+├── commands                  # 在插件栏可直接执行的脚本指令  
+└── windows                   # Webview 窗口 每个文件代表一个窗口  
+├── modules                   # 自行封装模块
+├── utils                     # 工具函数
 ```
 
-## Debugging
+### 配置项
+
+sketch 端使用 skpm 进行构建打包,配置文件在 `./webpack.skpm.config.js`,如有需要可以自定义
+
+## Debug
+
+应该都会了 就不写了...
 
 To view the output of your `console.log`, you have a few different options:
 * Open `Console.app` and look for the sketch logs
@@ -78,4 +106,20 @@ skpm log
 ```
 
 The `-f` option causes `skpm log` to not stop when the end of logs is reached, but rather to wait for additional data to be appended to the input
+
+
+## Bridge
+bridge 是 webview 和 sketch 的通信层,通过 channel 进行数据交换 (类似前后端分离)
+
+本层定义了 
+通信字段(`channel.ts`) webview 向 sketch 的发信方法 `sendMsg.ts`
+
+```
+bridge
+├── channel.ts           # 通信信道字段
+└── sendMsg.ts           # webview 向 sketch 层发信方法
+├── index.ts             # 对外统一暴露接口
+```
+
+目前 `sendMsg.ts` 只包含了与 sketch 层的通信方式,未来若需扩展到 figma 等平台, 则可以根据平台判断,加入对应的通信方式,抹平端的差异
 
