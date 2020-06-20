@@ -48,6 +48,7 @@ declare const MOPointer: any;
 
 declare function NSClassFromString(name: string): any;
 declare function NSMakeRect(x: number, y: number, w: number, h: number): NSRect;
+declare function CGRectMake(x: number, y: number, w: number, h: number): CGRect;
 declare function NSMakeSize(w: number, h: number): NSSize;
 declare class NSSize {
   width: number;
@@ -440,11 +441,20 @@ declare class NSUUID {}
 declare class NSURLSessionUploadTask {}
 declare class SCKShareUploadDataSource {}
 declare class WKWebView extends NSView {
-  static alloc(): any;
+  static alloc(): {
+    initWithFrame_configuration(
+      CGRect: CGRect,
+      config: WKWebViewConfiguration
+    ): WKWebView;
+  };
   loadRequest(request: NSURLRequest): void;
   setAutoresizingMask(mask: number): void;
   evaluateJavaScript_completionHandler(js: string, cb: () => void): void;
 }
+
+/**
+ * @see https://developer.apple.com/documentation/webkit/wkwebviewconfiguration
+ */
 declare class WKWebViewConfiguration {
   static alloc(): any;
 }

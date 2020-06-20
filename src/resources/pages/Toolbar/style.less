@@ -1,0 +1,55 @@
+@import '~theme/theme';
+
+.container {
+  background: @background-color-base;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.up {
+  border-bottom: 1px solid @border-color-base;
+  width: 100%;
+}
+.down {
+  width: 100%;
+}
+.item {
+  cursor: pointer;
+  user-select: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: @text-color-secondary;
+  border-top: 1px solid @border-color-base;
+
+  &:hover {
+    color: @primary-color;
+    background: @background-color-light;
+  }
+  &:active {
+    color: @primary-7;
+    background: @background-color-base;
+  }
+}
+.icon {
+  padding: 4px 0;
+  height: 36px;
+  width: 40px;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all @animation-duration-base @ease-in-out;
+}
+.title {
+  font-size: 12px;
+  padding-bottom: 2px;
+}

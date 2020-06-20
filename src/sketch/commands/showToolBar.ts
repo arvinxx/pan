@@ -1,9 +1,12 @@
-import { winIdentifier } from '@/sketch/windows';
+import { winIdentifier, toolbarWin } from '@/sketch/windows';
 
 /**
  * Sketch 窗口标识符
  */
 const viewIdentifier = {
+  /**
+   * Sketch 中央画布Id
+  */
   CANVAS: 'view_canvas',
 };
 
@@ -48,7 +51,6 @@ const toggleSidePanel = (toolbar, identifier: string, isInsert = false) => {
     }
   });
   stageView.setSubviews(finalViews);
-  // stageView.adjustSubviews();
 
   context.document.showMessage(`${isShow ? '️显示' : '隐藏'} Toolbar⚙️`);
 };
@@ -61,16 +63,8 @@ export default () => {
 
   const threadDictionary = NSThread.mainThread().threadDictionary();
 
-  const toolbar = NSStackView.alloc().initWithFrame<NSStackView>(
-    NSMakeRect(0, 0, 40, 0)
-  );
-  toolbar.setIdentifier(winIdentifier.TOOLBAR);
-  toolbar.setBackgroundColor(NSColor.windowBackgroundColor());
-
-  // toolbar.setFlipped(true);
-  // toolbar.orientation = 0;
-
-  // TODO: threadDictionary 用来干什么?
+  const toolbar = toolbarWin();
+  // // TODO: threadDictionary 用来干什么?
   threadDictionary[winIdentifier.TOOLBAR] = toolbar;
 
   toggleSidePanel(toolbar, winIdentifier.TOOLBAR);

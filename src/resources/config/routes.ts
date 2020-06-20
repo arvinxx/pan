@@ -20,6 +20,11 @@ const routes: IRoute[] = [
         component: './Table',
         exact: true,
       },
+      {
+        path: '/toolbar',
+        component: './Toolbar',
+        exact: true,
+      },
     ],
   },
 ];

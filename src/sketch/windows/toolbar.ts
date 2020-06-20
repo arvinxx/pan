@@ -1,40 +1,20 @@
-import BrowserWindow from 'sketch-module-web-view';
-import { UI } from 'sketch';
 import { getWinURL } from '@/sketch/utils/windows';
 import { winIdentifier } from './index';
 
-let browserWindow: BrowserWindow = null;
+const toolbarWindow = () => {
+  const wkwebviewConfig = WKWebViewConfiguration.alloc().init();
 
-const toolbarWindow = (options?) => {
-  browserWindow = new BrowserWindow({
-    ...options,
-    alwaysOnTop: true,
-    // frame: false,
-    identifier: winIdentifier.TOOLBAR,
-    width: 80,
-    show: true,
-    resizable: false,
-    hidesOnDeactivate: false,
-    vibrancy: 'sidebar',
-  });
+  const toolbar = WKWebView.alloc().initWithFrame_configuration(
+    CGRectMake(0, 0, 40, 0),
+    wkwebviewConfig
+  );
 
-  // only show the window when the page has loaded to avoid a white flash
-  browserWindow.once('ready-to-show', () => {
-    browserWindow.show();
-  });
+  toolbar.setIdentifier(winIdentifier.TOOLBAR);
 
-  const webContents = browserWindow.webContents;
-
-  // add a handler for a call from web content's javascript
-  webContents.on('nativeLog', (s: any) => {
-    UI.message(s);
-    webContents
-      .executeJavaScript(`result(${JSON.stringify(s)})`)
-      .catch(console.error);
-  });
-
-  browserWindow.loadURL(getWinURL('toolbar'));
-  return browserWindow;
+  toolbar.loadRequest(
+    NSURLRequest.requestWithURL(NSURL.URLWithString(getWinURL('toolbar')))
+  );
+  return toolbar;
 };
 
 export default toolbarWindow;
