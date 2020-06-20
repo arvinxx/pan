@@ -1,4 +1,4 @@
-import { TableConfig } from 'typings/table';
+import { TableConfig } from 'typings/data/table';
 
 /**
  * 表格字符串

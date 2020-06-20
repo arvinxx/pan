@@ -3,7 +3,7 @@ import BrowserWindow from 'sketch-module-web-view';
 import { isWebviewPresent, sendToWebview } from 'sketch-module-web-view/remote';
 import pack from '../../../package.json';
 import { getSettings, getWinURL, setSettings } from '../utils';
-import channel from '@/common/channel';
+import channel from '@/bridge/channel';
 
 const PREF_UNIQUE_KEY = 'cx.ap.sketch-find-and-replace.pref';
 const STATE_UNIQUE_KEY = 'cx.ap.sketch-find-and-replace.state';

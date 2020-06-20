@@ -2,8 +2,8 @@ import React, { FC, useState } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import copy from 'copy-to-clipboard';
-import { Col, Row, Typography, Space, Switch, message } from 'antd';
-import { CopyTwoTone, CopyOutlined } from '@ant-design/icons';
+import { Col, Row, Typography, Space, message, Checkbox } from 'antd';
+import { CopyOutlined } from '@ant-design/icons';
 import styles from './style.less';
 import { useDispatch, useSelector } from 'dva';
 import { ConnectState, TableModelState } from '@/models/connect';
@@ -47,12 +47,12 @@ const Code: FC<CodeProps> = ({
         <Col>
           <Space>
             <div>注释</div>
-            <Switch
+            <Checkbox
               checked={codeComment[type]}
               onChange={(e) => {
                 dispatch({
                   type: 'table/switchCodeComment',
-                  payload: { [type]: e },
+                  payload: { [type]: e.target.checked },
                 });
               }}
             />

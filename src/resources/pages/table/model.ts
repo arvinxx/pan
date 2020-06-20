@@ -1,5 +1,5 @@
 import { DvaModel, Reducer, Effect } from '@/models/connect';
-import { TableModelType } from 'typings/table';
+import { TableModelType } from 'typings/data/table';
 import update from 'immutability-helper';
 
 import transformTableProps from '@/pages/table/components/Table/transformTableProps';

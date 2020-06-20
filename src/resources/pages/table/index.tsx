@@ -1,27 +1,18 @@
 import React, { FC, useCallback, useState } from 'react';
 import { ErrorBoundary, Footer } from '@/components';
-import { Collapse, Tabs, Tooltip } from 'antd';
-
+import { Collapse, Tabs } from 'antd';
 import { uuid } from '@/utils';
-import Handsontable from 'handsontable';
 import { useSelector, useDispatch } from 'dva';
 import useUndo from '@/hooks/useUndo';
-import { TableConfig } from 'typings/table';
-import { sendMsg } from '@/services';
+import { TableConfig } from 'typings/data/table';
+
 import { ConnectState, Loading, TableModelState } from '@/models/connect';
 import DataArea from './components/DataArea';
 import ProCode from './components/ProCode';
 import Config from './components/Config';
+import { generateTable } from './service';
 
 import styles from './style.less';
-import Table from '@/pages/table/components/Table';
-import ProTable from '@ant-design/pro-table';
-
-declare global {
-  interface Window {
-    hotTableInstance: Handsontable;
-  }
-}
 
 const { Panel } = Collapse;
 const { TabPane } = Tabs;
@@ -56,7 +47,7 @@ const TablePage: FC = () => {
 
   const handleGenerate = () => {
     // 通知 Sketch 生成表格
-    sendMsg('TABLE_GENERATE', table);
+    generateTable(table);
   };
 
   const onApplyHistory = (storedConfig: TableConfig) => {
@@ -65,11 +56,11 @@ const TablePage: FC = () => {
   };
 
   const onClearHistory = (type: string) => {
-    sendMsg('TABLE_CLEAR_HISTORY', type);
+    // sendMsg('TABLE_CLEAR_HISTORY', type);
   };
 
   const { tableHistory } = state;
-
+  console.log(process);
   return (
     <ErrorBoundary onRetry={onRetry}>
       <div className={styles.container}>
@@ -83,7 +74,6 @@ const TablePage: FC = () => {
           >
             <TabPane key={'table'} tab={'Table表格'} />
             <TabPane key={'pro-table'} tab={'ProTable 高级表格'} />
-
             <TabPane key={'form'} disabled tab={'Form 表单'} />
           </Tabs>
           <div className={styles.main}>

@@ -6,44 +6,44 @@
     {
       "name": "系统信息",
       "identifier": "com.arvinxx.pan.system-info",
-      "script": "./sketch/commands/systemInfo.ts",
+      "script": "./commands/systemInfo.ts",
       "shortcut": "cmd j"
     },
     {
       "name": "生成画板总览",
       "identifier": "com.arvinxx.pan.artboards-overview",
-      "script": "./sketch/commands/artboardsOverview.ts",
+      "script": "./commands/artboardsOverview.ts",
       "shortcut": "ctrl a"
     },
     {
       "name": "交换位置",
       "identifier": "com.arvinxx.pan.swap-position",
-      "script": "./sketch/commands/swap.ts",
+      "script": "./commands/swap.ts",
       "shortcut": "ctrl shift s",
       "handler": "swapPosition"
     },
     {
       "name": "交换文本",
       "identifier": "com.arvinxx.pan.swap-text",
-      "script": "./sketch/commands/swap.ts",
+      "script": "./commands/swap.ts",
       "shortcut": "ctrl shift s",
       "handler": "swapText"
     },
     {
       "name": "Home",
       "identifier": "com.arvinxx.pan.win.home",
-      "script": "./sketch/windows/home.ts"
+      "script": "./windows/home.ts"
     },
     {
       "name": "表格",
       "identifier": "com.arvinxx.pan.win.table",
-      "script": "./sketch/windows/table.ts",
+      "script": "./windows/table.ts",
       "shortcut": "ctrl t"
     },
     {
       "name": "查找替换",
       "identifier": "com.arvinxx.pan.win.replace",
-      "script": "./sketch/windows/replace.ts",
+      "script": "./windows/replace.ts",
       "shortcut": "ctrl k"
     }
   ],

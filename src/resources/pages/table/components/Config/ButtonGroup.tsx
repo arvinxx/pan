@@ -28,13 +28,13 @@ const ButtonGroup: FC<ButtonGroupProps> = ({ onBack, onReset }) => {
           icon={<RedoOutlined />}
           type={'link'}
           size={'small'}
-          style={{ marginRight: 2 }}
+          // style={{ marginRight: 2 }}
         >
           重置
         </Button>
-        <Button onClick={onBack} type={'primary'} size={'small'}>
-          确定
-        </Button>
+        {/*<Button onClick={onBack} type={'primary'} size={'small'}>*/}
+        {/*  确定*/}
+        {/*</Button>*/}
       </Col>
     </Row>
   );

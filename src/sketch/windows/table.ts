@@ -1,9 +1,9 @@
 import BrowserWindow from 'sketch-module-web-view';
 import { UI } from 'sketch';
 import { getWinURL } from '@/sketch/utils/windows';
-import channel from '@/common/channel';
+import { channel } from '@/bridge';
 import { generateTable } from '@/sketch/utils/table';
-import { TableModelType } from 'typings/table';
+import { TableModelType } from 'typings/data/table';
 
 const tableWindows = () => {
   const browserWindow = new BrowserWindow({

@@ -1,7 +1,6 @@
-import { EffectsCommandMap, Subscription, AnyAction } from 'dva';
+import { EffectsCommandMap, Subscription } from 'dva';
 
 import { TableModelState } from '@/pages/table/model';
-import { ImmerReducer } from '@@/plugin-dva/connect';
 
 export { TableModelState };
 
@@ -21,6 +20,17 @@ export interface ConnectState {
 
 export { EffectsCommandMap, Subscription };
 
+/**
+ * An Action type which accepts any other properties.
+ * This is mainly for the use of the `Reducer` type.
+ * This is not part of `Action` itself to prevent types that extend `Action` from
+ * having an index signature.
+ */
+export interface AnyAction extends Action {
+  // Allows any extra properties to be defined in an action.
+  [extraProps: string]: any;
+}
+
 export type Reducer<S = any, A extends Action = AnyAction> = (
   state: S,
   action: A
@@ -37,9 +47,7 @@ export type Action<P = any, C = (payload: P) => void> = {
   type: string;
   payload?: P;
   callback?: C;
-  meta?: {
-    mixpanel?: any;
-  };
+  meta?: {};
   [key: string]: any;
 };
 

@@ -1,13 +1,7 @@
-import React, {
-  FC,
-  useState,
-  useEffect,
-  useRef,
-  KeyboardEventHandler,
-} from 'react';
+import React, { FC, useState, useEffect, useRef } from 'react';
 import { Button, Space, Row, Col, Input, Checkbox, Radio } from 'antd';
-import { sendMsg } from '@/services';
 import { Loading } from './components';
+import { closeWin, replaceText, resetPreference } from './service';
 import styles from './style.less';
 
 const Replace: FC = () => {
@@ -42,12 +36,13 @@ const Replace: FC = () => {
   };
 
   const closeWindow = () => {
-    sendMsg('REPLACE_CLOSE');
+    closeWin();
+    return;
   };
 
   const resetPref = () => {
     setMounted(false);
-    sendMsg('REPLACE_RESET_PREF');
+    resetPreference();
     setTimeout(() => {
       setMounted(true);
     }, 1000);
@@ -62,7 +57,7 @@ const Replace: FC = () => {
       replaceString,
       replaceStart: true,
     };
-    sendMsg('REPLACE_REPLACE', state);
+    replaceText(state);
   };
 
   const { caseSensitive, wholeWord, selection } = options;

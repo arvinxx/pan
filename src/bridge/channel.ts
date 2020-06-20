@@ -7,6 +7,7 @@ const channel = {
   // 生成表格
   TABLE_GENERATE: 'TABLE_GENERATE',
   TABLE_CLEAR_HISTORY: 'TABLE_CLEAR_HISTORY',
+  GLOBAL_SYSTEM_INFO: 'GLOBAL_SYSTEM_INFO',
 };
 export default channel;
 export type ChannelType = keyof typeof channel;

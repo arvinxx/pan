@@ -16,6 +16,8 @@
       "typings/*": ["../../typings/*"],
       "@/*": ["./*"],
       "@/common": ["../common"],
+      "@/bridge/*": ["../bridge/*"],
+      "@/bridge": ["../bridge"],
       "@/common/*": ["../common/*"],
       "@@/*": [".umi/*"]
     }
@@ -25,7 +27,7 @@
     "./services/**/*",
     "./pages/**/*",
     "./assets/**/*",
-    ".umirc.ts",
+    "config/.umirc.ts",
     "typings.d.ts",
     "../../typings"
   ]

@@ -1,4 +1,4 @@
-import { ChannelType } from '@/common/channel';
+import { ChannelType } from './channel';
 
 /**
  * 向 sketch 进程发消息
@@ -8,4 +8,3 @@ import { ChannelType } from '@/common/channel';
 export const sendMsg = (channel: ChannelType, data?: any) => {
   window.postMessage(channel, JSON.stringify(data));
 };
-
