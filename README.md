@@ -86,6 +86,14 @@ sketch
 ├── utils                     # 工具函数
 ```
 
+#### windows
+
+实现的窗口分成两种,`BrowserWindows` 悬浮类窗口 和 `WKWebView` Toolbar 窗口
+
+*BrowserWindows*: 承载主要的交互能力
+
+*WKWebView*: 右侧的 Toolbar 面板
+
 ### 配置项
 
 sketch 端使用 skpm 进行构建打包,配置文件在 `./webpack.skpm.config.js`,如有需要可以自定义

@@ -48,6 +48,7 @@ const Toolbar: FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.up}>
+        <div className={styles.logo}>logo</div>
         {up.map((item) => {
           const { icon, key, name } = item;
           return (
