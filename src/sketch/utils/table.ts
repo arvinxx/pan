@@ -2,7 +2,7 @@
  * 生成 table
  */
 import { TableModelType } from 'typings/data/table';
-import generateComponentLayer from '../lib/antd';
+import generateComponentLayer from '../modules/antd';
 
 export const generateTable = (table: TableModelType): boolean => {
   const doc = context.document;

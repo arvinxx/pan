@@ -30,7 +30,7 @@ others are likely more Sketch things
  * getter that returns a method that gets the value. We can't document this properly
  * in TypeScript, so we'll have to settle for this, and type your getters.
  */
-type MochaProperty<T> = T | (() => T);
+type MochaProperty<T> = (() => T) | T;
 
 declare const context: SketchContext;
 declare const NSUTF8StringEncoding: number;
@@ -81,13 +81,68 @@ declare class CGPoint {
   x: number;
   y: number;
 }
-declare class CGRect {}
+declare class CGRect {
+  origin: CGPoint;
+  size: CGSize;
+}
 declare class CGSize {}
 declare class CHProgressSheet {}
 declare class CHSheetController {}
 declare class CHSingletonObject {}
 declare class CHWindowController {}
-declare class COScript {}
+/**
+ * CocoaScript 方法
+ */
+declare class COScript {
+  /**
+   * 设置是否持久化
+   */
+  setShouldKeepAround: (keepAround: boolean) => void;
+
+  /**
+   * 预处理源
+   */
+  preprocessedSource: string;
+
+  static currentCOScript(): COScript;
+  /**
+   * 返回当前脚本是否持久化
+   */
+  shouldKeepAround(): boolean;
+  /**
+   * 返回处理后的代码
+   */
+  processedSource(): string;
+  coreModuleMap: any;
+  akToolbarButtonItemType: any;
+  hash: any;
+  superclass: any;
+  description: any;
+  debugDescription: any;
+  attributeKeys(): any;
+
+  associatedObject: any;
+  archiveReferenceIdentifier_bc: any;
+  immutableModelObject: any;
+  exposedBindings: any;
+  BCCache_selfOrDeferredObject: any;
+  BCCache_unblockingSelfOrDeferredObject: any;
+  classDescription: any;
+  toOneRelationshipKeys: any;
+  toManyRelationshipKeys: any;
+  observationInfo: any;
+  classForKeyedArchiver: any;
+  autoContentAccessingProxy: any;
+  scriptingProperties: any;
+  classCode: any;
+  className: any;
+
+  /**
+   * 是否需要预处理
+   */
+  shouldPreprocess(): boolean;
+  env(): NSDictionary;
+}
 declare class DKDistortionTransform {}
 declare class ECLogChannel {}
 declare class ECLogHandler {}
@@ -130,7 +185,7 @@ declare class MSTilePlacerDelegate {}
 declare class MSTileRenderOperationDelegate {}
 declare class MSVectorCanvasDelegate {}
 declare class NSAffineTransform {}
-declare class NSArray<T = NSObject> {
+declare class NSArray<T = NSObject> extends Array {
   [index: number]: T;
   count(): number;
   objectAtIndex(index: number): T;
@@ -147,7 +202,18 @@ declare class NSCache {}
 declare class NSClipView {}
 declare class NSCollectionView {}
 declare class NSCollectionViewItem {}
-declare class NSColor {}
+/**
+ * 原生颜色类型
+ * @see https://developer.apple.com/documentation/appkit/nscolor
+ */
+declare class NSColor extends NSObject {
+  /**
+   * 获取背景颜色
+   */
+  static windowBackgroundColor(): WindowBackgroundColor;
+}
+declare class WindowBackgroundColor extends NSColor {}
+
 declare class NSColorSpace {}
 declare class NSColorWell {}
 declare class NSComboBox {}
@@ -155,6 +221,9 @@ declare class NSControl {}
 declare class NSCursor {}
 declare class NSData {}
 declare class NSDate {}
+/**
+ * 线程目录
+ */
 declare class NSDictionary {
   [key: string]: any;
 }
@@ -212,7 +281,12 @@ declare class NSPopUpButton {}
 declare class NSPopUpButtonCell {}
 declare class NSPredicate {}
 declare class NSProgressIndicator {}
-declare class NSResponder {}
+
+/**
+ *  NSResponser 类型
+ * @see https://developer.apple.com/documentation/appkit/nsresponder
+ */
+declare class NSResponder extends NSObject {}
 declare class NSScrollView {}
 declare class NSScrubberItemView {}
 declare class NSSearchField {}
@@ -221,7 +295,49 @@ declare class NSSegmentedControl {}
 declare class NSSet {}
 declare class NSSlider {}
 declare class NSSplitView {}
-declare class NSStackView {}
+
+/**
+ * UI Layout 方向
+ */
+declare enum NSUserInterfaceLayoutOrientation {
+  horizontal,
+  vertical,
+}
+
+declare enum NSStackViewDistribution {
+  equalCentering,
+  equalSpacing,
+  fill,
+  fillEqually,
+  fillProportionally,
+  gravityAreas,
+}
+
+declare class NSStackView extends NSView {
+  /**
+   * The horizontal or vertical layout direction of the stack view.
+   */
+  orientation: NSUserInterfaceLayoutOrientation;
+
+  setOrientation(orientation: NSUserInterfaceLayoutOrientation): void;
+
+  distribution: NSStackViewDistribution;
+
+  /**
+   * 初始化
+   */
+  static alloc(): NSStackView;
+
+  /**
+   * The minimum spacing, in points, between adjacent views in the stack view.
+   * @see https://developer.apple.com/documentation/appkit/nsstackview/1488945-spacing
+   */
+  spacing: CGFloat;
+  setSpacing(num: number): void;
+
+  setBackgroundColor(color: NSColor): void;
+}
+
 declare class NSStoryboard {}
 declare class NSString extends String {
   static stringWithContentsOfFile_encoding_error(...args: any[]): any;
@@ -244,13 +360,28 @@ declare class NSURL {
   static fileURLWithPath(path: string): NSURL;
 }
 declare class NSURLSession {}
-declare class NSView {
+/**
+ *  NSView 类
+ *  @see https://developer.apple.com/documentation/appkit/nsview
+ */
+declare class NSView extends NSResponder {
   adjustSubviews(): void;
-  subviews: MochaProperty<NSArray<NSView> | NSView[]>;
-  identifier: MochaProperty<string>;
+
+  subviews(): NSArray<NSView>;
+  setSubviews(views: NSArray<NSView>);
+  identifier(): string;
+  setIdentifier(id: string): void;
+  initWithFrame<T = NSView>(rect: NSRect): T;
+
+  /**
+   * View是否翻转坐标系
+   * https://developer.apple.com/documentation/appkit/nsview/1483532-flipped?language=occ
+   */
+  readonly flipped: boolean;
+  setFlipped(boolean): void;
 }
 declare class NSViewController {}
-declare class NSWindow {
+declare class NSWindow extends NSResponder {
   contentView(): NSView;
 }
 declare class NSWindowController {}
@@ -379,6 +510,9 @@ declare class MSTextHeaderInspectorItemDelegate {}
 declare class MSGPURenderer {}
 declare class MSInspectorItemProvider {}
 declare class NSRect {}
+/**
+ * 实例线程
+ */
 declare class NSThread {
   static mainThread(): NSThread;
   threadDictionary(): NSDictionary;

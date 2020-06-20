@@ -7334,8 +7334,6 @@ declare class MSCloudAvatarView extends NSView {
   imageView(...args: any[]): any;
   /* typeEncoding=@24@0:8@16 */
   initWithCoder(...args: any[]): any;
-  /* typeEncoding=@48@0:8{CGRect={CGPoint=dd}{CGSize=dd}}16 */
-  initWithFrame(...args: any[]): any;
   /* typeEncoding=v16@0:8 */
   loadAvatar(): void;
   /* typeEncoding=v16@0:8 */
@@ -13273,7 +13271,11 @@ declare class MSDocument extends NSDocument /* implements MSCloudExportableDocum
   /* typeEncoding=v16@0:8 */
   warnIfPluginsDisabled(): void;
   /* typeEncoding=@16@0:8 */
-  window(...args: any[]): any;
+  window(
+    ...args: any[]
+  ): {
+    convertRectToScreen(rect: NSRect): CGRect;
+  };
   /* typeEncoding=v24@0:8@16 */
   windowControllerDidLoadNib(...args: any[]): any;
   /* typeEncoding=v24@0:8@16 */

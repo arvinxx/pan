@@ -18,11 +18,13 @@
   "scripts": {
     "dev": "concurrently \"npm run dev:resources\" \"npm run dev:sketch\"",
     "dev:sketch": "NODE_ENV=development skpm-build --watch",
-    "dev:sketch-only": "npm run build:resources &&skpm-build --watch",
     "dev:resources": "APP_ROOT=src/resources PORT=8110 BROWSER=none umi dev",
+    "dev:sketch-only": "npm run build:resources &&skpm-build --watch",
     "build": "npm run build:resources&& npm run build:sketch",
     "build:sketch": "NODE_ENV=prod skpm-build",
     "build:resources": "APP_ROOT=src/resources umi build",
+    "build:resources-analyze": "APP_ROOT=src/resources ANALYZE=1 umi build",
+    "refresh": "find ./*.sketchplugin -name \"*_ts\" | entr -r /Applications/Sketch.app/Contents/MacOS/Sketch",
     "postinstall": "npm run build && skpm-link"
   },
   "devDependencies": {

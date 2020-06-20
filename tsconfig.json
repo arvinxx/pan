@@ -1,5 +1,5 @@
 {
-  "include": ["src", "**/*.ts", "**/*.js"],
+  "include": ["src", "src/**/*.ts", "src/**/*.js", "./typings"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "es5",
@@ -21,7 +21,6 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@@/*": ["src/resources/.umi/*"],
       "typings/*": ["typings/*"],
       "@/*": ["src/*"]
     }

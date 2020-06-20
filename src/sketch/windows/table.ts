@@ -4,12 +4,11 @@ import { getWinURL } from '@/sketch/utils/windows';
 import { channel } from '@/bridge';
 import { generateTable } from '@/sketch/utils/table';
 import { TableModelType } from 'typings/data/table';
+import { winIdentifier } from '@/sketch/windows/index';
 
 const tableWindows = () => {
   const browserWindow = new BrowserWindow({
-    identifier: 'homeWin.webview',
-    // width: 400,
-    // height: 600,
+    identifier: winIdentifier.TABLE,
     title: '表格生成',
     show: false,
     hidesOnDeactivate: false,

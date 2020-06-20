@@ -1,19 +1,22 @@
 import { EffectsCommandMap, Subscription } from 'dva';
 
-import { TableModelState } from '@/pages/table/model';
+import { TableModelState } from '@/pages/Table/model';
+import { GlobalModelState } from './global';
 
-export { TableModelState };
+export { TableModelState, GlobalModelState };
 
 export interface Loading {
   global: boolean;
   effects: { [key: string]: boolean };
   models: {
     table: boolean;
+    global: boolean;
   };
 }
 
 export interface ConnectState {
   table: TableModelState;
+  global: GlobalModelState;
   loading: Loading;
   router: { location: Location };
 }

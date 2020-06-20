@@ -1,13 +1,19 @@
 import BrowserWindow from 'sketch-module-web-view';
 import { UI } from 'sketch';
 import { getWinURL } from '@/sketch/utils/windows';
+import { winIdentifier } from './index';
 
-const homeWindows = () => {
-  const browserWindow = new BrowserWindow({
-    identifier: 'homeWin.webview',
+let browserWindow: BrowserWindow = null;
+
+const systemInfoWindow = () => {
+  browserWindow = new BrowserWindow({
+    alwaysOnTop: true,
+    identifier: winIdentifier.SYSTEM_INFO,
     width: 240,
-    height: 180,
+    height: 300,
+    title: '系统信息',
     show: false,
+    resizable: false,
     hidesOnDeactivate: false,
   });
 
@@ -18,11 +24,6 @@ const homeWindows = () => {
 
   const webContents = browserWindow.webContents;
 
-  // print a message when the page loads
-  webContents.on('did-finish-load', () => {
-    UI.message('UI loaded!');
-  });
-
   // add a handler for a call from web content's javascript
   webContents.on('nativeLog', (s: any) => {
     UI.message(s);
@@ -32,6 +33,7 @@ const homeWindows = () => {
   });
 
   browserWindow.loadURL(getWinURL('home'));
+  return browserWindow;
 };
 
-export default homeWindows;
+export default systemInfoWindow;

@@ -1,5 +1,7 @@
 import { defineConfig } from 'umi';
 import { resolve } from 'path';
+import routes from './routes';
+
 import theme from '../theme/variables';
 import chainWebpack from './webpack';
 
@@ -8,7 +10,7 @@ const config = defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  devtool: isDev ? 'source-map' : 'cheap-eval-source-map',
+  devtool: isDev ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
   outputPath: `../../dist`,
   alias: {
     '@/common': resolve(__dirname, '../../common'),
@@ -18,6 +20,7 @@ const config = defineConfig({
   locale: {
     default: 'zh-CN',
   },
+  routes,
   theme,
   history: { type: isDev ? 'hash' : 'browser' },
   exportStatic: { htmlSuffix: true, dynamicRoot: true },

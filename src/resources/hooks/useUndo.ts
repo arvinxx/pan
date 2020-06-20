@@ -2,7 +2,7 @@
  * 使用了数组的length来简化操作，因此stack一直是在引用上做修改，在外部如果要使用stack的话要注意
  */
 import { useReducer, useCallback, useEffect } from 'react';
-import { TableConfig } from '@/pages/table/data';
+import { TableConfig } from '@/pages/Table/data';
 
 const UNDO = 'UNDO';
 const REDO = 'REDO';

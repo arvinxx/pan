@@ -2,7 +2,7 @@ import { DvaModel, Reducer, Effect } from '@/models/connect';
 import { TableModelType } from 'typings/data/table';
 import update from 'immutability-helper';
 
-import transformTableProps from '@/pages/table/components/Table/transformTableProps';
+import transformTableProps from '@/pages/Table/components/Table/transformTableProps';
 
 export interface TableModelState extends TableModelType {
   activeHeader: string;

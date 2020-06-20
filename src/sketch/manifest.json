@@ -4,10 +4,15 @@
   "icon": "icons/logo.png",
   "commands": [
     {
+      "name": "切换状态栏",
+      "identifier": "com.arvinxx.pan.show-toolbar",
+      "script": "./commands/showToolBar.ts",
+      "shortcut": "ctrl j"
+    },
+    {
       "name": "系统信息",
       "identifier": "com.arvinxx.pan.system-info",
-      "script": "./commands/systemInfo.ts",
-      "shortcut": "cmd j"
+      "script": "./commands/systemInfo.ts"
     },
     {
       "name": "生成画板总览",
@@ -30,15 +35,10 @@
       "handler": "swapText"
     },
     {
-      "name": "Home",
-      "identifier": "com.arvinxx.pan.win.home",
-      "script": "./windows/home.ts"
-    },
-    {
       "name": "表格",
       "identifier": "com.arvinxx.pan.win.table",
       "script": "./windows/table.ts",
-      "shortcut": "ctrl t"
+      "shortcut": "ctrl alt t"
     },
     {
       "name": "查找替换",
@@ -48,18 +48,20 @@
     }
   ],
   "menu": {
-    "title": "🚀🚀Pan🚀🚀",
+    "title": "\uD83C\uDF73Pan",
     "items": [
-      "com.arvinxx.pan.system-info",
+      "com.arvinxx.pan.show-toolbar",
+      "-",
       "com.arvinxx.pan.artboards-overview",
-      "com.arvinxx.pan.panel",
-      "com.arvinxx.pan.win.home",
+      "-",
       "com.arvinxx.pan.win.replace",
       "com.arvinxx.pan.win.table",
       {
         "title": "交换",
         "items": ["com.arvinxx.pan.swap-position", "com.arvinxx.pan.swap-text"]
-      }
+      },
+      "-",
+      "com.arvinxx.pan.system-info"
     ]
   }
 }

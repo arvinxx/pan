@@ -38,6 +38,7 @@ module.exports = function(config, isPluginCommand) {
       },
     ],
   });
+
   if (!config.resolve) {
     config.resolve = {
       extensions: [],
