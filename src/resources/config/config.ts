@@ -10,6 +10,9 @@ const config = defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
+  dynamicImport: {
+    loading: '@/components/PageLoading',
+  },
   devtool: isDev ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
   outputPath: `../../dist`,
   alias: {
@@ -25,6 +28,9 @@ const config = defineConfig({
   history: { type: isDev ? 'hash' : 'browser' },
   exportStatic: { htmlSuffix: true, dynamicRoot: true },
   chainWebpack,
+  chunks: isDev
+    ? undefined
+    : ['antdesigns', 'antd', 'vendors', 'default.umi', 'umi'],
 });
 
 export default config;

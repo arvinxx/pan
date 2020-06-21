@@ -22,28 +22,30 @@ const ProCode: FC = () => {
   const { config, columns, dataSource, codeComment } = table;
 
   return (
-    <Row gutter={24} justify={'space-between'}>
-      <Col span={12}>
-        <Code
-          title={'Table表格代码'}
-          language={'jsx'}
-          code={tableString(config, codeComment.table)}
-          type={'table'}
-        />
-        <Code
-          title={'Columns列代码'}
-          code={columnsString(columns)}
-          type={'columns'}
-        />
-      </Col>
-      <Col span={12}>
-        <Code
-          title={'测试数据'}
-          code={dataSourceString(dataSource)}
-          type={'dataSource'}
-        />
-      </Col>
-    </Row>
+    <>
+      <Row gutter={24} justify={'space-between'}>
+        <Col span={12}>
+          <Code
+            title={'Table表格代码'}
+            language={'jsx'}
+            code={tableString(config, codeComment.table)}
+            type={'table'}
+          />
+        </Col>
+        <Col span={12}>
+          <Code
+            title={'Columns列代码'}
+            code={columnsString(columns)}
+            type={'columns'}
+          />
+        </Col>
+      </Row>
+      <Code
+        title={'测试数据'}
+        code={dataSourceString(dataSource)}
+        type={'dataSource'}
+      />
+    </>
   );
 };
 

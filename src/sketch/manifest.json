@@ -6,45 +6,50 @@
     {
       "name": "切换工具栏",
       "identifier": "com.arvinxx.pan.show-toolbar",
-      "script": "./commands/showToolBar.ts",
-      "shortcut": "ctrl j"
+      "script": "./app.ts",
+      "shortcut": "ctrl j",
+      "handler": "showToolBar"
     },
     {
       "name": "系统信息",
       "identifier": "com.arvinxx.pan.system-info",
-      "script": "./commands/systemInfo.ts"
+      "script": "./app.ts",
+      "handler": "systemInfo"
     },
     {
       "name": "生成画板总览",
       "identifier": "com.arvinxx.pan.artboards-overview",
-      "script": "./commands/artboardsOverview.ts",
-      "shortcut": "ctrl a"
+      "script": "./app.ts",
+      "shortcut": "ctrl a",
+      "handler": "artboardsOverview"
     },
     {
       "name": "交换位置",
       "identifier": "com.arvinxx.pan.swap-position",
-      "script": "./commands/swap.ts",
+      "script": "./app.ts",
       "shortcut": "ctrl shift s",
       "handler": "swapPosition"
     },
     {
       "name": "交换文本",
       "identifier": "com.arvinxx.pan.swap-text",
-      "script": "./commands/swap.ts",
+      "script": "./app.ts",
       "shortcut": "ctrl shift s",
       "handler": "swapText"
     },
     {
       "name": "表格",
       "identifier": "com.arvinxx.pan.win.table",
-      "script": "./windows/table.ts",
-      "shortcut": "ctrl alt t"
+      "script": "./app.ts",
+      "shortcut": "ctrl t",
+      "handler": "tableWin"
     },
     {
       "name": "查找替换",
       "identifier": "com.arvinxx.pan.win.replace",
-      "script": "./windows/replace.ts",
-      "shortcut": "ctrl k"
+      "script": "./app.ts",
+      "shortcut": "ctrl k",
+      "handler": "replaceWin"
     }
   ],
   "menu": {

@@ -448,6 +448,7 @@ declare class WKWebView extends NSView {
     ): WKWebView;
   };
   loadRequest(request: NSURLRequest): void;
+  loadFileURL_allowingReadAccessToURL(url: NSURL, isDirectory: boolean): void;
   setAutoresizingMask(mask: number): void;
   evaluateJavaScript_completionHandler(js: string, cb: () => void): void;
 }
