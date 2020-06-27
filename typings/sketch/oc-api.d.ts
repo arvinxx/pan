@@ -1,5 +1,117 @@
 // Generated with Sketch 53
 
+declare class MSArtboardPresetsViewControllerDelegate {}
+declare class MSAssetLibraryDelegate {}
+declare class MSAssetPickerHeaderViewDelegate {}
+declare class MSAssetPreferenceItemDelegate {}
+declare class MSBasicDelegate {}
+declare class MSCloudExportableDocument {}
+declare class MSCloudShareUploadControllerDelegate {}
+declare class MSCloudViewControllerDelegate {}
+declare class MSColorInspectorDelegate {}
+declare class MSColorInspectorSectionDelegate {}
+declare class MSColorPreviewButtonDelegate {}
+declare class MSContentDrawViewDelegate {}
+declare class MSDocumentDataDelegate {}
+declare class MSEditArtboardPresetViewControllerDelegate {}
+declare class MSEventHandlerManagerDelegate {}
+declare class MSFirstLineTypesetterDelegate {}
+declare class MSGestureRecognizerDelegate {}
+declare class MSGradientBarViewDelegate {}
+declare class MSGradientEventHandlerDelegate {}
+declare class MSGradientPointArrayDelegate {}
+declare class MSHighLevelExportDelegate {}
+declare class MSImporter {}
+declare class MSModeModePickerDelegate {}
+declare class MSPluginUpdater {}
+declare class MSPopToolbarItemActionObject {}
+declare class MSPresetPickerViewDelegate {}
+declare class MSRenderingContextCacheProvider {}
+declare class MSReorderingContainerDelegate {}
+declare class MSSelectVectorHandleGestureRecognizerDelegate {}
+declare class MSSidebarControllerDelegate {}
+declare class MSSliceLayerWatcher {}
+declare class MSStylePartInspectorDelegate {}
+declare class MSTextLayerEditingDelegate {}
+declare class MSTileDelegate {}
+declare class MSTiledLayerDelegate {}
+declare class MSTilePlacerDelegate {}
+declare class MSTileRenderOperationDelegate {}
+declare class MSVectorCanvasDelegate {}
+declare class BCSingleton {}
+declare class _MSImmutableOverrideValue {}
+declare class MSOverlayRenderingDelegate {}
+declare class _MSOverrideValue {}
+declare class MSRenderer {}
+declare class MSProfilingRendererDelegate {}
+
+declare class MSSharedStylesPopUpButtonCellDelegate {}
+declare class MSStackViewScrollViewDelegate {}
+declare class MSStylePartPreviewButtonWithBlendModeDelegae {}
+declare class MSSymbolInstanceSectionDelegate {}
+declare class MSTextHeaderInspectorItemDelegate {}
+declare class MSGPURenderer {}
+declare class MSInspectorItemProvider {}
+declare class MSAlignmentEngineDelegate {}
+declare class MSLine {}
+declare class MSInspectorSectionDelegate {}
+declare class MSLineSegment {}
+declare class MSCloudLoginWindowControllerDelegate {}
+declare class MSDataMenuProviderDelegate {}
+declare class MSDataSupplierManagerDelegate {}
+declare class MSInspectorItemDelegate {}
+declare class MSInspectorValueAdaptorDelegate {}
+declare class MSSnappable {}
+declare class MSLocalDataSupplierDelegate {}
+declare class MSOverlayRendererDelegate {}
+declare class MSPluginDataSupplierDelegate {}
+declare class MSPluginLogAction {}
+declare class MSMenuBuilderDelegate {}
+declare class MSStylePartPreviewButtonDelegate {}
+declare class MSStylePartInspectorItemDelegate {}
+declare class MSTextLayerTextViewDelegate {}
+declare class MSIncrementDecrementDelegate {}
+declare class _TtC17SketchControllers22MSAlignmentEngineCycle {}
+
+declare class MSAssetCollectionViewSourceDelegate {}
+declare class MSAsset {}
+declare class MSAssetCollectionViewSourceItemProvider {}
+declare class BCLine {}
+declare class BCLineSegment {}
+declare class MSAssetCollectionViewItemDelegate {}
+declare class MSAssetPickerControllerDelegate {}
+declare class MSAssetPickerScrubberControllerDelegate {}
+declare class NSScrubber {}
+declare class NSPointerArray {}
+declare class _MSColorAsset {}
+declare class MSColorComponentAdaptorDelegate {}
+declare class MSColorComponentsControllerDelegate {}
+declare class MSColorModePickerControllerDelegate {}
+declare class MSColorModelPickerDelegate {}
+declare class MSColorPickerViewControllerDelegate {}
+declare class MSFlowInfo {}
+declare class _MSFreeformGroupLayout {}
+declare class MSFrequentColorsControllerDelegate {}
+declare class MSFrequentImagesControllerDelegate {}
+declare class MSFrequentObjectsControllerDelegate {}
+declare class _MSGradientAsset {}
+declare class BCColorPickerSliderView {}
+declare class _MSGroupLayout {}
+declare class _MSImmutableAssetContainer {}
+declare class _MSImmutableColorAsset {}
+declare class _MSImmutableFreeformGroupLayout {}
+declare class _MSImmutableGradientAsset {}
+declare class _MSImmutableGroupLayout {}
+declare class _MSImmutableInferredGroupLayout {}
+declare class _MSImmutableOverrideProperty {}
+declare class _MSInferredGroupLayout {}
+declare class _TtC17SketchControllers12MSLayerMover {}
+declare class MSDragLayerToolUserInterface {}
+declare class MTLBuffer {}
+declare class MTLDepthStencilState {}
+declare class NSCountedSet {}
+declare class _MSOverrideProperty {}
+declare class BCAtomicStack {}
 declare class BCReadWriteLock extends NSObject {
   /* typeEncoding=v16@0:8 */
   dealloc(): void;
@@ -4131,7 +4243,7 @@ declare class MSAttributeConverter extends NSObject {
   initWithAttributeName_block(...args: any[]): any;
 }
 
-declare class MSAttributedString extends NSObject /* implements MSCoding, NSCopying */ {
+declare class MSAttributedString extends NSCopying /* implements MSCoding, NSCopying */ {
   /* typeEncoding=@"NSString", ivar=(null), attributes=(assign,nonatomic,readonly) */
   archiveReferenceIdentifier_bc(): NSString;
   /* typeEncoding=c, ivar=(null), attributes=(assign,nonatomic,readonly) */
@@ -4202,28 +4314,29 @@ declare class MSAttributedString extends NSObject /* implements MSCoding, NSCopy
   hash(...args: any[]): any;
   /* typeEncoding=@16@0:8 */
   immutableModelObject(...args: any[]): any;
-  /* typeEncoding=@16@0:8 */
-  init(...args: any[]): any;
-  /* typeEncoding=@36@0:8@16@24c32 */
-  initWithAttributedString_colorSpace_convert(...args: any[]): any;
-  /* typeEncoding=@32@0:8@16@24 */
-  initWithAttributedString_documentColorSpace(...args: any[]): any;
-  /* typeEncoding=@24@0:8@16 */
-  initWithEncodedAttributedString(...args: any[]): any;
-  /* typeEncoding=@24@0:8@16 */
-  initWithUnarchiver(...args: any[]): any;
-  /* typeEncoding=c24@0:8@16 */
+
+  initWithAttributedString_colorSpace_convert(
+    ...args: any[]
+  ): MSAttributedString;
+  initWithAttributedString_documentColorSpace(
+    ...args: any[]
+  ): MSAttributedString;
+  initWithEncodedAttributedString(...args: any[]): MSAttributedString;
+  initWithUnarchiver(...args: any[]): MSAttributedString;
+
   isEqual(...args: any[]): any;
   /* typeEncoding=c24@0:8@16 */
   propertiesAreEqual(...args: any[]): any;
-  /* typeEncoding=@16@0:8 */
-  string(...args: any[]): any;
+
+  string(): string;
   /* typeEncoding=@16@0:8 */
   transformedAttributedString(...args: any[]): any;
   /* typeEncoding=@16@0:8 */
   treeAsDictionary(...args: any[]): any;
   /* typeEncoding=@16@0:8 */
   unavailableFontNames(...args: any[]): any;
+
+  static alloc(): MSAttributedString;
 }
 
 declare class MSAttributedStringAttribute extends NSObject /* implements BCJSONEncoding */ {
@@ -18601,7 +18714,7 @@ declare class MSGoogleAnalyticsWrapper extends NSObject /* implements WebFrameLo
   /* typeEncoding=#, ivar=(null), attributes=(assign,readonly) */
   superclass(): any;
   /* typeEncoding=@"WebView", ivar=_webView, attributes=(retain,nonatomic) */
-  webView(): WebView;
+  webView(): WKWebView;
   /* typeEncoding=c, ivar=_webViewReady, attributes=(assign,nonatomic) */
   webViewReady(): boolean;
 
@@ -32119,6 +32232,8 @@ declare class MSOverrideManagementPropertyViewController extends MSOverrideManag
   /* typeEncoding=v24@0:8@16 */
   setPropertyName(...args: any[]): any;
 }
+
+declare class MSThemeImageViewDelegate {}
 
 declare class MSOverrideManagementTitleViewController extends MSOverrideManagementViewController /* implements MSThemeImageViewDelegate */ {
   /* typeEncoding=@"NSString", ivar=_overrideName, attributes=(retain,nonatomic) */
@@ -56409,3 +56524,5 @@ declare class _MSTriangleShape extends MSShapePathLayer {
   /* typeEncoding=v24@0:8@16 */
   syncPropertiesFromObject(...args: any[]): any;
 }
+
+declare class _TtC6Sketch21MSResizingPreviewView {}

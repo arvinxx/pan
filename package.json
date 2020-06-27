@@ -7,7 +7,7 @@
     "sketch": ">=3.0"
   },
   "skpm": {
-    "name": "\uD83C\uDF73Pan",
+    "name": "🍳Pan",
     "manifest": "src/sketch/manifest.json",
     "main": "pan.sketchplugin",
     "assets": [
@@ -34,6 +34,7 @@
     "@sketch-hq/sketch-file-format-ts": "^5.1.0",
     "@skpm/builder": "^0.7.7",
     "@types/classnames": "^2.2.10",
+    "@types/mocha": "^7.0.2",
     "@types/react-resizable": "^1.7.2",
     "@types/react-syntax-highlighter": "^11.0.4",
     "@typescript-eslint/eslint-plugin": "^3.1.0",
@@ -66,5 +67,9 @@
     "typescript": "^3.9.5",
     "umi": "^3.2.3",
     "yorkie": "^2.0.0"
+  },
+  "dependencies": {
+    "@brainly/html-sketchapp": "^4.4.0",
+    "sketch-constants": "^1.1.0"
   }
 }

@@ -1,38 +1,3 @@
-declare interface SketchContext {
-  api(): any;
-  command: MSPluginCommand;
-  document: MSDocument;
-  scriptPath: string;
-  scriptURL: NSURL;
-  selection: NSArray;
-}
-declare interface SketchActionContext<T extends MSAction>
-  extends SketchContext {
-  actionContext: {
-    document: MSDocument;
-    action?: T;
-    exports?: { path: string; request: MSExportRequest }[];
-  };
-  action: string;
-}
-
-/*
-ABOUT:
-The rest of this file are bare minimum types referenced in sketch.d.ts.
-NS*, CG*, WK*: AppKit types
-MS*: Sketch interface (@interface) or delegate (@protocol)
-SCK*: More Sketch classes
-others are likely more Sketch things
-*/
-
-/**
- * Instance properties in Mocha are set up as setters for the value type directly, and a
- * getter that returns a method that gets the value. We can't document this properly
- * in TypeScript, so we'll have to settle for this, and type your getters.
- */
-type MochaProperty<T> = (() => T) | T;
-
-declare const context: SketchContext;
 declare const NSUTF8StringEncoding: number;
 declare const NSViewWidthSizable: number;
 declare const NSViewHeightSizable: number;
@@ -44,12 +9,12 @@ declare const NSLayoutAttributeHeight: number;
 declare const NSLayoutRelationEqual: number;
 declare const NSLayoutAttributeTop: any;
 declare const NSPasteboardTypeString: unique symbol;
-declare const MOPointer: any;
 
 declare function NSClassFromString(name: string): any;
 declare function NSMakeRect(x: number, y: number, w: number, h: number): NSRect;
 declare function CGRectMake(x: number, y: number, w: number, h: number): CGRect;
 declare function NSMakeSize(w: number, h: number): NSSize;
+
 declare class NSSize {
   width: number;
   height: number;
@@ -147,53 +112,20 @@ declare class COScript {
 declare class DKDistortionTransform {}
 declare class ECLogChannel {}
 declare class ECLogHandler {}
-declare class MSArtboardPresetsViewControllerDelegate {}
-declare class MSAssetLibraryDelegate {}
-declare class MSAssetPickerHeaderViewDelegate {}
-declare class MSAssetPreferenceItemDelegate {}
-declare class MSBasicDelegate {}
-declare class MSCloudExportableDocument {}
-declare class MSCloudShareUploadControllerDelegate {}
-declare class MSCloudViewControllerDelegate {}
-declare class MSColorInspectorDelegate {}
-declare class MSColorInspectorSectionDelegate {}
-declare class MSColorPreviewButtonDelegate {}
-declare class MSContentDrawViewDelegate {}
-declare class MSDocumentDataDelegate {}
-declare class MSEditArtboardPresetViewControllerDelegate {}
-declare class MSEventHandlerManagerDelegate {}
-declare class MSFirstLineTypesetterDelegate {}
-declare class MSGestureRecognizerDelegate {}
-declare class MSGradientBarViewDelegate {}
-declare class MSGradientEventHandlerDelegate {}
-declare class MSGradientPointArrayDelegate {}
-declare class MSHighLevelExportDelegate {}
-declare class MSImporter {}
-declare class MSModeModePickerDelegate {}
-declare class MSPluginUpdater {}
-declare class MSPopToolbarItemActionObject {}
-declare class MSPresetPickerViewDelegate {}
-declare class MSRenderingContextCacheProvider {}
-declare class MSReorderingContainerDelegate {}
-declare class MSSelectVectorHandleGestureRecognizerDelegate {}
-declare class MSSidebarControllerDelegate {}
-declare class MSSliceLayerWatcher {}
-declare class MSStylePartInspectorDelegate {}
-declare class MSTextLayerEditingDelegate {}
-declare class MSTileDelegate {}
-declare class MSTiledLayerDelegate {}
-declare class MSTilePlacerDelegate {}
-declare class MSTileRenderOperationDelegate {}
-declare class MSVectorCanvasDelegate {}
 declare class NSAffineTransform {}
 declare class NSArray<T = NSObject> extends Array {
   [index: number]: T;
   count(): number;
   objectAtIndex(index: number): T;
+
+  static arrayWithArray(array: any): NSArray;
 }
 declare class NSArrayController {}
 declare class NSATSTypesetter {}
-declare class NSAttributedString {}
+declare class NSAttributedString {
+  static attributedStringWithString_attributes_(content: any, attribs: any);
+}
+
 declare class NSBezierPath {}
 declare class NSBitmapImageRep {}
 declare class NSBundle {}
@@ -212,6 +144,13 @@ declare class NSColor extends NSObject {
    * 获取背景颜色
    */
   static windowBackgroundColor(): WindowBackgroundColor;
+
+  static colorWithDeviceRed_green_blue_alpha(
+    red: number,
+    green: number,
+    blue: number,
+    alpha: number
+  ): NSColor;
 }
 declare class WindowBackgroundColor extends NSColor {}
 
@@ -233,7 +172,6 @@ declare class NSDocumentController {}
 declare class NSEdgeInsets {}
 declare class NSError {}
 declare class NSEvent {}
-declare class NSFont {}
 declare class NSFormatter {}
 declare class NSGradient {}
 declare class NSGraphicsContext {}
@@ -261,7 +199,10 @@ declare class NSMapTable {}
 declare class NSMenu {}
 declare class NSMenuItem {}
 declare class NSMutableArray {}
-declare class NSMutableAttributedString {}
+declare class NSMutableAttributedString extends NSObject {
+  static alloc(): NSMutableAttributedString;
+  appendAttributedString(newString: any): void;
+}
 declare class NSMutableData {}
 declare class NSMutableDictionary {}
 declare class NSMutableSet {}
@@ -270,6 +211,14 @@ declare class NSNib {}
 declare class NSNumber extends Number {}
 declare class NSNumberFormatter {}
 declare class NSObject {
+  /**
+   * Implemented by subclasses to initialize a new object (the receiver)
+   * immediately after memory for it has been allocated.
+   *
+   */
+  init(): this;
+
+  alloc(): this;
   class(): any;
   className(): NSString;
   isKindOfClass<T extends NSObject>(arg: { new (): T }): this is T;
@@ -284,7 +233,7 @@ declare class NSPredicate {}
 declare class NSProgressIndicator {}
 
 /**
- *  NSResponser 类型
+ *  NSResponder 类型
  * @see https://developer.apple.com/documentation/appkit/nsresponder
  */
 declare class NSResponder extends NSObject {}
@@ -341,8 +290,11 @@ declare class NSStackView extends NSView {
 
 declare class NSStoryboard {}
 declare class NSString extends String {
-  static stringWithContentsOfFile_encoding_error(...args: any[]): any;
-  static stringWithFormat(...args: any[]): any;
+  static stringWithContentsOfFile_encoding_error(...args: any[]): NSString;
+  static stringWithFormat(...args: any[]): NSString;
+  static stringWithString(rawString: string): NSString;
+
+  dataUsingEncoding(NSUTF8StringEncoding: number): any;
 }
 declare class NSTableCellView {}
 declare class NSTableView {}
@@ -401,7 +353,7 @@ declare class SMKMirrorClient {}
 declare class SMKMirrorController {}
 declare class SnapItem {}
 declare class SVGImporter {}
-declare class WebView {}
+
 declare class _CHTransformStruct {}
 declare class SCKAvatar {}
 declare class SCKShareUploadOperation {}
@@ -409,12 +361,7 @@ declare class NSProgress {}
 declare class NSPanel {
   static alloc(): any;
 }
-declare class BCSingleton {}
-declare class _MSImmutableOverrideValue {}
-declare class MSOverlayRenderingDelegate {}
-declare class _MSOverrideValue {}
-declare class MSRenderer {}
-declare class MSProfilingRendererDelegate {}
+
 declare class CATextLayer {}
 declare class _NSRange {}
 declare class NSRange {}
@@ -424,7 +371,7 @@ declare class CGVector {
   dy: CGFloat;
 }
 declare class CGFloat extends Number {}
-declare class NSCopying {}
+declare class NSCopying extends NSObject {}
 declare class NSFileWrapper {}
 declare class NSURLSessionDataTask {}
 declare class NSURLProtocol {}
@@ -440,6 +387,7 @@ declare class NSURLSessionDownloadTask {}
 declare class NSUUID {}
 declare class NSURLSessionUploadTask {}
 declare class SCKShareUploadDataSource {}
+
 declare class WKWebView extends NSView {
   static alloc(): {
     initWithFrame_configuration(
@@ -460,26 +408,7 @@ declare class WKWebViewConfiguration {
   static alloc(): any;
 }
 declare class SCKCloudDocument {}
-declare class MSAlignmentEngineDelegate {}
-declare class MSLine {}
-declare class MSInspectorSectionDelegate {}
-declare class MSLineSegment {}
-declare class MSCloudLoginWindowControllerDelegate {}
-declare class MSDataMenuProviderDelegate {}
-declare class MSDataSupplierManagerDelegate {}
-declare class MSInspectorItemDelegate {}
-declare class MSInspectorValueAdaptorDelegate {}
-declare class MSSnappable {}
-declare class MSLocalDataSupplierDelegate {}
-declare class MSOverlayRendererDelegate {}
-declare class MSPluginDataSupplierDelegate {}
-declare class MSPluginLogAction {}
-declare class MSMenuBuilderDelegate {}
-declare class MSStylePartPreviewButtonDelegate {}
-declare class MSStylePartInspectorItemDelegate {}
-declare class MSTextLayerTextViewDelegate {}
-declare class MSIncrementDecrementDelegate {}
-declare class _TtC17SketchControllers22MSAlignmentEngineCycle {}
+
 declare class NSValueTransformer {}
 declare class NSTableRowView {}
 declare class SCKAPIEnvironment {}
@@ -510,16 +439,7 @@ declare class NSOpenGLLayer {}
 declare class NSOpenGLContext {}
 declare class MSTiledRendererHostView {}
 declare class NSTrackingArea {}
-declare class _TtC6Sketch21MSResizingPreviewView {}
-
 declare class NSToolbarItemGroup {}
-declare class MSSharedStylesPopUpButtonCellDelegate {}
-declare class MSStackViewScrollViewDelegate {}
-declare class MSStylePartPreviewButtonWithBlendModeDelegae {}
-declare class MSSymbolInstanceSectionDelegate {}
-declare class MSTextHeaderInspectorItemDelegate {}
-declare class MSGPURenderer {}
-declare class MSInspectorItemProvider {}
 declare class NSRect {}
 /**
  * 实例线程
@@ -538,43 +458,3 @@ declare class NSPasteboard {
 }
 declare class NSCollectionViewFlowLayout {}
 declare class NSCollectionViewLayoutAttributes {}
-declare class MSAssetCollectionViewSourceDelegate {}
-declare class MSAsset {}
-declare class MSAssetCollectionViewSourceItemProvider {}
-declare class BCLine {}
-declare class BCLineSegment {}
-declare class MSAssetCollectionViewItemDelegate {}
-declare class MSAssetPickerControllerDelegate {}
-declare class MSAssetPickerScrubberControllerDelegate {}
-declare class NSScrubber {}
-declare class NSPointerArray {}
-declare class _MSColorAsset {}
-declare class MSColorComponentAdaptorDelegate {}
-declare class MSColorComponentsControllerDelegate {}
-declare class MSColorModePickerControllerDelegate {}
-declare class MSColorModelPickerDelegate {}
-declare class MSColorPickerViewControllerDelegate {}
-declare class MSFlowInfo {}
-declare class _MSFreeformGroupLayout {}
-declare class MSFrequentColorsControllerDelegate {}
-declare class MSFrequentImagesControllerDelegate {}
-declare class MSFrequentObjectsControllerDelegate {}
-declare class _MSGradientAsset {}
-declare class BCColorPickerSliderView {}
-declare class _MSGroupLayout {}
-declare class _MSImmutableAssetContainer {}
-declare class _MSImmutableColorAsset {}
-declare class _MSImmutableFreeformGroupLayout {}
-declare class _MSImmutableGradientAsset {}
-declare class _MSImmutableGroupLayout {}
-declare class _MSImmutableInferredGroupLayout {}
-declare class _MSImmutableOverrideProperty {}
-declare class _MSInferredGroupLayout {}
-declare class _TtC17SketchControllers12MSLayerMover {}
-declare class MSDragLayerToolUserInterface {}
-declare class MTLBuffer {}
-declare class MTLDepthStencilState {}
-declare class NSCountedSet {}
-declare class _MSOverrideProperty {}
-declare class BCAtomicStack {}
-declare class MSThemeImageViewDelegate {}

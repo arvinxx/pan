@@ -1,5 +1,3 @@
-import { join } from 'path';
-
 import { getWinURL } from '@/sketch/utils/windows';
 import { winIdentifier } from './index';
 import { isDev } from '@/common/env';
@@ -14,18 +12,15 @@ const toolbarWindow = () => {
 
   toolbar.setIdentifier(winIdentifier.TOOLBAR);
 
-  // if (isDev) {
-  //   toolbar.loadRequest(
-  //     NSURLRequest.requestWithURL(NSURL.URLWithString(getWinURL('toolbar')))
-  //   );
-  // } else {
-  console.log(process);
-  const url = join(`/Resources/toolbar.html`);
-  const webAppUrl = join(process.cwd(), `/Contents/Resources`);
-  console.log(url);
-
-  toolbar.loadFileURL(url, NSURL.fileURLWithPath(url), false);
-  // }
+  if (isDev) {
+    toolbar.loadRequest(
+      NSURLRequest.requestWithURL(NSURL.URLWithString(getWinURL('toolbar')))
+    );
+  } else {
+    // const url = join(`/Resources/toolbar.html`);
+    //
+    // toolbar.loadFileURL(url, NSURL.fileURLWithPath(url), false);
+  }
   return toolbar;
 };
 

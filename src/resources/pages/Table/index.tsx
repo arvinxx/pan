@@ -5,12 +5,16 @@ import { uuid } from '@/utils';
 import { useSelector, useDispatch } from 'dva';
 import useUndo from '@/hooks/useUndo';
 import { TableConfig } from 'typings/data/table';
+import {
+  nodeTreeToSketchGroup,
+  nodeTreeToSketchPage,
+} from '@brainly/html-sketchapp';
 
 import { ConnectState, Loading, TableModelState } from '@/models/connect';
 import DataArea from './components/DataArea';
 import ProCode from './components/ProCode';
 import Config from './components/Config';
-import { generateTable } from './service';
+import { generateTable, generateTableFromJSON } from './service';
 
 import styles from './style.less';
 
@@ -47,7 +51,11 @@ const TablePage: FC = () => {
 
   const handleGenerate = () => {
     // 通知 Sketch 生成表格
-    generateTable(table);
+    const el = document.getElementById('x-table');
+    if (el) {
+      const json = nodeTreeToSketchGroup(el);
+      generateTableFromJSON(json);
+    }
   };
 
   const onApplyHistory = (storedConfig: TableConfig) => {
@@ -60,7 +68,7 @@ const TablePage: FC = () => {
   };
 
   const { tableHistory } = state;
-  console.log(process);
+
   return (
     <ErrorBoundary onRetry={onRetry}>
       <div className={styles.container}>

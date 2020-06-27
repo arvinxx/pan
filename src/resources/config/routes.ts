@@ -11,6 +11,11 @@ const routes: IRoute[] = [
         component: './Home',
       },
       {
+        path: '/test',
+        exact: true,
+        component: './TestField',
+      },
+      {
         path: '/replace',
         exact: true,
         component: './Replace',

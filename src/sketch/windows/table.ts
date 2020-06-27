@@ -2,9 +2,10 @@ import BrowserWindow from 'sketch-module-web-view';
 import { UI } from 'sketch';
 import { getWinURL } from '@/sketch/utils/windows';
 import { channel } from '@/bridge';
-import { generateTable } from '@/sketch/utils/table';
-import { TableModelType } from 'typings/data/table';
+
 import { winIdentifier } from '@/sketch/windows/index';
+
+import { getNativeLayer } from '@/sketch/modules/sketchJson';
 
 const tableWindows = () => {
   const browserWindow = new BrowserWindow({
@@ -13,6 +14,10 @@ const tableWindows = () => {
     show: false,
     hidesOnDeactivate: false,
   });
+
+  const threadDictionary = NSThread.mainThread().threadDictionary();
+
+  threadDictionary[winIdentifier.TABLE] = browserWindow;
 
   // only show the window when the page has loaded to avoid a white flash
   browserWindow.once('ready-to-show', () => {
@@ -34,13 +39,21 @@ const tableWindows = () => {
       .catch(console.error);
   });
 
-  webContents.on(channel.TABLE_GENERATE, (data: string) => {
-    const table: TableModelType = JSON.parse(data);
-    const success = generateTable(table);
-    if (success) {
-      browserWindow.close();
-    }
+  webContents.on(channel.TABLE_GENERATE_FROM_JSON, (data) => {
+    const page = context.document.currentPage();
+    const failingLayers = [];
+
+    data.layers
+      // 将layer 转为原生 layer
+      .map((layer) => {
+        const nativeLayer = getNativeLayer(failingLayers, layer);
+
+        console.log(nativeLayer);
+        return nativeLayer;
+      })
+      .forEach((layer) => layer && page.addLayer(layer));
   });
+
   browserWindow.loadURL(getWinURL('table'));
 };
 

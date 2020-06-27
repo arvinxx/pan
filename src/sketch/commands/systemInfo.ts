@@ -1,3 +1,5 @@
+import { getSketchVersion } from '@/sketch/utils/version';
+
 declare global {
   namespace NodeJS {
     interface ProcessVersions {
@@ -21,7 +23,7 @@ export default (context: SketchContext) => {
   const plugin = process.versions.plugin;
   const env = process.env.NODE_ENV;
   const platform = process.type;
-  const sketch = process.versions.sketch;
+  const sketch = getSketchVersion();
   console.info('=======System Info=======');
   console.info(`开发环境: ${env}`);
   console.info(`Plugin 版本: ${plugin}`);

@@ -16,7 +16,7 @@ const expandedRowRender = () => <p>我是 description</p>;
 interface ColType {
   width: number;
 }
-const Data: FC = () => {
+const TablePage: FC = () => {
   const dispatch = useDispatch();
   // const [activeCells, setActiveCells] = useState<string[]>([]);
   const table = useSelector<ConnectState, TableModelState>(
@@ -69,6 +69,7 @@ const Data: FC = () => {
 
   return (
     <div
+      id={'x-table'}
       style={{ width: tableWidth !== 'auto' ? widthValue : undefined }}
       ref={ref}
     >
@@ -146,4 +147,4 @@ const Data: FC = () => {
   );
 };
 
-export default Data;
+export default TablePage;

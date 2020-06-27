@@ -1,4 +1,4 @@
-/// <reference path="./sketch.d.ts" />
+/// <reference path="./oc-api.d.ts" />
 
 declare module 'sketch/dom' {
   class dom {

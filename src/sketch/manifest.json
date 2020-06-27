@@ -4,10 +4,16 @@
   "icon": "icons/logo.png",
   "commands": [
     {
+      "name": "测试场",
+      "identifier": "com.arvinxx.pan.test-field",
+      "script": "./app.ts",
+      "shortcut": "ctrl w",
+      "handler": "testFieldWin"
+    },
+    {
       "name": "切换工具栏",
       "identifier": "com.arvinxx.pan.show-toolbar",
       "script": "./app.ts",
-      "shortcut": "ctrl j",
       "handler": "showToolBar"
     },
     {
@@ -55,6 +61,8 @@
   "menu": {
     "title": "\uD83C\uDF73Pan",
     "items": [
+      "com.arvinxx.pan.test-field",
+      "-",
       "com.arvinxx.pan.show-toolbar",
       "-",
       "com.arvinxx.pan.artboards-overview",
