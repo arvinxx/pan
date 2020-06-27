@@ -9,15 +9,19 @@ const DEFAULT_USER_INFO_SCOPE = 'html-sketchapp';
 
 export interface BaseInitParams {
   id?: string;
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
 }
 class Base {
   private _layers: any[];
   private _userInfo: any;
-  private _style: any;
+  protected _style: any;
   protected _class?: string;
   private _objectID: string;
   private _isLocked: boolean | undefined;
-  private _name: string;
+  protected _name: string;
   private _resizingConstraint: any;
   private _hasClippingMask: any;
   constructor(data: BaseInitParams) {
@@ -122,6 +126,7 @@ class Base {
       userInfo: undefined,
       style: undefined,
       frame: undefined,
+      text: undefined,
     };
 
     if (this._userInfo) {

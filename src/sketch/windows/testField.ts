@@ -43,6 +43,12 @@ const testFieldWindow = () => {
         .map(getNativeLayer)
         // 添加到图层里
         .forEach((layer) => layer && page.addLayer(layer));
+    } else {
+      page.addLayer(getNativeLayer(data));
+
+      data.layers
+        .map(getNativeLayer)
+        .forEach((layer) => layer && page.addLayer(layer));
     }
 
     console.log('添加成功');

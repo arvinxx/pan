@@ -5,10 +5,7 @@ import { uuid } from '@/utils';
 import { useSelector, useDispatch } from 'dva';
 import useUndo from '@/hooks/useUndo';
 import { TableConfig } from 'typings/data/table';
-import {
-  nodeTreeToSketchGroup,
-  nodeTreeToSketchPage,
-} from '@brainly/html-sketchapp';
+import { nodeTreeToSketchGroup } from '@/utils/html2asketch';
 
 import { ConnectState, Loading, TableModelState } from '@/models/connect';
 import DataArea from './components/DataArea';
@@ -17,6 +14,7 @@ import Config from './components/Config';
 import { generateTable, generateTableFromJSON } from './service';
 
 import styles from './style.less';
+import { sendRawMsgToEnd } from '@/bridge';
 
 const { Panel } = Collapse;
 const { TabPane } = Tabs;
@@ -52,9 +50,11 @@ const TablePage: FC = () => {
   const handleGenerate = () => {
     // 通知 Sketch 生成表格
     const el = document.getElementById('x-table');
+
     if (el) {
-      const json = nodeTreeToSketchGroup(el);
-      generateTableFromJSON(json);
+      const group = nodeTreeToSketchGroup(el);
+      console.log(group);
+      sendRawMsgToEnd('TABLE_GENERATE_FROM_JSON', group);
     }
   };
 

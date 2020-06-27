@@ -14,6 +14,7 @@ import {
   TableModelState,
 } from '@/models/connect';
 import { sendRawMsgToEnd } from '@/bridge';
+import { doc } from 'prettier';
 
 const Panel: FC = () => {
   const dispatch = useDispatch();
@@ -25,10 +26,10 @@ const Panel: FC = () => {
     const el = document.getElementById('test');
 
     if (el) {
-      const layers = nodeToSketchLayers(el);
+      const group = nodeTreeToSketchGroup(el);
 
-      console.log(layers);
-      sendRawMsgToEnd('TEST_FIELD', layers);
+      console.log(group);
+      sendRawMsgToEnd('TEST_FIELD', group);
     }
   };
 

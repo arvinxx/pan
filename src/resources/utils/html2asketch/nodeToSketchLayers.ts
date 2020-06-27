@@ -7,6 +7,7 @@ import Style from './model/style';
 import Text from './model/text';
 import TextStyle from './model/textStyle';
 import createXPathFromElement from './helpers/createXPathFromElement';
+import { getName } from './helpers/name';
 import { parseBackgroundImage, getActualImageSize } from './helpers/background';
 import { splitShadowString, shadowStringToObject } from './helpers/shadow';
 import { getSVGString } from './helpers/svg';
@@ -21,7 +22,7 @@ const DEFAULT_VALUES = {
   boxShadow: 'none',
 };
 
-function hasOnlyDefaultStyles(styles) {
+function hasOnlyDefaultStyles(styles: CSSStyleDeclaration) {
   return Object.keys(DEFAULT_VALUES).every((key) => {
     const defaultValue = DEFAULT_VALUES[key];
     const value = styles[key];
@@ -30,7 +31,7 @@ function hasOnlyDefaultStyles(styles) {
   });
 }
 
-function fixBorderRadius(borderRadius, width, height) {
+function fixBorderRadius(borderRadius: string, width: number, height: number) {
   const matches = borderRadius.match(/^([0-9.]+)(.+)$/);
 
   // Sketch uses 'px' units for border radius, so we need to convert % to px
@@ -43,7 +44,7 @@ function fixBorderRadius(borderRadius, width, height) {
   return parseInt(borderRadius, 10);
 }
 
-function isSVGDescendant(node) {
+function isSVGDescendant(node: HTMLElement) {
   return node instanceof SVGElement && node.matches('svg *');
 }
 
@@ -51,7 +52,7 @@ function isSVGDescendant(node) {
  * @param {string} fontWeight font weight as provided by the browser
  * @return {number} normalized font weight
  */
-function parseFontWeight(fontWeight: string | number) {
+function parseFontWeight(fontWeight: string) {
   // Support 'bold' and 'normal' for Electron compatibility.
   if (fontWeight === 'bold') {
     return 700;
@@ -84,11 +85,13 @@ export default function nodeToSketchLayers(
   const styles: CSSStyleDeclaration = getComputedStyle(node);
 
   const {
+    // 背景颜色
     backgroundColor,
     backgroundImage,
     backgroundPositionX,
     backgroundPositionY,
     backgroundSize,
+    // 边框
     borderColor,
     borderWidth,
     borderTopWidth,
@@ -103,20 +106,21 @@ export default function nodeToSketchLayers(
     borderTopRightRadius,
     borderBottomLeftRadius,
     borderBottomRightRadius,
+    // 字体
     fontFamily,
     fontWeight,
     fontSize,
     lineHeight,
     letterSpacing,
-    color,
     textTransform,
     textDecorationLine,
     textAlign,
     justifyContent,
     display,
+    whiteSpace,
     boxShadow,
     opacity,
-    whiteSpace,
+    color,
   } = styles;
 
   // skip SVG child nodes as they are already covered by `new SVG(…)`
@@ -124,17 +128,18 @@ export default function nodeToSketchLayers(
     return layers;
   }
 
+  // 如果隐藏直接返回
   if (!isNodeVisible(node, bcr, styles)) {
     return layers;
   }
 
-  // 没有必要在默认情况下就添加 shape 吧
+  // 没有必要在默认情况下就添加 shape 吧?
   const shapeGroup = new ShapeGroup({ x: left, y: top, width, height });
 
   if (options && options.getRectangleName) {
     shapeGroup.setName(options.getRectangleName(node));
   } else {
-    shapeGroup.setName(createXPathFromElement(node));
+    shapeGroup.setName(getName(node.nodeType));
   }
 
   const isImage = node.nodeName === 'IMG' && node.currentSrc;
@@ -225,9 +230,8 @@ export default function nodeToSketchLayers(
     };
 
     const rectangle = new Rectangle({ width, height, cornerRadius });
-
-    console.log(rectangle);
     shapeGroup.addLayer(rectangle);
+    shapeGroup.setName('rect');
 
     // This should return a array once multiple background-images are supported
     const backgroundImageResult = parseBackgroundImage(backgroundImage);
@@ -275,8 +279,8 @@ export default function nodeToSketchLayers(
             const group = new Group({ x: left, y: top, width, height });
 
             // position is relative to the group
-            shapeGroup.setPosition({ x: 0, y: 0 });
-            group.addLayer(shapeGroup);
+            group.setPosition({ x: 0, y: 0 });
+            group.addLayer(group);
             group.addLayer(bm);
 
             layer = group;
@@ -296,6 +300,9 @@ export default function nodeToSketchLayers(
     }
 
     layers.push(layer);
+  } else {
+    // 否则只是一个编组
+    shapeGroup.setName(getName(node.nodeType));
   }
 
   if (isSVG) {
@@ -336,13 +343,12 @@ export default function nodeToSketchLayers(
     skipSystemFonts: options && options.skipSystemFonts,
   });
 
-  console.log(textStyle);
   const rangeHelper = document.createRange();
 
   // Text
   Array.from(node.childNodes)
     .filter(
-      (child) => child.nodeType === 3 && child.nodeValue.trim().length > 0
+      (child) => child.nodeType === 3 && child.nodeValue!.trim().length > 0
     )
     .forEach((textNode) => {
       rangeHelper.selectNodeContents(textNode);
@@ -357,12 +363,11 @@ export default function nodeToSketchLayers(
       let fixY = 0;
 
       // center text inside a box
-      // TODO it's possible now in sketch - fix it!
       if (lineHeightInt && textBCRHeight !== lineHeightInt * numberOfLines) {
         fixY = (textBCRHeight - lineHeightInt * numberOfLines) / 2;
       }
 
-      const textValue = fixWhiteSpace(textNode.nodeValue, whiteSpace);
+      const textValue = fixWhiteSpace(textNode.nodeValue || '', whiteSpace);
 
       const text = new Text({
         x: textBCR.left,
@@ -380,7 +385,6 @@ export default function nodeToSketchLayers(
 
       layers.push(text);
     });
-  console.log(layers);
 
   return layers;
 }

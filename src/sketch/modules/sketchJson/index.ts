@@ -29,7 +29,6 @@ export const getNativeLayer = (layer) => {
 
   layer.layers = [];
 
-  console.log(layer);
   try {
     nativeObj = fromSJSON(layer);
   } catch (e) {
@@ -38,7 +37,7 @@ export const getNativeLayer = (layer) => {
   }
 
   // Get native object for all child layers and append them to the current object
-  if (children && children.length) {
+  if (children && children.length && children.length > 0) {
     children.forEach((child) => {
       const nativeChild = getNativeLayer(child);
 

@@ -2,6 +2,7 @@ import Group from './model/group';
 import Style from './model/style';
 import nodeToSketchLayers from './nodeToSketchLayers';
 import { isNodeVisible } from './helpers/visibility';
+import { getName } from '@/utils/html2asketch/helpers/name';
 
 export default function nodeTreeToSketchGroup(node: HTMLElement, options?) {
   const bcr = node.getBoundingClientRect();
@@ -65,7 +66,7 @@ export default function nodeTreeToSketchGroup(node: HTMLElement, options?) {
   if (options && options.getGroupName) {
     group.setName(options.getGroupName(node));
   } else {
-    group.setName(`${node.nodeName.toLowerCase()}`);
+    group.setName(getName(node.nodeType));
   }
 
   return group;

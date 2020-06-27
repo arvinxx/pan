@@ -1,8 +1,33 @@
-import Base from './base';
+import Base, { BaseInitParams } from './base';
 import { RESIZING_CONSTRAINTS } from '../helpers/utils';
 
+interface TextInitParams extends BaseInitParams {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  text: string;
+  style: any;
+  multiline: boolean;
+}
 class Text extends Base {
-  constructor({ x, y, width, height, text, style, multiline, id }) {
+  private _x: number;
+  private _y: number;
+  private _width: number;
+  private _height: number;
+  private _text: string;
+  private _multiline: boolean;
+
+  constructor({
+    x,
+    y,
+    width,
+    height,
+    text,
+    style,
+    multiline,
+    id,
+  }: TextInitParams) {
     super({ id });
     this._class = 'text';
     this._x = x;

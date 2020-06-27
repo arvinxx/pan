@@ -41,17 +41,20 @@ const tableWindows = () => {
 
   webContents.on(channel.TABLE_GENERATE_FROM_JSON, (data) => {
     const page = context.document.currentPage();
-    const failingLayers = [];
 
-    data.layers
-      // 将layer 转为原生 layer
-      .map((layer) => {
-        const nativeLayer = getNativeLayer(failingLayers, layer);
+    if (data.length) {
+      data
+        // 将layer 转为原生 layer
+        .map(getNativeLayer)
+        // 添加到图层里
+        .forEach((layer) => layer && page.addLayer(layer));
+    } else {
+      page.addLayer(getNativeLayer(data));
 
-        console.log(nativeLayer);
-        return nativeLayer;
-      })
-      .forEach((layer) => layer && page.addLayer(layer));
+      data.layers
+        .map(getNativeLayer)
+        .forEach((layer) => layer && page.addLayer(layer));
+    }
   });
 
   browserWindow.loadURL(getWinURL('table'));
