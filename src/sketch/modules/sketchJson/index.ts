@@ -1,3 +1,5 @@
+import FileFormat from '@sketch-hq/sketch-file-format-ts';
+
 import { fixTextLayer } from './helpers/fixFont';
 import fixImageFillsInLayer from './helpers/fixImageFill';
 import fixBitmap from './helpers/fixBitmap';
@@ -8,7 +10,7 @@ import fromSJSON from './fromSJSON';
  * 将 JSON 图层转为 原生图层
  * @param layer
  */
-export const getNativeLayer = (layer) => {
+export const getNativeLayer = (layer): FileFormat.AnyLayer => {
   // debug
   console.log('Processing ' + layer.name + ' (' + layer._class + ')');
 

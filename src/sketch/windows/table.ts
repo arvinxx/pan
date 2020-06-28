@@ -1,5 +1,6 @@
 import BrowserWindow from 'sketch-module-web-view';
-import { UI } from 'sketch';
+import { UI, Settings, Document } from 'sketch';
+
 import { getWinURL } from '@/sketch/utils/windows';
 import { channel } from '@/bridge';
 
@@ -39,8 +40,16 @@ const tableWindows = () => {
       .catch(console.error);
   });
 
-  webContents.on(channel.TABLE_GENERATE_FROM_JSON, (data) => {
+  webContents.on(channel.TABLE_GENERATE_FROM_JSON, (res) => {
+    const { json: data, table } = res;
+
     const page = context.document.currentPage();
+    const tableId = Settings.sessionVariable('PAN_ACTIVE_TABLE');
+    console.log(tableId);
+    if (tableId) {
+      const layer = Document.getSelectedDocument().getLayerWithID(tableId);
+      console.log(layer);
+    }
 
     if (data.length) {
       data
@@ -49,15 +58,19 @@ const tableWindows = () => {
         // 添加到图层里
         .forEach((layer) => layer && page.addLayer(layer));
     } else {
-      page.addLayer(getNativeLayer(data));
+      const group = getNativeLayer(data);
 
+      page.addLayer(group);
       data.layers
         .map(getNativeLayer)
         .forEach((layer) => layer && page.addLayer(layer));
+
+      Settings.setLayerSettingForKey(group, 'TABLE_DATA', table);
     }
   });
 
   browserWindow.loadURL(getWinURL('table'));
+  return browserWindow;
 };
 
 export default tableWindows;

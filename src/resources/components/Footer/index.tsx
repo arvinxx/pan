@@ -14,6 +14,8 @@ import useHotKeysForUndo from '@/hooks/useHotKeysForUndo';
 import { IconFont } from '@/components';
 
 import styles from './footer.less';
+import { useSelector } from 'dva';
+import { ConnectState, TableModelState } from '@/models/connect';
 
 dayjs.locale('zh-cn');
 dayjs.extend(relativeTime);
@@ -33,6 +35,9 @@ interface FooterProps {
 
 const Footer: FC<FooterProps> = React.memo((props) => {
   const { formatMessage } = useIntl();
+  const { isUpdate } = useSelector<ConnectState, TableModelState>(
+    (state) => state.table
+  );
   const {
     config,
 
@@ -211,7 +216,11 @@ const Footer: FC<FooterProps> = React.memo((props) => {
           type="primary"
           onClick={handleGenerate}
         >
-          {formatMessage({ id: 'components.footer.generate' })}
+          {formatMessage({
+            id: isUpdate
+              ? 'components.footer.update'
+              : 'components.footer.generate',
+          })}
         </Button>
       </Col>
     </Row>

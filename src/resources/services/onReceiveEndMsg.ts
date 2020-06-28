@@ -11,5 +11,10 @@ export default (dispatch: Dispatch) => (
         type: 'global/save',
         payload: JSON.parse(payload),
       });
+    case 'TABLE_FROM_LAYER_DATA':
+      dispatch({
+        type: 'table/init',
+        payload: JSON.parse(payload),
+      });
   }
 };

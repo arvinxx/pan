@@ -5,6 +5,7 @@ export default {
   // Footer //
   'components.footer.cancel': '取消',
   'components.footer.generate': '生成',
+  'components.footer.update': '更新',
   'components.footer.reset': '重置',
   'components.footer.home': '返回首页',
   'components.footer.preview': '预览',

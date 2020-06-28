@@ -44,11 +44,11 @@
       "handler": "swapText"
     },
     {
-      "name": "表格",
+      "name": "智能表格",
       "identifier": "com.arvinxx.pan.win.table",
       "script": "./app.ts",
       "shortcut": "ctrl t",
-      "handler": "tableWin"
+      "handler": "toggleTable"
     },
     {
       "name": "查找替换",

@@ -54,7 +54,14 @@ const TablePage: FC = () => {
     if (el) {
       const group = nodeTreeToSketchGroup(el);
       console.log(group);
-      sendRawMsgToEnd('TABLE_GENERATE_FROM_JSON', group);
+      sendRawMsgToEnd('TABLE_GENERATE_FROM_JSON', {
+        json: group,
+        table: {
+          config: table.config,
+          columns: table.columns,
+          dataSource: table.dataSource,
+        },
+      });
     }
   };
 

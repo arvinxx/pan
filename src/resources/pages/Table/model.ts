@@ -18,6 +18,10 @@ export interface TableModelState extends TableModelType {
     dataSource: boolean;
   };
   tableWidth: 'auto' | 'fixed';
+  /**
+   * 是否属于二次修改
+   */
+  isUpdate: boolean;
 }
 export interface TableModelStore extends DvaModel<TableModelState> {
   namespace: 'table';
@@ -25,6 +29,7 @@ export interface TableModelStore extends DvaModel<TableModelState> {
   effects: {};
   reducers: {
     save: Reducer<TableModelState>;
+    init: Reducer<TableModelState>;
     saveConfig: Reducer<TableModelState>;
     switchCodeComment: Reducer<TableModelState>;
     handleHeaderText: Reducer<TableModelState>;
@@ -107,11 +112,15 @@ const TableModel: TableModelStore = {
       columns: true,
       dataSource: true,
     },
+    isUpdate: false,
   },
   effects: {},
   reducers: {
     save(state, { payload }) {
       return { ...state, ...payload };
+    },
+    init(state, { payload }) {
+      return { ...state, ...payload, isUpdate: true };
     },
     saveConfig(state, { payload }) {
       return { ...state, config: { ...state.config, ...payload } };
