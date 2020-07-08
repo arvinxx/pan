@@ -6,6 +6,7 @@
   "engines": {
     "sketch": ">=3.0"
   },
+  "repository": "https://github.com/arvinxx/pan",
   "skpm": {
     "name": "🍳Pan",
     "manifest": "src/sketch/manifest.js",
