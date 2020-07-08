@@ -100,14 +100,15 @@ sketch 端使用 skpm 进行构建打包,配置文件在 `./webpack.skpm.config.
 
 ## Debug
 
-应该都会了 就不写了...
+建议使用 [sketch-dev-tools](https://github.com/skpm/sketch-dev-tools) 工具作为调试工具。
 
-To view the output of your `console.log`, you have a few different options:
-* Open `Console.app` and look for the sketch logs
-* Use Safari's web inspector to debug your plugin's javascript context
-* Look at the `~/Library/Logs/com.bohemiancoding.sketch3/Plugin Output.log` file
+另外一种用法就是使用 `Console.app` 工具。
 
-Skpm provides a convenient way to do the latter:
+* 打开 `Console.app` 找 sketch 的 log
+* 查看 `~/Library/Logs/com.bohemiancoding.sketch3/Plugin Output.log` 文件
+* Skpm 的方法 `skpm log`
+The `-f` option causes `skpm log` to not stop when the end of logs is reached, but rather to wait for additional data to be appended to the input
+
 ### 自动重载脚本
 
 使用 skpm 将会自动重载 sketch 插件
@@ -115,7 +116,7 @@ Skpm provides a convenient way to do the latter:
 
 ### Sketch 端自动刷新
 
-如果定义了一些持久性的变量,需要重启 sketch 才能看到插件更新时,可以使用 entr  进行自动重启
+如果定义了一些持久性的变量,需要重启 sketch 才能看到插件更新时,可以使用 entr 进行自动重启
 
 ```bash
 brew install entr
@@ -124,13 +125,6 @@ brew install entr
 然后执行 `npm run refresh` 即可
 
 Ref: [Sketch Debug](https://developer.sketch.com/plugins/debugging)
-
-
-```bash
-skpm log
-```
-
-The `-f` option causes `skpm log` to not stop when the end of logs is reached, but rather to wait for additional data to be appended to the input
 
 
 ## Bridge

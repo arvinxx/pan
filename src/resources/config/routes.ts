@@ -6,24 +6,14 @@ const routes: IRoute[] = [
     component: '@/layouts/BridgeLayout',
     routes: [
       {
-        path: '/home',
+        path: '/systemInfo',
         exact: true,
-        component: './Home',
-      },
-      {
-        path: '/test',
-        exact: true,
-        component: './TestField',
+        component: './SystemInfo',
       },
       {
         path: '/replace',
         exact: true,
         component: './Replace',
-      },
-      {
-        path: '/toolbar',
-        component: './Toolbar',
-        exact: true,
       },
     ],
   },

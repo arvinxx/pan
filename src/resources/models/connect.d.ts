@@ -1,9 +1,7 @@
 import { EffectsCommandMap, Subscription } from 'dva';
-
-import { TableModelState } from '@/pages/Table/model';
 import { GlobalModelState } from './global';
 
-export { TableModelState, GlobalModelState };
+export { GlobalModelState };
 
 export interface Loading {
   global: boolean;
@@ -15,7 +13,6 @@ export interface Loading {
 }
 
 export interface ConnectState {
-  table: TableModelState;
   global: GlobalModelState;
   loading: Loading;
   router: { location: Location };

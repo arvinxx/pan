@@ -20,7 +20,7 @@ module.exports = {
       name: '交换文本',
       identifier: 'com.arvinxx.pan.swap-text',
       script: './app.ts',
-      shortcut: 'ctrl shift s',
+      shortcut: 'ctrl shift t',
       handler: 'swapText',
     },
     {
