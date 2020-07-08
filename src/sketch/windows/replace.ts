@@ -1,36 +1,25 @@
 import { UI, Settings, Document } from 'sketch';
 import BrowserWindow from 'sketch-module-web-view';
 import { isWebviewPresent, sendToWebview } from 'sketch-module-web-view/remote';
-import pack from '../../../package.json';
+
 import { getSettings, getWinURL, setSettings } from '../utils';
 import channel from '@/bridge/channel';
+import { winIdentifier } from './index';
+import { ReplaceModel } from 'typings/data/replace';
 
-const PREF_UNIQUE_KEY = 'cx.ap.sketch-find-and-replace.pref';
-const STATE_UNIQUE_KEY = 'cx.ap.sketch-find-and-replace.state';
+const PREF_UNIQUE_KEY = 'com.arvinxx.pan.replace.pref';
+const STATE_UNIQUE_KEY = 'com.arvinxx.pan.replace.state';
 
 // to delete saved settings uncoment the next line
-// Settings.setSettingForKey(PREFUNIQUKEY, JSON.stringify({}))
+Settings.setSettingForKey(PREF_UNIQUE_KEY, JSON.stringify({}));
+
 enum FindMode {
   'selection' = 1,
   'currentPage' = 2,
   'allPages' = 3,
 }
-interface State {
-  findString: string;
-  replaceString: string;
-  document: boolean;
-  regexActive: boolean;
-  caseSensitive: boolean;
-  wholeWord: boolean;
-  count: number;
-  darkMode?: boolean;
-  findMode?: number;
-  selection?: boolean;
-  regex?: any;
-  init?: boolean;
-}
 
-const defaultSettings: State = {
+const defaultSettings: ReplaceModel = {
   findString: '',
   replaceString: '',
   document: false,
@@ -57,15 +46,11 @@ function escapeReplaceString(string) {
 // start ^(Occupation)
 // end (Occupation)$
 
-export default function () {
-  const theme = UI && UI.getTheme ? UI.getTheme() : '';
-  defaultSettings.darkMode = theme === 'dark';
-
+export default function() {
   // load state
 
   const savedSate = getSettings(STATE_UNIQUE_KEY);
-  console.log(`savedSate: ${savedSate}`);
-  let state: State = defaultSettings;
+  let state: ReplaceModel = defaultSettings;
 
   if (typeof savedSate === 'string' && savedSate == 'Loaded') {
     setSettings(STATE_UNIQUE_KEY, '');
@@ -74,10 +59,10 @@ export default function () {
     const savedSettings = getSettings(PREF_UNIQUE_KEY);
 
     console.log(`savedSettings: ${savedSettings}`);
-    if (savedSettings === 'object') {
-      state = { ...defaultSettings, ...savedSettings };
-    } else {
+    if (!savedSettings) {
       setSettings(PREF_UNIQUE_KEY, {});
+    } else {
+      state = { ...defaultSettings, ...savedSettings };
     }
   }
 
@@ -93,12 +78,10 @@ export default function () {
   if (document) {
     selection = document.selectedLayers;
     if (selection.length > 0) {
-      UI.message('Find and replace in the selection (v' + pack.version + ')');
+      UI.message('选中' + selection.length + '个对象');
       state = { ...state, findMode: 1, selection: true };
     } else {
-      UI.message(
-        'Find and replace in the current page (v' + pack.version + ')'
-      );
+      UI.message('打开窗口');
       const page = document.selectedPage;
       selection = page.layers;
       state = { ...state, findMode: 2, selection: false };
@@ -110,7 +93,7 @@ export default function () {
   };
 
   const windowOptions: BrowserWindowConstructorOptions = {
-    identifier: 'cx.ap.sketch-find-and-replace.webWiew',
+    identifier: winIdentifier.SYSTEM_INFO,
     width: 460,
     height: 240,
     resizable: false,
@@ -121,10 +104,14 @@ export default function () {
     minimizable: false,
     maximizable: false,
     hidesOnDeactivate: false,
+    show: false,
   };
 
   let browserWindow = new BrowserWindow(windowOptions);
 
+  browserWindow.on('ready-to-show', () => {
+    browserWindow.show();
+  });
   browserWindow.on('closed', () => {
     browserWindow = null;
   });
@@ -133,9 +120,12 @@ export default function () {
 
   let contents = browserWindow.webContents;
 
+  /**
+   * 初始化 RegExp
+   */
   const initRegExp = (newState) => {
     state = newState;
-    UI.message(`${state.findString} replace by ${state.replaceString}`);
+    UI.message(`${state.replaceString} 替换 ${state.findString}`);
     // reset layers
     layers = [];
     // reset overrides
@@ -151,7 +141,7 @@ export default function () {
 
     const { findMode } = state;
     console.log('--------------------------------');
-    console.log('findMode: ' + findMode);
+    console.log('查找模式: ' + findMode);
 
     switch (findMode) {
       case FindMode.selection:
@@ -172,8 +162,7 @@ export default function () {
     parseLayers(selection);
 
     state.count = layers.length + overrides.length;
-    // send count
-    // log(JSON.stringify(state,null,2))
+
     updateSateWebview();
   };
 
@@ -277,7 +266,7 @@ export default function () {
 
   const parseOverrides = (overrides) => {
     overrides.forEach((override) => {
-      // log('--- override ---')
+      // console.log('--- override ---')
       switch (override.affectedLayer.type) {
         case 'Text':
           // log('-Text')
@@ -305,38 +294,13 @@ export default function () {
           break;
 
         default:
-        // log('#####--- Default override type: ' + override.affectedLayer.type)
-        /* 
-        if (override.layers) {
-          parseLayers(override.layers)
-        }
-        */
+        // console.log('#####--- Default override type: ' + override.affectedLayer.type)
       }
     });
   };
 
   contents.once('did-finish-load', () => {
     updateSateWebview(true);
-  });
-
-  contents.once(channel.REPLACE_CLOSE, () => {
-    browserWindow.close();
-  });
-
-  contents.on('message', (s) => {
-    UI.message(s);
-  });
-
-  contents.on('resetPref', () => {
-    Settings.setSettingForKey(STATE_UNIQUE_KEY, '');
-    Settings.setSettingForKey(PREF_UNIQUE_KEY, {});
-    UI.message(`Reset Preference Settings 🖖! Done`);
-  });
-
-  contents.on('setDarkMode', (mode) => {
-    state = { ...state, darkMode: mode };
-    saveSettings(state);
-    UI.message(`Set darkMode ${mode ? 'on 🌙' : 'off 😎'}!`);
   });
 
   contents.on(channel.REPLACE_FIND, (json) => {

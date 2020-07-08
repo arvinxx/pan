@@ -34,7 +34,7 @@ module.exports = {
   menu: {
     title: '\uD83C\uDF73Pan',
     items: [
-      'com.arvinxx.pan.win.replace',
+      // 'com.arvinxx.pan.win.replace',
       '-',
       {
         title: '交换',

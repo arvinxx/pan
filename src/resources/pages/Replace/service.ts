@@ -10,6 +10,3 @@ export const replaceText = (state: any) => {
 export const closeWin = () => {
   sendMsgToEnd('REPLACE_CLOSE');
 };
-export const resetPreference = () => {
-  sendMsgToEnd('REPLACE_RESET_PREF');
-};

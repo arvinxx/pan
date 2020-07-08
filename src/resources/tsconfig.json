@@ -27,7 +27,6 @@
     "./services/**/*",
     "./pages/**/*",
     "./assets/**/*",
-    "typings.d.ts",
-    "../../typings"
+    "../../typings/**/*"
   ]
 }
