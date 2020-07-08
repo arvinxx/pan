@@ -21,11 +21,6 @@ const routes: IRoute[] = [
         component: './Replace',
       },
       {
-        path: '/table',
-        component: './Table',
-        exact: true,
-      },
-      {
         path: '/toolbar',
         component: './Toolbar',
         exact: true,

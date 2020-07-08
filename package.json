@@ -8,7 +8,7 @@
   },
   "skpm": {
     "name": "🍳Pan",
-    "manifest": "src/sketch/manifest.json",
+    "manifest": "src/sketch/manifest.js",
     "main": "pan.sketchplugin",
     "assets": [
       "static",
@@ -69,7 +69,6 @@
     "yorkie": "^2.0.0"
   },
   "dependencies": {
-    "@brainly/html-sketchapp": "^4.4.0",
     "sketch-constants": "^1.1.0"
   }
 }

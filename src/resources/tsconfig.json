@@ -27,7 +27,6 @@
     "./services/**/*",
     "./pages/**/*",
     "./assets/**/*",
-    "config/.umirc.ts",
     "typings.d.ts",
     "../../typings"
   ]
