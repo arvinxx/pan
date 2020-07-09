@@ -1,7 +1,6 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
 import { Button, Space, Row, Col, Input, Checkbox, Radio } from 'antd';
-import { Loading } from './components';
-import { closeWin, replaceText, resetPreference } from './service';
+import { closeWin, replaceText } from './service';
 import styles from './style.less';
 
 const Replace: FC = () => {
@@ -40,14 +39,6 @@ const Replace: FC = () => {
     return;
   };
 
-  const resetPref = () => {
-    setMounted(false);
-    resetPreference();
-    setTimeout(() => {
-      setMounted(true);
-    }, 1000);
-  };
-
   const replace = () => {
     setReplaceStart(true);
     const state = {
@@ -62,9 +53,7 @@ const Replace: FC = () => {
 
   const { caseSensitive, wholeWord, selection } = options;
 
-  return !mounted ? (
-    <Loading resetPref={resetPref} />
-  ) : (
+  return (
     <div className={styles.container}>
       <Space direction={'vertical'}>
         <Row>

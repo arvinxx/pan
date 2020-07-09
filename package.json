@@ -29,7 +29,6 @@
     "postinstall": "npm run build && skpm-link"
   },
   "devDependencies": {
-    "@ant-design/icons": "^4.2.1",
     "@sketch-hq/sketch-file-format-ts": "^5.1.0",
     "@skpm/builder": "^0.7.7",
     "@types/classnames": "^2.2.10",
@@ -39,12 +38,9 @@
     "@umijs/hooks": "^1.9.3",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.2.3",
-    "antd": "^4.3.3",
     "concurrently": "^5.2.0",
-    "copy-to-clipboard": "^3.3.1",
     "eslint": "^7.1.0",
     "immutability-helper": "^3.1.1",
-    "less-vars-to-js": "^1.3.0",
     "lint-staged": "^10.0.7",
     "prettier": "^1.19.1",
     "react": "^16.13.1",
@@ -58,6 +54,8 @@
     "yorkie": "^2.0.0"
   },
   "dependencies": {
+    "antd": "^4.3.3",
+    "@ant-design/icons": "^4.2.1",
     "sketch-constants": "^1.1.0"
   }
 }
