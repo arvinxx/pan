@@ -448,13 +448,6 @@ declare class NSThread {
   static mainThread(): NSThread;
   threadDictionary(): NSDictionary;
 }
-declare class NSPasteboard {
-  static generalPasteboard(): NSPasteboard;
-  stringForType(t: typeof NSPasteboardTypeString): NSString;
-  setString_forType(
-    data: string | NSString,
-    t: typeof NSPasteboardTypeString
-  ): void;
-}
+
 declare class NSCollectionViewFlowLayout {}
 declare class NSCollectionViewLayoutAttributes {}

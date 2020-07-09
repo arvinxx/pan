@@ -1161,6 +1161,10 @@ declare module 'sketch/dom' {
        * If the value of the override can be changed.
        */
       editable: boolean;
+      /**
+       * 是否选中了这个 override
+       **/
+      selected: boolean;
     }
 
     /**

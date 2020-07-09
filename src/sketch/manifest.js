@@ -1,7 +1,8 @@
 module.exports = {
   compatibleVersion: 3,
   bundleVersion: 1,
-  icon: 'icons/logo.png',
+  icon: 'logo.png',
+  homepage: 'https://www.yuque.com/design-engineering/pan',
   commands: [
     {
       name: '插件信息',
@@ -33,23 +34,27 @@ module.exports = {
     {
       name: '批量创建Symbols',
       identifier: 'com.arvinxx.pan.create-symbols',
-      shortcut: 'ctrl opt shift b',
+      shortcut: 'ctrl shift b',
       script: './app.ts',
       handler: 'createSymbols',
     },
     {
-      name: '自定义名称创建',
-      identifier: 'com.arvinxx.pan.create-custom-symbols',
-      shortcut: 'ctrl opt shift c',
+      name: '快速复制文本',
+      identifier: 'com.arvinxx.pan.text.copy-text',
+      handler: 'fastCopyText',
+      shortcut: 'ctrl shift c',
       script: './app.ts',
-      handler: 'createCustomSymbols',
+      icon: 'icons/copy-text.png',
+      description: '将文本快速复制到剪切板(不需要点进去哦!)',
     },
     {
-      name: '自定义文件夹创建',
-      identifier: 'com.arvinxx.pan.create-custom-folders',
-      shortcut: 'ctrl opt shift f',
+      name: '快速粘贴文本',
+      identifier: 'com.arvinxx.pan.text.paste-text',
+      handler: 'fastPasteText',
+      shortcut: 'ctrl shift v',
       script: './app.ts',
-      handler: 'createCustomSymbolWithFolder',
+      icon: 'icons/paste-text.png',
+      description: '将剪贴板中的文本快速粘贴给选中图层',
     },
   ],
   menu: {
@@ -71,6 +76,13 @@ module.exports = {
         ],
       },
       '-',
+      {
+        title: '文本',
+        items: [
+          'com.arvinxx.pan.text.copy-text',
+          'com.arvinxx.pan.text.paste-text',
+        ],
+      },
       'com.arvinxx.pan.system-info',
     ],
   },
