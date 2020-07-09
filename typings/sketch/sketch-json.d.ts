@@ -58,13 +58,6 @@ export type WrappedSketchDocument = {
   sketchObject: SketchDocument | SketchDocumentData;
 };
 
-export type SketchContext = {
-  document: SketchDocument;
-  actionContext: {
-    document?: SketchDocument;
-  };
-};
-
 // Reacty things
 
 export type Size = { width: number; height: number };

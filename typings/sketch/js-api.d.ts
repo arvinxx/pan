@@ -997,6 +997,9 @@ declare module 'sketch/dom' {
       includedInInstance: boolean;
     }
 
+    /**
+     * 创建 SymbolMaster
+     **/
     export class SymbolMaster extends BaseArtboard<MSSymbolMaster> {
       type: Types.SymbolMaster;
       /**
