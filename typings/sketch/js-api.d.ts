@@ -1136,7 +1136,7 @@ declare module 'sketch/dom' {
       /**
        * The property that this override controls. It can be "stringValue" for a text override, "symbolId" for a nested symbol, or "image" for an image override.
        */
-      property: 'stringValue' | 'symbolId' | 'image';
+      property: 'stringValue' | 'symbolID' | 'image' | 'textStyle';
       /**
        * The unique ID of the override (${path}_${property}).
        */
