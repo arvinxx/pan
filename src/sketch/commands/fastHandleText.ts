@@ -1,4 +1,5 @@
 import { Document, UI } from 'sketch';
+import { AllLayers } from 'sketch/dom';
 
 const document = Document.getSelectedDocument();
 
@@ -70,30 +71,72 @@ export const fastCopyText = () => {
 export const fastPasteText = () => {
   const selection = document.selectedLayers;
 
-  selection.forEach((layer) => {
-    // 文本图层
+  /**
+   * 递归粘贴文本
+   **/
+  const pasteTextToLayer = (layer: AllLayers) => {
     if (layer.type === 'Text') {
       // 复制文本
       layer.text = getTextFromPasteboard();
+      return;
     }
 
     // Symbol对象
     if (layer.type === 'SymbolInstance') {
       // 如果有选中,那么只粘贴这个 override
-      const selectOverride = layer.overrides.filter((o) => o.selected);
-      if (selectOverride.length > 0) {
-        selectOverride[0].value = getTextFromPasteboard();
-        return;
+      const overrides = layer.overrides.filter((o) => o.selected);
+
+      console.log(layer.overrides.filter((o) => o.editable));
+      if (overrides.length > 0) {
+        const selectedOverride = overrides[0];
+        if (overrides[0].property === 'stringValue') {
+          overrides[0].value = getTextFromPasteboard();
+        }
+        // 针对 嵌套 symbol 需要有特别的方式拿到关联的文本
+        else if (selectedOverride.property === 'symbolID') {
+          const symbolId = selectedOverride.path;
+
+          const textOverrides = layer.overrides.filter(
+            (o) =>
+              o.editable &&
+              o.path.includes(symbolId) &&
+              o.property === 'stringValue'
+          );
+
+          if (textOverrides.length > 0) {
+            textOverrides.forEach((text) => {
+              text.value = getTextFromPasteboard();
+            });
+          }
+        }
+      } else {
+        // 如果没有选中,批量替换override
+        layer.overrides
+          .filter((o) => o.editable && o.property === 'stringValue')
+          .forEach((override) => {
+            override.value = getTextFromPasteboard();
+          });
       }
-
-      // 如果没有选中,批量替换override
-      layer.overrides
-        .filter((o) => o.editable && o.property === 'stringValue')
-        .forEach((override) => {
-          override.value = getTextFromPasteboard();
-        });
+      return;
     }
-  });
 
-  UI.message('粘贴成功!');
+    // 开始递归
+    if (
+      // 必须要有 Layer
+      !(
+        layer.type === 'Image' ||
+        layer.type === 'ShapePath' ||
+        layer.type === 'HotSpot'
+      ) &&
+      layer.layers.length > 0
+    ) {
+      layer.layers.forEach(pasteTextToLayer);
+    }
+  };
+
+  try {
+    selection.forEach(pasteTextToLayer);
+  } catch (e) {
+    UI.message('剪切板中似乎没有文本😶');
+  }
 };
