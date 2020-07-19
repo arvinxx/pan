@@ -1,5 +1,5 @@
 import { Document, SymbolMaster } from 'sketch';
-import { Artboard, Rectangle, ShapePath, Style } from 'sketch/dom';
+import { Artboard } from 'sketch/dom';
 
 const document = Document.getSelectedDocument();
 
