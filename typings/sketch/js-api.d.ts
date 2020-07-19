@@ -712,7 +712,7 @@ declare module 'sketch/dom' {
       /**
        * The points defining the Shape Path.
        */
-      points: CurvePoint[];
+      points?: CurvePoint[];
       /**
        * The type of the Shape Path. It can only be set when creating a new ShapePath.
        */
@@ -720,7 +720,7 @@ declare module 'sketch/dom' {
       /**
        * If the Path is closed.
        */
-      closed: boolean;
+      closed?: boolean;
     }
 
     export class ShapePath extends StyledLayer<MSShapePathLayer> {

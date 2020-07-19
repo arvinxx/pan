@@ -56,11 +56,21 @@ module.exports = {
       icon: 'icons/paste-text.png',
       description: '将剪贴板中的文本快速粘贴给选中图层',
     },
+    {
+      name: '粘贴为 Sketch',
+      identifier: 'com.arvinxx.pan.paste-sketch',
+      handler: 'pasteAsSketch',
+      shortcut: 'ctrl alt v',
+      script: './app.ts',
+      icon: 'icons/paste-text.png',
+      description: '粘贴 Sketch 对象',
+    },
   ],
   menu: {
     title: '\uD83C\uDF73Pan',
     items: [
-      // 'com.arvinxx.pan.win.replace',
+      'com.arvinxx.pan.paste-sketch',
+
       '-',
       {
         title: '交换',
