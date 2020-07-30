@@ -32,7 +32,6 @@
     "@sketch-hq/sketch-file-format-ts": "^5.1.0",
     "@skpm/builder": "^0.7.7",
     "@types/classnames": "^2.2.10",
-    "@types/mocha": "^7.0.2",
     "@typescript-eslint/eslint-plugin": "^3.1.0",
     "@typescript-eslint/parser": "^3.1.0",
     "@umijs/hooks": "^1.9.3",
@@ -55,7 +54,6 @@
   },
   "dependencies": {
     "antd": "^4.3.3",
-    "@ant-design/icons": "^4.2.1",
-    "sketch-constants": "^1.1.0"
+    "from-sketch-json": "^0.1.1"
   }
 }

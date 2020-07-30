@@ -8,7 +8,6 @@ declare const NSBackingStoreBuffered: number;
 declare const NSLayoutAttributeHeight: number;
 declare const NSLayoutRelationEqual: number;
 declare const NSLayoutAttributeTop: any;
-declare const NSPasteboardTypeString: unique symbol;
 
 declare function NSClassFromString(name: string): any;
 declare function NSMakeRect(x: number, y: number, w: number, h: number): NSRect;
@@ -176,7 +175,10 @@ declare class NSFormatter {}
 declare class NSGradient {}
 declare class NSGraphicsContext {}
 declare class NSHashTable {}
-declare class NSImage {}
+declare class NSImage {
+  static alloc(): NSImage;
+  initWithData(imgData:any): this;
+}
 declare class NSImageCell {}
 declare class NSImageView {}
 declare class NSIndexPath {}

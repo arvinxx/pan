@@ -1,5 +1,5 @@
-import { Document, UI } from 'sketch';
-import { AllLayers } from 'sketch/dom';
+import { Document, UI, Image } from 'sketch';
+import { AllLayers, ShapeType, Style, Types } from 'sketch/dom';
 
 const document = Document.getSelectedDocument();
 
@@ -13,12 +13,72 @@ const copyText = (text: string) => {
 
   UI.message('复制成功!');
 };
+
 /**
  * 获取粘贴文本
  **/
 const getTextFromPasteboard = (): string => {
   const pasteboard = NSPasteboard.generalPasteboard();
   return pasteboard.stringForType(NSPasteboardTypeString).toString();
+};
+
+/**
+ * 获取粘贴的图片
+ **/
+const getImageFromPasteboard = (): NSImage | undefined => {
+  const pasteboard = NSPasteboard.generalPasteboard();
+
+  const imgData = pasteboard.dataForType(NSPasteboardTypePNG);
+  const imgTiffData = pasteboard.dataForType(NSPasteboardTypeTIFF);
+
+  if (imgData || imgTiffData) {
+    if (imgData) {
+      return NSImage.alloc().initWithData(imgData);
+    }
+    if (imgTiffData) {
+      return NSImage.alloc().initWithData(imgTiffData);
+    }
+  }
+};
+
+/**
+ * 粘贴为图片填充
+ */
+export const pasteImageToLayer = (layer: ShapeType) => {
+  const image = getImageFromPasteboard();
+
+  if (!image) {
+    UI.message('剪切板没有图片😶');
+    return;
+  }
+  const fills = (layer as ShapeType).style.fills;
+
+  const imageLayer = new Image({
+    image,
+  });
+
+  if (fills.length === 0) {
+    fills.push({
+      fill: Style.FillType.Pattern,
+      enabled: true,
+      pattern: {
+        patternType: 'Fill',
+        image: imageLayer.image,
+        tileScale: 1,
+      },
+    });
+  } else {
+    fills.pop();
+    fills.push({
+      fill: Style.FillType.Pattern,
+      enabled: true,
+      pattern: {
+        patternType: 'Fill',
+        image: imageLayer.image,
+        tileScale: 1,
+      },
+    });
+  }
 };
 
 /**
@@ -64,29 +124,21 @@ export const fastCopyText = () => {
 
   UI.message('请选择一个包含文本的图层对象😶');
 };
-/**
- * 快速粘贴文本到图层对象
- * @see https://www.yuque.com/design-engineering/pan/fast-text
- **/
-export const fastPasteText = () => {
-  const selection = document.selectedLayers;
 
-  /**
-   * 递归粘贴文本
-   **/
-  const pasteTextToLayer = (layer: AllLayers) => {
-    if (layer.type === 'Text') {
+/**
+ * 超级粘贴方法
+ **/
+const superPasteToLayer = (layer: AllLayers) => {
+  switch (layer.type) {
+    // 文本对象
+    case Types.Text:
       // 复制文本
       layer.text = getTextFromPasteboard();
       return;
-    }
-
     // Symbol对象
-    if (layer.type === 'SymbolInstance') {
+    case Types.SymbolInstance:
       // 如果有选中,那么只粘贴这个 override
       const overrides = layer.overrides.filter((o) => o.selected);
-
-      console.log(layer.overrides.filter((o) => o.editable));
       if (overrides.length > 0) {
         const selectedOverride = overrides[0];
         if (overrides[0].property === 'stringValue') {
@@ -109,8 +161,9 @@ export const fastPasteText = () => {
             });
           }
         }
-      } else {
-        // 如果没有选中,批量替换override
+      }
+      // 如果没有选中,批量替换override
+      else {
         layer.overrides
           .filter((o) => o.editable && o.property === 'stringValue')
           .forEach((override) => {
@@ -118,24 +171,41 @@ export const fastPasteText = () => {
           });
       }
       return;
-    }
 
-    // 开始递归
-    if (
-      // 必须要有 Layer
-      !(
-        layer.type === 'Image' ||
-        layer.type === 'ShapePath' ||
-        layer.type === 'HotSpot'
-      ) &&
-      layer.layers.length > 0
-    ) {
-      layer.layers.forEach(pasteTextToLayer);
-    }
-  };
+    // 图层对象
+    // 粘贴图片
+    case Types.Shape:
+    case Types.ShapePath:
+      const image = getImageFromPasteboard();
+
+      if (!image) {
+        UI.message('剪切板没有图片😶');
+        return;
+      }
+      pasteImageToLayer(layer);
+      return;
+  }
+
+  // 开始递归
+  if (
+    // 必须要有 Layer
+    !(layer.type === 'Image' || layer.type === 'HotSpot') &&
+    layer.layers &&
+    layer.layers.length > 0
+  ) {
+    layer.layers.forEach(superPasteToLayer);
+  }
+};
+
+/**
+ * 快速粘贴文本到图层对象
+ * @see https://www.yuque.com/design-engineering/pan/fast-text
+ **/
+export const superPaste = () => {
+  const selection = document.selectedLayers;
 
   try {
-    selection.forEach(pasteTextToLayer);
+    selection.forEach(superPasteToLayer);
   } catch (e) {
     UI.message('剪切板中似乎没有文本😶');
   }

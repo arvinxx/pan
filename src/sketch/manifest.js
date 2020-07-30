@@ -1,7 +1,10 @@
+const name = `🍳Pan ${process.env.NODE_ENV === 'development' ? ' DEV' : ''}`;
+
 module.exports = {
   compatibleVersion: 3,
   bundleVersion: 1,
   icon: 'logo.png',
+  name,
   homepage: 'https://www.yuque.com/design-engineering/pan',
   commands: [
     {
@@ -40,7 +43,7 @@ module.exports = {
     },
     {
       name: '快速复制文本',
-      identifier: 'com.arvinxx.pan.text.copy-text',
+      identifier: 'com.arvinxx.pan.super-paste.copy-text',
       handler: 'fastCopyText',
       shortcut: 'ctrl shift c',
       script: './app.ts',
@@ -48,17 +51,17 @@ module.exports = {
       description: '将文本快速复制到剪切板(不需要点进去哦!)',
     },
     {
-      name: '快速粘贴文本',
-      identifier: 'com.arvinxx.pan.text.paste-text',
-      handler: 'fastPasteText',
+      name: '超级粘贴',
+      identifier: 'com.arvinxx.pan.super-paste.paste',
+      handler: 'superPaste',
       shortcut: 'ctrl shift v',
       script: './app.ts',
       icon: 'icons/paste-text.png',
-      description: '将剪贴板中的文本快速粘贴给选中图层',
+      description: '将剪贴板中的数据赋予给图层',
     },
     {
-      name: '粘贴为 Sketch',
-      identifier: 'com.arvinxx.pan.paste-sketch',
+      name: '粘贴 JSON 为 Sketch',
+      identifier: 'com.arvinxx.pan.super-paste.paste-sketch',
       handler: 'pasteAsSketch',
       shortcut: 'ctrl alt v',
       script: './app.ts',
@@ -67,11 +70,8 @@ module.exports = {
     },
   ],
   menu: {
-    title: '\uD83C\uDF73Pan',
+    title: name,
     items: [
-      'com.arvinxx.pan.paste-sketch',
-
-      '-',
       {
         title: '交换',
         items: ['com.arvinxx.pan.swap-position', 'com.arvinxx.pan.swap-text'],
@@ -87,12 +87,16 @@ module.exports = {
       },
       '-',
       {
-        title: '文本',
+        title: '超级粘贴',
         items: [
-          'com.arvinxx.pan.text.copy-text',
-          'com.arvinxx.pan.text.paste-text',
+          'com.arvinxx.pan.super-paste.paste-sketch',
+          '-',
+          'com.arvinxx.pan.super-paste.paste',
+          '-',
+          'com.arvinxx.pan.super-paste.copy-text',
         ],
       },
+      '-',
       'com.arvinxx.pan.system-info',
     ],
   },

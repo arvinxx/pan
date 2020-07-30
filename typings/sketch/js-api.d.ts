@@ -87,6 +87,7 @@ declare module 'sketch/dom' {
       Text = 'Text',
     }
 
+    export type ShapeType = Shape | ShapePath;
     /**
      * Access the selected Document
      * @return The selected Document or undefined if no document is open.
@@ -1652,8 +1653,20 @@ declare module 'sketch/dom' {
        * Whether the fill is active or not.
        */
       enabled?: boolean;
+      /**
+       * 添加图片需要
+       */
+      pattern?: Pattern;
     }
 
+    /**
+     * Image Fill Style
+     */
+    export interface Pattern {
+      patternType: 'Fill';
+      tileScale: number;
+      image: ImageData;
+    }
     /**
      * An object that represent a Border.
      */

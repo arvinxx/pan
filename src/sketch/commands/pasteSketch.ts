@@ -1,4 +1,4 @@
-import { fromSJSON } from '../modules/SketchJSON';
+import { fromSJSON } from 'from-sketch-json';
 import { getTextFromPasteboard } from '../function/pasteboard';
 import { fromNative, Document, UI } from 'sketch';
 import { AllLayers, ChildLayer } from 'sketch/dom';
