@@ -1,5 +1,6 @@
 import { Document, UI, Image } from 'sketch';
 import { AllLayers, ShapeType, Style, Types } from 'sketch/dom';
+import { pasteAsSketch } from '../function/pasteAsSketch';
 
 const document = Document.getSelectedDocument();
 
@@ -204,9 +205,13 @@ const superPasteToLayer = (layer: AllLayers) => {
 export const superPaste = () => {
   const selection = document.selectedLayers;
 
-  try {
-    selection.forEach(superPasteToLayer);
-  } catch (e) {
-    UI.message('剪切板中似乎没有文本😶');
+  if (selection.length !== 0) {
+    try {
+      selection.forEach(superPasteToLayer);
+    } catch (e) {
+      UI.message('剪切板中似乎没有文本😶');
+    }
+  } else {
+    pasteAsSketch();
   }
 };

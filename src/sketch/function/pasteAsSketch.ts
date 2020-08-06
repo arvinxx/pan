@@ -1,5 +1,5 @@
 import { fromSJSON } from 'from-sketch-json';
-import { getTextFromPasteboard } from '../function/pasteboard';
+import { getTextFromPasteboard } from './pasteboard';
 import { fromNative, Document, UI } from 'sketch';
 import { AllLayers, ChildLayer } from 'sketch/dom';
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
@@ -31,7 +31,7 @@ const transformToSketch = (layer: SketchFormat.AnyObject) => {
     UI.message('不是有效的 Sketch JSON 对象😶');
     return;
   }
-  const nativeLayer = fromSJSON(layer);
+  const nativeLayer = fromSJSON(layer as any);
   const sketchObj = fromNative(nativeLayer) as ChildLayer;
 
   adjustFrame(sketchObj);

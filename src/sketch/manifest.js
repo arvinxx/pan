@@ -54,19 +54,10 @@ module.exports = {
       name: '超级粘贴',
       identifier: 'com.arvinxx.pan.super-paste.paste',
       handler: 'superPaste',
-      shortcut: 'ctrl shift v',
-      script: './app.ts',
-      icon: 'icons/paste-text.png',
-      description: '将剪贴板中的数据赋予给图层',
-    },
-    {
-      name: '粘贴 JSON 为 Sketch',
-      identifier: 'com.arvinxx.pan.super-paste.paste-sketch',
-      handler: 'pasteAsSketch',
       shortcut: 'ctrl alt v',
       script: './app.ts',
       icon: 'icons/paste-text.png',
-      description: '粘贴 Sketch 对象',
+      description: '将剪贴板中的数据赋予给图层或插入 sketch JSON对象',
     },
   ],
   menu: {
@@ -89,8 +80,6 @@ module.exports = {
       {
         title: '超级粘贴',
         items: [
-          'com.arvinxx.pan.super-paste.paste-sketch',
-          '-',
           'com.arvinxx.pan.super-paste.paste',
           '-',
           'com.arvinxx.pan.super-paste.copy-text',
