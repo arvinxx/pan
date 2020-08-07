@@ -46,7 +46,6 @@ module.exports = {
     {
       name: '生成画板描述',
       identifier: baseIdentifier + '.artboard-description',
-      shortcut: 'ctrl shift b',
       script: './app.ts',
       handler: 'artboardOverview',
     },
