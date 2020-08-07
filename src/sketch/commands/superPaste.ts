@@ -190,7 +190,11 @@ const superPasteToLayer = (layer: AllLayers) => {
   // 开始递归
   if (
     // 必须要有 Layer
-    !(layer.type === 'Image' || layer.type === 'HotSpot') &&
+    !(
+      layer.type === 'Image' ||
+      layer.type === 'HotSpot' ||
+      layer.type === 'Slice'
+    ) &&
     layer.layers &&
     layer.layers.length > 0
   ) {
@@ -199,8 +203,8 @@ const superPasteToLayer = (layer: AllLayers) => {
 };
 
 /**
- * 快速粘贴文本到图层对象
- * @see https://www.yuque.com/design-engineering/pan/fast-text
+ * 超级粘贴
+ * @see https://www.yuque.com/design-engineering/pan/super-paste
  **/
 export const superPaste = () => {
   const selection = document.selectedLayers;

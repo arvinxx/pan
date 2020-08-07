@@ -451,7 +451,8 @@ declare module 'sketch/dom' {
       | ShapePath
       | Text
       | SymbolInstance
-      | HotSpot;
+      | HotSpot
+      | Slice;
 
     export type AllLayers = ChildLayer | Artboard | Page | SymbolMaster;
 

@@ -1,5 +1,7 @@
 const name = `🍳Pan ${process.env.NODE_ENV === 'development' ? ' DEV' : ''}`;
 
+const baseIdentifier = 'com.arvinxx.pan';
+
 module.exports = {
   compatibleVersion: 3,
   bundleVersion: 1,
@@ -9,41 +11,48 @@ module.exports = {
   commands: [
     {
       name: '插件信息',
-      identifier: 'com.arvinxx.pan.system-info',
+      identifier: baseIdentifier + '.system-info',
       script: './app.ts',
       handler: 'systemInfo',
     },
     {
       name: '交换位置',
-      identifier: 'com.arvinxx.pan.swap-position',
+      identifier: baseIdentifier + '.swap-position',
       script: './app.ts',
       shortcut: 'ctrl shift s',
       handler: 'swapPosition',
     },
     {
       name: '交换文本',
-      identifier: 'com.arvinxx.pan.swap-text',
+      identifier: baseIdentifier + '.swap-text',
       script: './app.ts',
       shortcut: 'ctrl shift t',
       handler: 'swapText',
     },
     {
       name: '查找替换',
-      identifier: 'com.arvinxx.pan.win.replace',
+      identifier: baseIdentifier + '.win.replace',
       script: './app.ts',
       shortcut: 'ctrl k',
       handler: 'replaceWin',
     },
     {
-      name: '批量创建Symbols',
-      identifier: 'com.arvinxx.pan.create-symbols',
+      name: '批量从画板创建Symbols',
+      identifier: baseIdentifier + '.create-symbols',
       shortcut: 'ctrl shift b',
       script: './app.ts',
-      handler: 'createSymbols',
+      handler: 'batchCreateSymbols',
+    },
+    {
+      name: '生成画板描述',
+      identifier: baseIdentifier + '.artboard-description',
+      shortcut: 'ctrl shift b',
+      script: './app.ts',
+      handler: 'artboardOverview',
     },
     {
       name: '快速复制文本',
-      identifier: 'com.arvinxx.pan.super-paste.copy-text',
+      identifier: baseIdentifier + '.super-paste.copy-text',
       handler: 'fastCopyText',
       shortcut: 'ctrl shift c',
       script: './app.ts',
@@ -52,7 +61,7 @@ module.exports = {
     },
     {
       name: '超级粘贴',
-      identifier: 'com.arvinxx.pan.super-paste.paste',
+      identifier: baseIdentifier + '.super-paste.paste',
       handler: 'superPaste',
       shortcut: 'ctrl alt v',
       script: './app.ts',
@@ -65,28 +74,31 @@ module.exports = {
     items: [
       {
         title: '交换',
-        items: ['com.arvinxx.pan.swap-position', 'com.arvinxx.pan.swap-text'],
+        items: [
+          baseIdentifier + '.swap-position',
+          baseIdentifier + '.swap-text',
+        ],
       },
       '-',
       {
-        title: 'Symbols',
+        title: '画板',
         items: [
-          'com.arvinxx.pan.create-symbols',
-          // 'com.arvinxx.pan.create-custom-symbols',
-          // 'com.arvinxx.pan.create-custom-folders',
+          baseIdentifier + '.create-symbols',
+          '-',
+          baseIdentifier + '.artboard-description',
         ],
       },
       '-',
       {
         title: '超级粘贴',
         items: [
-          'com.arvinxx.pan.super-paste.paste',
+          baseIdentifier + '.super-paste.paste',
           '-',
-          'com.arvinxx.pan.super-paste.copy-text',
+          baseIdentifier + '.super-paste.copy-text',
         ],
       },
       '-',
-      'com.arvinxx.pan.system-info',
+      baseIdentifier + '.system-info',
     ],
   },
 };
