@@ -62,7 +62,7 @@ module.exports = {
       name: '超级粘贴',
       identifier: baseIdentifier + '.super-paste.paste',
       handler: 'superPaste',
-      shortcut: 'ctrl alt v',
+      shortcut: 'ctrl shift v',
       script: './app.ts',
       icon: 'icons/paste-text.png',
       description: '将剪贴板中的数据赋予给图层或插入 sketch JSON对象',
