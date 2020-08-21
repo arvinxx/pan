@@ -30,6 +30,13 @@ module.exports = {
       handler: 'swapText',
     },
     {
+      name: '选择父级',
+      identifier: baseIdentifier + '.select-parent',
+      script: './app.ts',
+      shortcut: 'ctrl alt q',
+      handler: 'selectParent',
+    },
+    {
       name: '查找替换',
       identifier: baseIdentifier + '.win.replace',
       script: './app.ts',
@@ -87,6 +94,8 @@ module.exports = {
           baseIdentifier + '.artboard-description',
         ],
       },
+      '-',
+      baseIdentifier + '.select-parent',
       '-',
       {
         title: '超级粘贴',
