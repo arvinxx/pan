@@ -25928,11 +25928,7 @@ declare class MSLayer extends _MSLayer /* implements MSLayerListLayerExtensions,
   /* typeEncoding=@16@0:8 */
   rulerCoordinateSpace(...args: any[]): any;
   /* typeEncoding=v24@0:8c16c20 */
-  select_byExpandingSelection(...args: any[]): any;
-  /* typeEncoding=v28@0:8c16c20c24 */
-  select_byExpandingSelection_showSelection(...args: any[]): any;
-  /* typeEncoding=v24@0:8c16c20 */
-  select_byExtendingSelection(...args: any[]): any;
+  select_byExtendingSelection(select: boolean, extending: boolean): void;
   /* typeEncoding=v28@0:8c16c20c24 */
   select_byExtendingSelection_showSelection(...args: any[]): any;
   /* typeEncoding=@24@0:8Q16 */
