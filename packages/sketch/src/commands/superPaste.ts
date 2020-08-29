@@ -1,86 +1,14 @@
-import { Document, UI, Image } from 'sketch';
-import { AllLayers, ShapeType, Style, Types } from 'sketch/dom';
+import { UI } from 'sketch';
+import { AllLayers, Types } from 'sketch/dom';
+import { isBase64ImageString, documentContext } from '@/sketch/utils';
 import { pasteAsSketch } from '../function/pasteAsSketch';
+import { pasteAsImage, pasteImageToLayer } from '../function/pasteAsImage';
+import {
+  getTextFromClipboard,
+  copyTextToClipboard,
+} from '../function/clipboard';
 
-const document = Document.getSelectedDocument();
-
-/**
- * 复制文本
- **/
-const copyText = (text: string) => {
-  const pasteboard = NSPasteboard.generalPasteboard();
-  pasteboard.clearContents();
-  pasteboard.writeObjects([text]);
-
-  UI.message('复制成功!');
-};
-
-/**
- * 获取粘贴文本
- **/
-const getTextFromPasteboard = (): string => {
-  const pasteboard = NSPasteboard.generalPasteboard();
-  return pasteboard.stringForType(NSPasteboardTypeString).toString();
-};
-
-/**
- * 获取粘贴的图片
- **/
-const getImageFromPasteboard = (): NSImage | undefined => {
-  const pasteboard = NSPasteboard.generalPasteboard();
-
-  const imgData = pasteboard.dataForType(NSPasteboardTypePNG);
-  const imgTiffData = pasteboard.dataForType(NSPasteboardTypeTIFF);
-
-  if (imgData || imgTiffData) {
-    if (imgData) {
-      return NSImage.alloc().initWithData(imgData);
-    }
-    if (imgTiffData) {
-      return NSImage.alloc().initWithData(imgTiffData);
-    }
-  }
-};
-
-/**
- * 粘贴为图片填充
- */
-export const pasteImageToLayer = (layer: ShapeType) => {
-  const image = getImageFromPasteboard();
-
-  if (!image) {
-    UI.message('剪切板没有图片😶');
-    return;
-  }
-  const fills = (layer as ShapeType).style.fills;
-
-  const imageLayer = new Image({
-    image,
-  });
-
-  if (fills.length === 0) {
-    fills.push({
-      fill: Style.FillType.Pattern,
-      enabled: true,
-      pattern: {
-        patternType: 'Fill',
-        image: imageLayer.image,
-        tileScale: 1,
-      },
-    });
-  } else {
-    fills.pop();
-    fills.push({
-      fill: Style.FillType.Pattern,
-      enabled: true,
-      pattern: {
-        patternType: 'Fill',
-        image: imageLayer.image,
-        tileScale: 1,
-      },
-    });
-  }
-};
+const { document } = documentContext();
 
 /**
  * 快速复制文本
@@ -99,7 +27,7 @@ export const fastCopyText = () => {
   // 文本图层
   if (layer.type === 'Text') {
     // 复制文本
-    copyText(layer.text);
+    copyTextToClipboard(layer.text);
     return;
   }
 
@@ -111,13 +39,13 @@ export const fastCopyText = () => {
     );
 
     if (overrides.length === 1) {
-      copyText(overrides[0].value as string);
+      copyTextToClipboard(overrides[0].value as string);
       return;
     } else {
       // 找出选中的
       const override = overrides.filter((o) => o.selected);
       if (override.length === 1) {
-        copyText(override[0].value as string);
+        copyTextToClipboard(override[0].value as string);
         return;
       }
     }
@@ -134,7 +62,7 @@ const superPasteToLayer = (layer: AllLayers) => {
     // 文本对象
     case Types.Text:
       // 复制文本
-      layer.text = getTextFromPasteboard();
+      layer.text = getTextFromClipboard();
       return;
     // Symbol对象
     case Types.SymbolInstance:
@@ -143,7 +71,7 @@ const superPasteToLayer = (layer: AllLayers) => {
       if (overrides.length > 0) {
         const selectedOverride = overrides[0];
         if (overrides[0].property === 'stringValue') {
-          overrides[0].value = getTextFromPasteboard();
+          overrides[0].value = getTextFromClipboard();
         }
         // 针对 嵌套 symbol 需要有特别的方式拿到关联的文本
         else if (selectedOverride.property === 'symbolID') {
@@ -158,7 +86,7 @@ const superPasteToLayer = (layer: AllLayers) => {
 
           if (textOverrides.length > 0) {
             textOverrides.forEach((text) => {
-              text.value = getTextFromPasteboard();
+              text.value = getTextFromClipboard();
             });
           }
         }
@@ -168,7 +96,7 @@ const superPasteToLayer = (layer: AllLayers) => {
         layer.overrides
           .filter((o) => o.editable && o.property === 'stringValue')
           .forEach((override) => {
-            override.value = getTextFromPasteboard();
+            override.value = getTextFromClipboard();
           });
       }
       return;
@@ -177,12 +105,6 @@ const superPasteToLayer = (layer: AllLayers) => {
     // 粘贴图片
     case Types.Shape:
     case Types.ShapePath:
-      const image = getImageFromPasteboard();
-
-      if (!image) {
-        UI.message('剪切板没有图片😶');
-        return;
-      }
       pasteImageToLayer(layer);
       return;
   }
@@ -213,9 +135,18 @@ export const superPaste = () => {
     try {
       selection.forEach(superPasteToLayer);
     } catch (e) {
+      console.log(e);
       UI.message('剪切板中似乎没有文本😶');
     }
   } else {
-    pasteAsSketch();
+    const text = getTextFromClipboard();
+
+    // 判断是否是 图片格式
+    if (isBase64ImageString(text)) {
+      pasteAsImage();
+    } else {
+      // 粘贴为 Sketch
+      pasteAsSketch();
+    }
   }
 };
