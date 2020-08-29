@@ -25,7 +25,6 @@ declare class NSFont {
   fontDescriptor(): any;
 }
 
-declare const NSDataBase64EncodingEndLineWithCarriageReturn: any;
 declare const NSFontTraitsAttribute: any;
 declare const NSFontSymbolicTrait: any;
 declare const NSFontItalicTrait: any;
@@ -41,9 +40,7 @@ type LineHeight =
   | 'revert'
   | 'unset'
   | 'normal'
-  | string
   | 0
-  | LineHeightProperty<string | 0>[]
   | ((...args: any[]) => any)
   | (() => number)
   | string;
@@ -54,5 +51,5 @@ declare class NSMutableParagraphStyle extends NSObject {
   minimumLineHeight: LineHeight;
   lineHeightMultiple: number;
   maximumLineHeight: LineHeight;
-  alignment: BorderPosition.Center | any;
+  alignment: any;
 }

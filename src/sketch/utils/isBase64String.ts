@@ -7,7 +7,7 @@
  * @param str
  */
 export const isBase64ImageString = (str: string): string => {
-  const reg = /data:image\/.*;base64,(.*==)/;
+  const reg = /data:image\/.*;base64,(.*)/;
   const group = reg.exec(str);
 
   if (!group) {

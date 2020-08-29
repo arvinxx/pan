@@ -175,10 +175,7 @@ declare class NSFormatter {}
 declare class NSGradient {}
 declare class NSGraphicsContext {}
 declare class NSHashTable {}
-declare class NSImage {
-  static alloc(): NSImage;
-  initWithData(imgData: any): this;
-}
+
 declare class NSImageCell {}
 declare class NSImageView {}
 declare class NSIndexPath {}
@@ -212,19 +209,6 @@ declare class NSMutableString {}
 declare class NSNib {}
 declare class NSNumber extends Number {}
 declare class NSNumberFormatter {}
-declare class NSObject {
-  /**
-   * Implemented by subclasses to initialize a new object (the receiver)
-   * immediately after memory for it has been allocated.
-   *
-   */
-  init(): this;
-
-  static alloc(): NSObject;
-  class(): any;
-  className(): NSString;
-  isKindOfClass<T extends NSObject>(arg: { new (): T }): this is T;
-}
 declare class NSOperation {}
 declare class NSOperationQueue {}
 declare class NSPanGestureRecognizer {}
