@@ -158,7 +158,7 @@ declare class NSColorWell {}
 declare class NSComboBox {}
 declare class NSControl {}
 declare class NSCursor {}
-declare class NSData {}
+
 declare class NSDate {}
 /**
  * 线程目录
@@ -177,7 +177,7 @@ declare class NSGraphicsContext {}
 declare class NSHashTable {}
 declare class NSImage {
   static alloc(): NSImage;
-  initWithData(imgData:any): this;
+  initWithData(imgData: any): this;
 }
 declare class NSImageCell {}
 declare class NSImageView {}
@@ -220,7 +220,7 @@ declare class NSObject {
    */
   init(): this;
 
-  alloc(): this;
+  static alloc(): NSObject;
   class(): any;
   className(): NSString;
   isKindOfClass<T extends NSObject>(arg: { new (): T }): this is T;
@@ -291,13 +291,7 @@ declare class NSStackView extends NSView {
 }
 
 declare class NSStoryboard {}
-declare class NSString extends String {
-  static stringWithContentsOfFile_encoding_error(...args: any[]): NSString;
-  static stringWithFormat(...args: any[]): NSString;
-  static stringWithString(rawString: string): NSString;
 
-  dataUsingEncoding(NSUTF8StringEncoding: number): any;
-}
 declare class NSTableCellView {}
 declare class NSTableView {}
 declare class NSTextField {}
@@ -391,12 +385,12 @@ declare class NSURLSessionUploadTask {}
 declare class SCKShareUploadDataSource {}
 
 declare class WKWebView extends NSView {
-  static alloc(): {
-    initWithFrame_configuration(
-      CGRect: CGRect,
-      config: WKWebViewConfiguration
-    ): WKWebView;
-  };
+  static alloc(): WKWebView;
+
+  initWithFrame_configuration(
+    CGRect: CGRect,
+    config: WKWebViewConfiguration
+  ): this;
   loadRequest(request: NSURLRequest): void;
   loadFileURL_allowingReadAccessToURL(url: NSURL, isDirectory: boolean): void;
   setAutoresizingMask(mask: number): void;

@@ -1664,7 +1664,7 @@ declare module 'sketch/dom' {
      * Image Fill Style
      */
     export interface Pattern {
-      patternType: 'Fill';
+      patternType: 'Fill' | 'Fit' | 'Tile' | 'Stretch';
       tileScale: number;
       image: ImageData;
     }

@@ -1,5 +1,5 @@
 import { fromSJSON } from 'from-sketch-json';
-import { getTextFromPasteboard } from './pasteboard';
+import { getTextFromClipboard } from './clipboard';
 import { fromNative, Document, UI } from 'sketch';
 import { AllLayers, ChildLayer } from 'sketch/dom';
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
@@ -42,7 +42,7 @@ const transformToSketch = (layer: SketchFormat.AnyObject) => {
  * 复制 JSON 为 Sketch 图层
  **/
 export const pasteAsSketch = () => {
-  const text = getTextFromPasteboard();
+  const text = getTextFromClipboard();
   try {
     const json: SketchFormat.AnyObject | SketchFormat.AnyObject[] = JSON.parse(
       text
