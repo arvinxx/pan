@@ -141,12 +141,16 @@ export const superPaste = () => {
   } else {
     const text = getTextFromClipboard();
 
-    // 判断是否是 图片格式
-    if (isBase64ImageString(text)) {
-      pasteAsImage();
-    } else {
-      // 粘贴为 Sketch
-      pasteAsSketch();
+    try {
+      if (JSON.parse(text)) {
+        // 粘贴为 Sketch
+        pasteAsSketch();
+      }
+    } catch (e) {
+      if (isBase64ImageString(text)) {
+        // 判断是否是 图片格式
+        pasteAsImage();
+      }
     }
   }
 };
