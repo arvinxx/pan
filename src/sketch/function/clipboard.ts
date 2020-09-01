@@ -25,8 +25,11 @@ export const copyTextToClipboard = (text: string) => {
 export const getImageFromClipboard = (): NSImage | undefined => {
   const pasteboard = NSPasteboard.generalPasteboard();
 
+  console.log(pasteboard);
   const imgData = pasteboard.dataForType(NSPasteboardTypePNG);
+  console.log(imgData);
   const imgTiffData = pasteboard.dataForType(NSPasteboardTypeTIFF);
+  console.log(imgTiffData);
 
   if (imgData || imgTiffData) {
     if (imgData) {

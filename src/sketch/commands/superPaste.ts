@@ -135,8 +135,8 @@ export const superPaste = () => {
     try {
       selection.forEach(superPasteToLayer);
     } catch (e) {
-      console.log(e);
-      UI.message('剪切板中似乎没有文本😶');
+      // UI.message('剪切板中似乎没有文本😶');
+      UI.message(e);
     }
   } else {
     const text = getTextFromClipboard();
