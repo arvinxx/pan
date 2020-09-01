@@ -17,7 +17,7 @@ declare global {
 /**
  * 输出插件基本信息
  */
-export default (context: SketchContext) => {
+export const systemInfo = (context: SketchContext) => {
   const win = systemInfoWin();
   const plugin = process.versions.plugin;
   const env = process.env.NODE_ENV;
