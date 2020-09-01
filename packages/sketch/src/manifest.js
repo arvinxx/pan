@@ -74,6 +74,13 @@ module.exports = {
       icon: 'icons/paste-text.png',
       description: '将剪贴板中的数据赋予给图层或插入 sketch JSON对象',
     },
+    {
+      name: '快捷编辑文本',
+      identifier: baseIdentifier + '.fast-edit.text',
+      handler: 'fastEditText',
+      shortcut: 'command ctrl t',
+      script: './app.ts',
+    },
   ],
   menu: {
     title: name,
@@ -84,6 +91,20 @@ module.exports = {
           baseIdentifier + '.swap-position',
           baseIdentifier + '.swap-text',
         ],
+      },
+      '-',
+      {
+        title: '画板',
+        items: [
+          baseIdentifier + '.create-symbols',
+          '-',
+          baseIdentifier + '.artboard-description',
+        ],
+      },
+      '-',
+      {
+        title: '快捷编辑',
+        items: [baseIdentifier + '.fast-edit.text'],
       },
       '-',
       {
