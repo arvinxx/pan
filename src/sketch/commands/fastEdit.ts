@@ -1,9 +1,9 @@
 import { UI } from 'sketch';
-import { Text } from 'sketch/dom';
+import { SymbolInstance, Text } from 'sketch/dom';
 
 import { documentContext } from '@/sketch/utils';
 
-import { getInputFromUser, INPUT_TYPE, message } from 'sketch/ui';
+import { getInputFromUser, INPUT_TYPE } from 'sketch/ui';
 
 /**
  * 通过弹窗
@@ -16,7 +16,7 @@ export const fastEditText = () => {
   // 判断一下至少包含一个文本图层
   const textLayers = layers.filter((l) =>
     ['Text', 'SymbolInstance'].includes(l.type)
-  ) as Text[];
+  ) as (Text | SymbolInstance)[];
   if (textLayers.length === 0) {
     UI.message('请选择文本图层对象😶');
     return;
@@ -24,7 +24,24 @@ export const fastEditText = () => {
 
   let initialValue = '';
   if (textLayers.length === 1) {
-    initialValue = textLayers[0].text;
+    const layer = textLayers[0];
+    if (layer.type === 'Text') {
+      initialValue = layer.text;
+    }
+    // TODO 添加初始化单个 SymbolInstance 文本的能力
+
+    if (layer.type === 'SymbolInstance') {
+      layer.overrides
+        .filter((o) => o.editable && o.property === 'stringValue')
+        .forEach((override) => {
+          console.log(override);
+          if (override.value) {
+            initialValue = override.value as string;
+          } else {
+            initialValue = (override.affectedLayer as Text).text;
+          }
+        });
+    }
   }
 
   const text = getTextInModal(initialValue);
@@ -83,16 +100,16 @@ const getTextInModal = (initialValue) => {
   getInputFromUser(
     '快捷编辑文本',
     {
-      description: '请输入文本, 点击 OK 即可快速修改',
+      description: '请在下方编辑文本。编辑完成后, 点击 OK 或按下回车即可',
       type: INPUT_TYPE.string,
       initialValue,
     },
     (err, input) => {
       if (err) {
-        message('出错了😶');
-        return '';
+        text = initialValue ? initialValue : '';
+      } else {
+        text = input.toString();
       }
-      text = input.toString();
     }
   );
   return text;
