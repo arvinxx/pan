@@ -76,20 +76,20 @@ export const pasteImageToLayer = (layer: ShapeType) => {
   const fills = (layer as ShapeType).style.fills;
 
   const fillPattern: Pattern = {
-    patternType: 'Fit',
+    patternType: Style.PatternFillType.Fit,
     image: imageLayer.image,
     tileScale: 1,
   };
   if (fills.length === 0) {
     fills.push({
-      fill: Style.FillType.Pattern,
+      fillType: Style.FillType.Pattern,
       enabled: true,
       pattern: fillPattern,
     });
   } else {
     fills.pop();
     fills.push({
-      fill: Style.FillType.Pattern,
+      fillType: Style.FillType.Pattern,
       enabled: true,
       pattern: fillPattern,
     });
