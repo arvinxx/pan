@@ -1,7 +1,7 @@
 import { fromSJSON } from 'from-sketch-json';
 import { getTextFromClipboard } from './clipboard';
-import { fromNative, Document, UI } from 'sketch';
-import { AllLayers, ChildLayer } from 'sketch/dom';
+import { UI } from 'sketch';
+import { AllLayers, ChildLayer, fromNative, Document } from 'sketch/dom';
 import SketchFormat from '@sketch-hq/sketch-file-format-ts';
 
 const adjustFrame = (layer: AllLayers) => {
@@ -32,7 +32,7 @@ const transformToSketch = (layer: SketchFormat.AnyObject) => {
     return;
   }
   const nativeLayer = fromSJSON(layer as any);
-  const sketchObj = fromNative(nativeLayer) as ChildLayer;
+  const sketchObj = (fromNative(nativeLayer) as unknown) as ChildLayer;
 
   adjustFrame(sketchObj);
   Document.getSelectedDocument().selectedPage.layers.push(sketchObj);
