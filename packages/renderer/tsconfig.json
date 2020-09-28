@@ -1,32 +1,17 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
     "jsx": "react",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "sourceMap": true,
     "strict": true,
     "baseUrl": "./",
     "paths": {
-      "typings/*": ["../../typings/*"],
       "@/*": ["./*"],
-      "@/common": ["../common"],
-      "@/bridge/*": ["../bridge/*"],
-      "@/bridge": ["../bridge"],
-      "@/common/*": ["../common/*"],
       "@@/*": [".umi/*"]
     }
   },
-  "include": [
-    "mock/**/*",
-    "./services/**/*",
-    "./pages/**/*",
-    "./assets/**/*",
-    "../../typings/**/*"
-  ]
+  "include": ["mock/**/*", "./services/**/*", "./pages/**/*", "./assets/**/*"]
 }

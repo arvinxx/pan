@@ -20,7 +20,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-intl": "^4.6.7",
-    "antd": "^4.3.3"
+    "antd": "^4.3.3",
+    "@pan/bridge": "*"
   },
   "homepage": "https://github.com/arvinxx/pan#readme",
   "license": "MIT",
