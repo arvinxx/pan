@@ -1,0 +1,17 @@
+{
+  "name": "@pan/utils",
+  "version": "0.0.0",
+  "private": true,
+  "description": "public utils tools",
+  "author": "arvinxx <arvinx@foxmail.com>",
+  "homepage": "https://github.com/arvinxx/pan#readme",
+  "license": "ISC",
+  "main": "src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arvinxx/pan.git"
+  },
+  "bugs": {
+    "url": "https://github.com/arvinxx/pan/issues"
+  }
+}

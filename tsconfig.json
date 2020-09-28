@@ -1,5 +1,5 @@
 {
-  "include": ["src", "typings/**/*"],
+  "include": ["packages/**/src", "packages/**/typings"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "es5",
@@ -20,6 +20,11 @@
     "lib": ["dom", "es2015", "es2016", "es2017"],
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/sketch-typings",
+      "./node_modules/@figma"
+    ],
     "paths": {
       "typings/*": ["typings/*"],
       "@/*": ["src/*"]

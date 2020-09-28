@@ -1,0 +1,51 @@
+{
+  "name": "@pan/skech",
+  "version": "0.3.0",
+  "description": "sketch end of pan",
+  "keywords": [
+    "sketch"
+  ],
+  "engines": {
+    "sketch": ">=3.0"
+  },
+  "author": "arvinxx <arvinx@foxmail.com>",
+  "homepage": "https://github.com/arvinxx/pan",
+  "license": "MIT",
+  "scripts": {
+    "dev": "NODE_ENV=development skpm-build --watch",
+    "build": "skpm-build",
+    "build:watch": "skpm-build --watch"
+  },
+  "skpm": {
+    "name": "🍳Pan",
+    "manifest": "src/manifest.js",
+    "main": "../../dist/sketch/pan.sketchplugin",
+    "resources": [
+      "../../static/**/*",
+      "../../dist/renderer/**/*"
+    ],
+    "assets": [
+      "../../static/**/*"
+    ]
+  },
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arvinxx/pan.git"
+  },
+  "bugs": {
+    "url": "https://github.com/arvinxx/pan/issues"
+  },
+  "dependencies": {
+    "sketch-module-web-view": "^3.4.1",
+    "from-sketch-json": "^0.1.1",
+    "@pan/bridge": "*"
+  },
+  "devDependencies": {
+    "@sketch-hq/sketch-file-format-ts": "^5.1.0",
+    "sketch-typings": "^0.3.0",
+    "@skpm/builder": "^0.7.7",
+    "terser-webpack-plugin": "^3.0.3",
+    "ts-loader": "^7.0.5"
+  }
+}

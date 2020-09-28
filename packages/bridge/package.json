@@ -1,0 +1,19 @@
+{
+  "name": "@pan/bridge",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "arvinxx <arvinx@foxmail.com>",
+  "homepage": "https://github.com/arvinxx/pan#readme",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arvinxx/pan.git"
+  },
+  "main": "./src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/arvinxx/pan/issues"
+  }
+}
