@@ -1,5 +1,7 @@
 # Pan
 
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
+
 本项目基于 `skpm` 和 `umi` 进行搭建
 
 ## CLI Commands
