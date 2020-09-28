@@ -1,4 +1,4 @@
-import { isDev } from '../../../utils/src/env';
+import { isDev } from '@pan/utils';
 
 /**
  * 根据开发环境生成加载路径
