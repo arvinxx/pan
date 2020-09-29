@@ -1,4 +1,4 @@
-const data = {
+export const fillData = {
   designSaying: {
     en: [
       'Good design is innovative',
@@ -235,5 +235,3 @@ const data = {
     ],
   },
 };
-
-export default data;

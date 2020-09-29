@@ -1,9 +1,7 @@
-import { UI } from 'sketch';
 import { SymbolInstance, Text } from 'sketch/dom';
+import { getInputFromUser, INPUT_TYPE, message } from 'sketch/ui';
 
-import { documentContext } from '@/sketch/utils';
-
-import { getInputFromUser, INPUT_TYPE } from 'sketch/ui';
+import { documentContext } from '../utils';
 
 /**
  * 通过弹窗
@@ -18,7 +16,7 @@ export const fastEditText = () => {
     ['Text', 'SymbolInstance'].includes(l.type)
   ) as (Text | SymbolInstance)[];
   if (textLayers.length === 0) {
-    UI.message('请选择文本图层对象😶');
+    message('请选择文本图层对象😶');
     return;
   }
 

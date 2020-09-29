@@ -1,7 +1,7 @@
 {
   "name": "pan",
   "version": "0.3.0",
-  "author": "闻冰",
+  "author": "arvinxx",
   "description": "平底锅才是王者",
   "engines": {
     "sketch": ">=3.0"
@@ -10,26 +10,36 @@
   "skpm": {
     "name": "🍳Pan",
     "manifest": "src/sketch/manifest.js",
-    "main": "pan.sketchplugin",
+    "main": "build/pan.sketchplugin",
     "assets": [
       "static",
       "dist"
     ]
   },
   "scripts": {
-    "dev": "concurrently \"npm run dev:resources\" \"npm run dev:sketch\"",
+    "start": "concurrently \"npm run dev:renderer\" \"npm run dev:sketch\"",
+    "--------------": "",
     "dev:sketch": "NODE_ENV=development skpm-build --watch",
-    "dev:resources": "APP_ROOT=src/resources PORT=8110 BROWSER=none umi dev",
-    "dev:sketch-only": "npm run build:resources &&skpm-build --watch",
-    "build": "npm run build:resources&& npm run build:sketch",
+    "dev:sketch-only": "npm run build:renderer &&skpm-build --watch",
+    "dev:renderer": "APP_ROOT=src/renderer PORT=8110 BROWSER=none umi dev",
+    "-------------- ": "",
     "build:sketch": "NODE_ENV=prod skpm-build",
-    "build:resources": "APP_ROOT=src/resources umi build",
-    "build:resources-analyze": "APP_ROOT=src/resources ANALYZE=1 umi build",
-    "refresh": "find ./*.sketchplugin -name \"*_ts\" | entr -r /Applications/Sketch.app/Contents/MacOS/Sketch",
-    "postinstall": "npm run build && skpm-link"
+    "build:figma": "tsc --build tsconfig.figma.json",
+    "build:renderer": "APP_ROOT=src/renderer umi build",
+    "build:renderer-analyze": "APP_ROOT=src/renderer ANALYZE=1 umi build",
+    "--------------  ": "",
+    "package:sketch": "npm run build:renderer && npm run build:sketch",
+    "--------------   ": "",
+    "init:sketch": "npm run package:sketch && npm run link-sketch",
+    "refresh-sketch": "find ./*.sketchplugin -name \"*_ts\" | entr -r /Applications/Sketch.app/Contents/MacOS/Sketch",
+    "link-sketch": "skpm-link",
+    "--------------    ": "",
+    "clean": "rm -rf *.sketchplugin dist ./**/.umi*",
+    "postinstall": "npm run init:sketch"
   },
   "devDependencies": {
     "@sketch-hq/sketch-file-format-ts": "^5.1.0",
+    "@figma/plugin-typings": "^1.16.1",
     "@skpm/builder": "^0.7.7",
     "@types/classnames": "^2.2.10",
     "@typescript-eslint/eslint-plugin": "^3.1.0",
@@ -45,11 +55,11 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-intl": "^4.6.7",
-    "sketch-module-web-view": "^3.4.1",
-    "sketch-typings": "^0.3.0",
-    "terser-webpack-plugin": "^3.0.3",
+    "sketch-module-web-view": "^3.4.3",
+    "sketch-typings": "^0.3.1",
+    "terser-webpack-plugin": "^4.2.2",
     "ts-loader": "^7.0.5",
-    "typescript": "^3.9.5",
+    "typescript": "^4.0.3",
     "umi": "^3.2.3",
     "yorkie": "^2.0.0"
   },

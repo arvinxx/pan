@@ -1,4 +1,4 @@
-import { isDev } from '@/common/env';
+import { isDev } from '@pan/utils';
 
 /**
  * 根据开发环境生成加载路径
@@ -7,7 +7,7 @@ import { isDev } from '@/common/env';
 export const getWinURL = (win: string) => {
   // 这样的做法能够使得每个页面都是单页面
   // 不需要切换路由
-  const devUrl = `http://localhost:8110/#/${win}.html`;
+  const devUrl = `http://localhost:8110/${win}`;
   const prodUrl = `../Resources/${win}.html`;
 
   return isDev ? devUrl : prodUrl;

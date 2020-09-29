@@ -1,4 +1,4 @@
-import { ChannelType } from '@/bridge/channel';
+import { ChannelType } from '@pan/bridge';
 import { Dispatch } from '@/models/connect';
 
 export default (dispatch: Dispatch) => (
@@ -9,11 +9,6 @@ export default (dispatch: Dispatch) => (
     case 'GLOBAL_SYSTEM_INFO':
       dispatch({
         type: 'global/save',
-        payload: JSON.parse(payload),
-      });
-    case 'TABLE_FROM_LAYER_DATA':
-      dispatch({
-        type: 'table/init',
         payload: JSON.parse(payload),
       });
   }

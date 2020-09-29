@@ -1,7 +1,6 @@
-import { documentContext } from '@/sketch/function/find';
-import { SymbolMaster, UI } from 'sketch';
-import { Artboard, Group, Slice, Text } from 'sketch/dom';
+import { Artboard, Group, Slice, Text, SymbolMaster } from 'sketch/dom';
 import { getInputFromUser, INPUT_TYPE, message } from 'sketch/ui';
+import { documentContext } from '../utils';
 import { getGlobalData, getLayerData, setLayerData } from '../store/settings';
 
 /**
@@ -11,7 +10,7 @@ export const artboardOverview = () => {
   const { page, selection: artboards } = documentContext();
 
   if (artboards.length === 0) {
-    UI.message('选区中没有画板😶');
+    message('选区中没有画板😶');
     return;
   }
   page.layers.forEach((layer) => {

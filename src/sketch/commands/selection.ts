@@ -1,4 +1,4 @@
-import { documentContext } from '@/sketch/function/find';
+import { documentContext } from '../utils';
 import { message } from 'sketch/ui';
 
 /**

@@ -5,8 +5,9 @@ const routes: IRoute[] = [
     path: '/',
     component: '@/layouts/BridgeLayout',
     routes: [
+      { path: '/', redirect: '/system-info' },
       {
-        path: '/systemInfo',
+        path: '/system-info',
         exact: true,
         component: './SystemInfo',
       },

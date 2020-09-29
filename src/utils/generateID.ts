@@ -21,6 +21,6 @@ function e7() {
   }${lut[(d3 >> 16) & 0xff]}${lut[(d3 >> 24) & 0xff]}`;
 }
 
-export default () => {
+export const generateID = () => {
   return e7().toUpperCase();
 };

@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { Descriptions, Typography } from 'antd';
 
 import styles from './style.less';
-import { useDispatch, useSelector } from 'dva';
+import { useSelector } from 'dva';
 import { ConnectState, GlobalModelState } from '@/models/connect';
 
 const { Title } = Typography;

@@ -1,4 +1,7 @@
-import { getSketchVersion } from '@/sketch/utils/version';
+import { message } from 'sketch/ui';
+import { sendMsgToWebView } from '@pan/bridge';
+import { systemInfoWin } from '../windows';
+import { getSketchVersion } from '../utils';
 
 declare global {
   namespace NodeJS {
@@ -12,13 +15,10 @@ declare global {
   }
 }
 
-import { systemInfoWin } from '@/sketch/windows';
-import { sendMsgToWebView } from '@/bridge';
-
 /**
  * 输出插件基本信息
  */
-export const systemInfo = (context: SketchContext) => {
+export const systemInfo = () => {
   const win = systemInfoWin();
   const plugin = process.versions.plugin;
   const env = process.env.NODE_ENV;
@@ -30,7 +30,7 @@ export const systemInfo = (context: SketchContext) => {
   console.info(`插件平台: ${platform}`);
   console.info(`Sketch 版本: ${sketch}`);
   console.info('=======System End=======');
-  context.document.showMessage('️查看系统信息⚙️');
+  message('️查看系统信息⚙️');
 
   sendMsgToWebView(win, 'GLOBAL_SYSTEM_INFO', {
     env,

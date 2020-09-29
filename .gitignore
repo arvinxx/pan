@@ -12,10 +12,9 @@ npm-debug.log
 .idea
 
 dist
+build
 
 package-lock.json
-src/resources/.umi
-src/resources/.umi-production
+
 /Resources
-.umi
-/src/resources/.umi/
+.umi*

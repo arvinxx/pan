@@ -1,11 +1,11 @@
 import { UI, Settings, Document } from 'sketch';
 import BrowserWindow from 'sketch-module-web-view';
 import { isWebviewPresent, sendToWebview } from 'sketch-module-web-view/remote';
+import { channel } from '@pan/bridge';
+import { ReplaceModel } from 'typings/data/replace';
 
 import { getSettings, getWinURL, setSettings } from '../utils';
-import channel from '@/bridge/channel';
 import { winIdentifier } from './index';
-import { ReplaceModel } from 'typings/data/replace';
 
 const PREF_UNIQUE_KEY = 'com.arvinxx.pan.replace.pref';
 const STATE_UNIQUE_KEY = 'com.arvinxx.pan.replace.state';

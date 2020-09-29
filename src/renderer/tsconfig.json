@@ -15,10 +15,8 @@
     "paths": {
       "typings/*": ["../../typings/*"],
       "@/*": ["./*"],
-      "@/common": ["../common"],
-      "@/bridge/*": ["../bridge/*"],
-      "@/bridge": ["../bridge"],
-      "@/common/*": ["../common/*"],
+      "@pan/bridge": ["../bridge"],
+      "@pan/utils": ["../utils"],
       "@@/*": [".umi/*"]
     }
   },

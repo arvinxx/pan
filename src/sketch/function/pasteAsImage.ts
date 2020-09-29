@@ -1,9 +1,7 @@
 import { message } from 'sketch/ui';
-import { documentContext, isBase64ImageString } from '@/sketch/utils';
-import {
-  getImageFromClipboard,
-  getTextFromClipboard,
-} from '@/sketch/function/clipboard';
+import { isBase64ImageString } from '@pan/utils';
+import { documentContext } from '../utils';
+import { getImageFromClipboard, getTextFromClipboard } from './clipboard';
 import { Image, UI } from 'sketch';
 import { Pattern, ShapeType, Style } from 'sketch/dom';
 

@@ -1,5 +1,4 @@
 {
-  "include": ["src", "typings/**/*"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "es5",
@@ -22,7 +21,13 @@
     "baseUrl": ".",
     "paths": {
       "typings/*": ["typings/*"],
-      "@/*": ["src/*"]
-    }
+      "@pan/utils": ["src/utils"],
+      "@pan/bridge": ["src/bridge"]
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/sketch-typings",
+      "./node_modules/@figma/plugin-typings"
+    ]
   }
 }

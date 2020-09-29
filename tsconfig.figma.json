@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/figma/**/*"],
+  "compilerOptions": {
+    "target": "es6",
+    "outDir": "./build/figma",
+    "typeRoots": ["./node_modules/@types", "./node_modules/@figma"]
+  }
+}

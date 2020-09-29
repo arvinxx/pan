@@ -32,7 +32,7 @@ module.exports = function(config, isPluginCommand) {
         loader: 'ts-loader',
         options: {
           transpileOnly: isDev,
-          configFile: path.resolve(process.cwd(), 'tsconfig.json'),
+          configFile: path.resolve(process.cwd(), 'tsconfig.sketch.json'),
           reportFiles: ['src/sketch/**/*.ts'],
         },
       },
@@ -45,7 +45,8 @@ module.exports = function(config, isPluginCommand) {
     };
   }
   config.resolve.alias = {
-    '@': path.resolve(__dirname, './src'),
+    '@pan/utils': path.resolve(__dirname, 'src/utils'),
+    '@pan/bridge': path.resolve(__dirname, 'src/bridge'),
   };
 
   config.resolve.extensions = [...config.resolve.extensions, '.ts', '.tsx'];

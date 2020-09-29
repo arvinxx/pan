@@ -1,5 +1,5 @@
-import { Settings, Document } from 'sketch';
-import { AllLayers, Types } from 'sketch/dom';
+import { Settings } from 'sketch';
+import { AllLayers, Types, Document } from 'sketch/dom';
 import { StateKeyType } from './state';
 
 /**

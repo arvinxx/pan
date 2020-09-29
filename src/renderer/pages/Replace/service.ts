@@ -1,4 +1,4 @@
-import { sendMsgToEnd } from '@/bridge';
+import { sendMsgToEnd } from '@pan/bridge';
 
 /**
  * 生成 table

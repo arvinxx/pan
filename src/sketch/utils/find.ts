@@ -1,10 +1,13 @@
 import { AllLayers, Page, Selection } from 'sketch/dom';
 import { Document } from 'sketch';
+
+export const isArtboard = (layer: AllLayers | Document) =>
+  layer.type === 'Artboard' || layer.type === 'SymbolMaster';
+
 /**
  * 是否是Shape
  * @param layer
  */
-
 export const isShapeLayer = (layer: AllLayers) =>
   layer.type === 'Shape' || layer.type === 'ShapePath';
 
