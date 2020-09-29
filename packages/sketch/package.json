@@ -20,12 +20,9 @@
     "name": "🍳Pan",
     "manifest": "src/manifest.js",
     "main": "../../dist/sketch/pan.sketchplugin",
-    "resources": [
-      "../../static/**/*",
-      "../../dist/renderer/**/*"
-    ],
     "assets": [
-      "static"
+      "static",
+      "dist"
     ]
   },
   "private": true,

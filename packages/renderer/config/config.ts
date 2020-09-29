@@ -10,7 +10,7 @@ const config = defineConfig({
     loading: '@/components/PageLoading',
   },
   devtool: isDev ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
-  outputPath: `../../dist/renderer`,
+  outputPath: `../sketch/dist`,
   alias: {
     '@/common': resolve(__dirname, '../../common'),
     '@/bridge': resolve(__dirname, '../../bridge'),

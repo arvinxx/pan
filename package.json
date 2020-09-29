@@ -1,6 +1,6 @@
 {
   "name": "pan",
-  "version": "0.2.3",
+  "version": "1.0.0",
   "private": true,
   "author": "arvinxx",
   "description": "平底锅才是王者",
@@ -10,8 +10,6 @@
   "repository": "https://github.com/arvinxx/pan",
   "scripts": {
     "dev": "NODE_ENV=development lerna run dev -- --parallel",
-    "build:sketch": "skpm-build",
-    "build:sketch-watch": "skpm-build --watch",
     "refresh": "find ./*.sketchplugin -name \"*_ts\" | entr -r /Applications/Sketch.app/Contents/MacOS/Sketch"
   },
   "devDependencies": {
