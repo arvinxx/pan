@@ -2,7 +2,7 @@
   "name": "pan",
   "version": "0.1.0",
   "description": "figma end of pan",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc"
   },

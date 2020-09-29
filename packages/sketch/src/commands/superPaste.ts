@@ -1,6 +1,7 @@
 import { UI } from 'sketch';
 import { AllLayers, Types } from 'sketch/dom';
-import { isBase64ImageString, documentContext } from '@/sketch/utils';
+import { isBase64ImageString } from '@pan/utils';
+import { documentContext } from '../utils';
 import { pasteAsSketch } from '../function/pasteAsSketch';
 import { pasteAsImage, pasteImageToLayer } from '../function/pasteAsImage';
 import {

@@ -1,9 +1,7 @@
 import { UI } from 'sketch';
-import { SymbolInstance, Text } from 'sketch/dom';
-
-import { documentContext } from '@/sketch/utils';
-
 import { getInputFromUser, INPUT_TYPE } from 'sketch/ui';
+import { SymbolInstance, Text } from 'sketch/dom';
+import { documentContext } from '../utils';
 
 /**
  * 通过弹窗

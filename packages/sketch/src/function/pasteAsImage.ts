@@ -1,11 +1,9 @@
-import { message } from 'sketch/ui';
-import { documentContext, isBase64ImageString } from '@/sketch/utils';
-import {
-  getImageFromClipboard,
-  getTextFromClipboard,
-} from '@/sketch/function/clipboard';
-import { Image, UI } from 'sketch';
+import { Image } from 'sketch';
 import { Pattern, ShapeType, Style } from 'sketch/dom';
+import { message } from 'sketch/ui';
+import { isBase64ImageString } from '@pan/utils';
+import { documentContext } from '../utils';
+import { getImageFromClipboard, getTextFromClipboard } from './clipboard';
 
 /**
  * 将 Base64 粘贴为 Image
@@ -59,7 +57,7 @@ export const pasteImageToLayer = (layer: ShapeType) => {
     const image = getImageFromClipboard();
 
     if (!image) {
-      UI.message('剪切板没有图片😶');
+      message('剪切板没有图片😶');
       return;
     }
 

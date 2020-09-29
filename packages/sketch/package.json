@@ -1,5 +1,5 @@
 {
-  "name": "@pan/skech",
+  "name": "@pan/sktech",
   "version": "0.3.0",
   "description": "sketch end of pan",
   "keywords": [
@@ -25,7 +25,7 @@
       "../../dist/renderer/**/*"
     ],
     "assets": [
-      "../../static/**/*"
+      "static"
     ]
   },
   "private": true,
@@ -39,13 +39,15 @@
   "dependencies": {
     "sketch-module-web-view": "^3.4.1",
     "from-sketch-json": "^0.1.1",
-    "@pan/bridge": "*"
+    "@pan/bridge": "*",
+    "@pan/utils": "*"
   },
   "devDependencies": {
     "@sketch-hq/sketch-file-format-ts": "^5.1.0",
-    "sketch-typings": "^0.3.0",
+    "sketch-typings": "^0.3.1",
     "@skpm/builder": "^0.7.7",
     "terser-webpack-plugin": "^3.0.3",
-    "ts-loader": "^7.0.5"
+    "ts-loader": "^7.0.5",
+    "webpack": "^4.44.2"
   }
 }

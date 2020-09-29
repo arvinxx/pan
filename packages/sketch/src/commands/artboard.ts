@@ -1,4 +1,4 @@
-import { documentContext } from '../function/find';
+import { documentContext } from '../utils';
 import { SymbolMaster, UI } from 'sketch';
 import { Artboard, Group, Slice, Text } from 'sketch/dom';
 import { getInputFromUser, INPUT_TYPE, message } from 'sketch/ui';
