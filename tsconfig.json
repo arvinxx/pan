@@ -1,4 +1,5 @@
 {
+  "include": ["src/**/*", "./node_modules/@figma"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "es5",
@@ -27,7 +28,7 @@
     "typeRoots": [
       "./node_modules/@types",
       "./node_modules/sketch-typings",
-      "./node_modules/@figma/plugin-typings"
+      "./node_modules/@figma"
     ]
   }
 }

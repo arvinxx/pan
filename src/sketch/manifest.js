@@ -52,6 +52,7 @@ module.exports = {
   bundleVersion: 1,
   icon: 'logo.png',
   name,
+  author: 'Arvin Xu',
   homepage: 'https://www.yuque.com/design-engineering/pan',
   commands: [
     {
