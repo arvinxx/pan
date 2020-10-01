@@ -19,23 +19,23 @@ English | [简体中文](./README.zh-CN.md)
 
 </div>
 
-本项目基于 `skpm` 和 `umi` 进行搭建
+Build with `skpm` and `umi` 
 
 ## CLI Commands
-### 安装
+### Install
 ```bash
 npm i
 ```
-或
+or
 ```bash
 yarn
 ```
 
-### 开发
+### Develop
 ``` bash
 npm run dev
 ```
-###  打包构建
+###  Build
 ```bash
 npm run build
 ```
