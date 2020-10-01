@@ -14,7 +14,7 @@
 [![License][license]](./LICENSE)
 
 <!-- license url -->
-[license]: https://img.shields.io/github/license/arvinxx/pan
+[license]: https://img.shields.io/github/license/arvinxx/pan?color=d&style=flat-square
 
 <!-- version url -->
 
