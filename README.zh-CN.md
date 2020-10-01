@@ -11,6 +11,11 @@
 
 [![ Build With skpm][skpm-url]](https://d.umijs.org/) [![Build With father][umi-url]](https://github.com/umijs/father/)
 
+[![License][license]](./LICENSE)
+
+<!-- license url -->
+[license]: https://img.shields.io/github/license/arvinxx/pan
+
 <!-- version url -->
 
 [release-version]: https://img.shields.io/github/v/release/arvinxx/pan?label=latest&color=g&style=flat-square
