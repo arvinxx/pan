@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*", "./node_modules/@figma"],
+  "include": ["src/**/*", "./node_modules/@figma", "typings"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "es5",

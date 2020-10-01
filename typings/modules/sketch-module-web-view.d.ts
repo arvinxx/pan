@@ -273,6 +273,7 @@ interface Rectangle {
    */
   y: number;
 }
+
 interface BrowserWindowConstructorOptions {
   identifier: string;
   /**
