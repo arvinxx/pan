@@ -1,4 +1,4 @@
-export interface ReplaceModel {
+declare interface ReplaceModel {
   findString: string;
   /**
    * 替换对象
